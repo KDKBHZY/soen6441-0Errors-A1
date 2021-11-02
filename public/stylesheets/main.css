@@ -1,0 +1,32 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.search{
+    width: 30%;
+    margin: 100px auto;
+    display: flex;
+}
+.search input{
+    float: left;//左浮动
+    height: 30px;
+    width: 400px;
+    outline: none;
+    border: 1px solid black;
+    box-sizing: border-box;
+padding-left: 10px;
+}
+.search button{
+    height: 30px;
+    width: 100px;
+    background-color: blue;
+    color: white;
+    border-style: none;
+    outline: none;
+}
+.search button i{
+    font-style: normal;
+}
+.search button:hover{
+    font-size: 18px;
+}

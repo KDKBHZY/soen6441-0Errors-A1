@@ -17,5 +17,8 @@ public class HomeController extends Controller {
     public Result index() {
         return ok(views.html.index.render());
     }
+    public Result rlytics() {
+        return ok(views.html.index1.render());
+    }
 
 }
