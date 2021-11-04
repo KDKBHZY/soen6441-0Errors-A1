@@ -1,21 +1,27 @@
 package controllers;
 
 import play.mvc.*;
+//import scala.collection.parallel.immutable.ParRange;
+import services.RedditService;
+import views.html.*;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's redditLytics page.
  */
 public class RedditLyticsController extends Controller {
-
-    /**
-     * An action that renders an HTML page with a input for searching reddit submissions
-     * The configuration in the <code>routes</code> file means that
-     * this method will be called when the application receives a
-     * <code>GET</code> request with a path of <code>/redditlytics</code>.
-     */
+private RedditService redditService;
+public RedditLyticsController(RedditService redditService){
+    this.redditService = redditService;
+}
+//
     public Result rlyticsIndex() {
         return ok(views.html.rlytics.render());
     }
-
+    public CompletionStage<Result> search() {
+        return CompletableFuture.completedFuture(ok(rlytics.render()));
+    }
 }
