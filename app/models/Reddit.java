@@ -2,36 +2,36 @@ package models;
 
 public class Reddit {
 
-    private String redditID;
-    private User author;
-    private String subReddit;
-    private String submission;
+    private String subreddit_id;
+    private String author;
+    private String subreddit;
+    private String title;
 
-    public Reddit(String id, User author, String subReddit, String submission) {
-        this.redditID = id;
+    public Reddit(String subreddit_id, String author, String subReddit, String title) {
+        this.subreddit_id = subreddit_id;
         this.author = author;
-        this.subReddit = subReddit;
-        this.submission = submission;
+        this.subreddit = subReddit;
+        this.title = title;
     }
 
     @Override
     public String toString() {
-        return String.format("Author: %s, %s, \"%s\"", this.author, this.subReddit, this.submission);
+        return String.format("Author: %s, %s, \"%s\"", this.author, this.subreddit, this.title);
     }
 
     public String getRedditID() {
-        return redditID;
+        return subreddit_id;
     }
 
-    public User getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
     public String getSubReddit() {
-        return subReddit;
+        return subreddit;
     }
 
     public String getSubmission() {
-        return submission;
+        return title;
     }
 }

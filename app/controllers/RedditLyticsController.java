@@ -16,19 +16,17 @@ import java.util.concurrent.CompletionStage;
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
-    private RedditImplemention re;
 @Inject
 public RedditLyticsController(RedditService redditService ,RedditImplemention re ){
     this.redditService = redditService;
-    this.re = re;
 }
 //
     public Result rlyticsIndex() {
         return ok(views.html.rlytics.render());
     }
     public CompletionStage<Result> search() {
-        CompletionStage<WSResponse> responsePromise = re.search("trump");
-        System.out.println("json data:::::::"+redditService.getTweets("trump"));
+        //CompletionStage<WSResponse> responsePromise = re.search("trump");
+        System.out.println("json data:::::::"+redditService.getRedditsts("trump"));
         return CompletableFuture.completedFuture(ok(rlytics.render()));
     }
 }
