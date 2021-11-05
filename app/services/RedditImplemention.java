@@ -1,5 +1,6 @@
 package services;
 
+import com.typesafe.play.cachecontrol.CacheDirectives;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
@@ -24,10 +25,9 @@ public class RedditImplemention implements RedditApi {
     }
 
 
-
     @Override
     public CompletionStage<WSResponse> search(String keyword) {
-        keyword = "trump";
+        System.out.println(keyword);
         WSRequest request = ws.url(baseUrl);
         CompletionStage<WSResponse> responsePromise = request.get();
         System.out.println("get data"+responsePromise);
