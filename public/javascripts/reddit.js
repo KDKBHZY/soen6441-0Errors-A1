@@ -27,12 +27,12 @@ $(document).ready(function () {
 
 
 
-    jQuery("#searchKey").click(function () {
-        var d = { "userName": "特朗普", "age": 911 };
+    jQuery("#search").click(function () {
+        var a = document.getElementById("searchKey").value;
         htmlobj = jQuery.ajax({
             url: "../services/app/RedditService/getRedditsts",                            //将数据data发送到的路径
-            data: d,
-            async: false,
+            data: a,
+            async: true,
             type: "post"
         });
         jQuery("#demo").html(htmlobj.responseText);
