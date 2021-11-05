@@ -30,11 +30,13 @@ $(document).ready(function () {
     jQuery("#search").click(function () {
         var a = document.getElementById("searchKey").value;
         htmlobj = jQuery.ajax({
-            url: "../services/app/RedditService/getRedditsts",                            //将数据data发送到的路径
-            data: a,
+            url: "/search1?",                            //将数据data发送到的路径
+            data: "term="+a.toString(),
             async: true,
-            type: "post"
+            type: "get",
+
         });
-        jQuery("#demo").html(htmlobj.responseText);
+        console.log(htmlobj);
+       // jQuery("#demo").html(htmlobj.responseText);
     });
 });

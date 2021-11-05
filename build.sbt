@@ -9,3 +9,4 @@ scalaVersion := "2.13.6"
 
 libraryDependencies += guice
 libraryDependencies += ws
+libraryDependencies += guice

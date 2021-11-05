@@ -32,6 +32,7 @@ public class RedditService {
         mapper = new ObjectMapper();
     }
 
+
     /**
      * Parse the reddits for a keyword
      * @param keywords keyword
@@ -39,6 +40,7 @@ public class RedditService {
      */
     public CompletionStage<Reddit> getRedditsts(final String keywords) {
         try {
+
             return redditImplementation.search(keywords)
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parseReddits);

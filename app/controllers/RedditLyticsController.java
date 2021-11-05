@@ -6,7 +6,7 @@ import services.RedditImplemention;
 import services.RedditService;
 import views.html.*;
 import javax.inject.Inject;
-
+import play.api.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -25,8 +25,14 @@ public RedditLyticsController(RedditService redditService ,RedditImplemention re
         return ok(views.html.rlytics.render());
     }
     public CompletionStage<Result> search() {
-        //CompletionStage<WSResponse> responsePromise = re.search("trump");
         System.out.println("json data:::::::"+redditService.getRedditsts("trump"));
         return CompletableFuture.completedFuture(ok(rlytics.render()));
     }
+    public CompletionStage<Result> search1(String term) {
+    System.out.println(term);
+        //CompletionStage<WSResponse> responsePromise = re.search("trump");
+        System.out.println("json data:::::::"+redditService.getRedditsts(term));
+        return CompletableFuture.completedFuture(ok(rlytics.render()));
+    }
+
 }

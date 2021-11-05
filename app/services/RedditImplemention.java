@@ -9,7 +9,7 @@ import java.util.concurrent.CompletionStage;
 
 public class RedditImplemention implements RedditApi {
 
-    private String baseUrl = "https://api.pushshift.io/reddit/search/submission/?q=trump&size=10&sort=asc";
+    private String baseUrl = "https://api.pushshift.io/reddit/search/submission";
 
 
     private final WSClient ws;
@@ -27,16 +27,17 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> search(String keyword) {
-        keyword = "trump";
-        WSRequest request = ws.url(baseUrl);
-        CompletionStage<WSResponse> responsePromise = request.get();
-        System.out.println("get data"+responsePromise);
-        return responsePromise;
-//        return ws.url(baseUrl )
-//                //.addHeader("Authorization", bearer)
-//                .addQueryParameter("q", keyword)
-//                .addQueryParameter("size", "10")
-//                .addQueryParameter("sort", "asc")
-//                .get(); // THIS IS NOT BLOCKING! It returns a promise to the response. It comes from WSRequest.
+        System.out.println(keyword);
+        //keyword = "trump";
+//        WSRequest request = ws.url(baseUrl);
+//        CompletionStage<WSResponse> responsePromise = request.get();
+//        System.out.println("get data"+responsePromise);
+//        return responsePromise;
+        return ws.url(baseUrl)
+                //.addHeader("Authorization", bearer)
+                .addQueryParameter("q", keyword)
+                .addQueryParameter("size", "10")
+                .addQueryParameter("sort", "asc")
+                .get(); // THIS IS NOT BLOCKING! It returns a promise to the response. It comes from WSRequest.
           }
 }
