@@ -30,13 +30,13 @@ $(document).ready(function () {
     jQuery("#search").click(function () {
         var a = document.getElementById("searchKey").value;
         htmlobj = jQuery.ajax({
-            url: "/search1?",                            //将数据data发送到的路径
+            url: "/search?",                            //将数据data发送到的路径
             data: "term="+a.toString(),
             async: true,
             type: "get",
 
         });
-        console.log(htmlobj);
-       // jQuery("#demo").html(htmlobj.responseText);
+        console.log(htmlobj.responseText);
+       jQuery("#text").html(htmlobj.responseText);
     });
 });

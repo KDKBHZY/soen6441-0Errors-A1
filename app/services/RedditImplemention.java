@@ -27,12 +27,6 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> search(String keyword) {
-        System.out.println(keyword);
-        //keyword = "trump";
-//        WSRequest request = ws.url(baseUrl);
-//        CompletionStage<WSResponse> responsePromise = request.get();
-//        System.out.println("get data"+responsePromise);
-//        return responsePromise;
         return ws.url(baseUrl)
                 //.addHeader("Authorization", bearer)
                 .addQueryParameter("q", keyword)

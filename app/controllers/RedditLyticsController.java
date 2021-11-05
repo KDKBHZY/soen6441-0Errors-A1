@@ -24,11 +24,8 @@ public RedditLyticsController(RedditService redditService ,RedditImplemention re
     public Result rlyticsIndex() {
         return ok(views.html.rlytics.render());
     }
-    public CompletionStage<Result> search() {
-        System.out.println("json data:::::::"+redditService.getRedditsts("trump"));
-        return CompletableFuture.completedFuture(ok(rlytics.render()));
-    }
-    public CompletionStage<Result> search1(String term) {
+
+    public CompletionStage<Result> search(String term) {
     System.out.println(term);
         //CompletionStage<WSResponse> responsePromise = re.search("trump");
         System.out.println("json data:::::::"+redditService.getRedditsts(term));

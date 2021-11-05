@@ -10,8 +10,8 @@ import play.libs.ws.WSResponse;
 import play.libs.ws.WSResponse;
 
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import javax.inject.Inject;
@@ -23,13 +23,11 @@ public class RedditService {
     @Inject
     private RedditImplemention redditImplementation;
 
-    private ObjectMapper mapper;
-
     /**
      * Default constructor
      */
     public RedditService() {
-        mapper = new ObjectMapper();
+        //mapper = new ObjectMapper();
     }
 
 
@@ -38,7 +36,7 @@ public class RedditService {
      * @param keywords keyword
      * @return CompletionStage of a SearchResult
      */
-    public CompletionStage<Reddit> getRedditsts(final String keywords) {
+    public CompletionStage<List> getRedditsts(final String keywords) {
         try {
 
             return redditImplementation.search(keywords)
@@ -56,19 +54,19 @@ public class RedditService {
      * @param result JsonNode jsonNode extracted from the redditImplementation
      * @return SearchResult search results as a POJO
      */
-    public Reddit parseReddits(JsonNode result) {
+    public List parseReddits(JsonNode result) {
         try {
-           Iterator<JsonNode> elements = result.elements();
-                   result = result.get("data");
-                   int n = result.size();
+            List<Reddit> res = new ArrayList<>();
+            result = result.get("data");
+            int n = result.size();
             System.out.println(n);
             for(int i = 0;i<n;i++){
-                System.out.println(result.get(i).get("author"));
-
+                Reddit r = new Reddit(Integer.toString(i), result.get(i).get("author").toString(), result.get(i).get("subreddit").toString(), result.get(i).get("title").toString());
+                res.add(r);
             }
-            return mapper.treeToValue(result,
-                    Reddit.class);
-        } catch (JsonProcessingException e) {
+            System.out.println(res);
+            return res;
+        } catch (Exception e) {
             System.out.println("Cannot parse jaon data");
             return null;
         }

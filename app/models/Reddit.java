@@ -14,6 +14,8 @@ public class Reddit {
         this.title = title;
     }
 
+
+
     @Override
     public String toString() {
         return String.format("Author: %s, %s, \"%s\"", this.author, this.subreddit, this.title);
