@@ -31,7 +31,6 @@ public class RedditService {
      */
     public CompletionStage<List<Reddit>> getRedditsts(final String keywords) {
         try {
-
             return redditImplementation.search(keywords)
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parseReddits);

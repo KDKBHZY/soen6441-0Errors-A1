@@ -5,15 +5,13 @@
 @main("result") {
     <div style="text-align: center;">
         <h1>Result</h1>
-    </div>
-    <div class="search">
-        <input type="text" placeholder="Enter search terms" name="" id="searchKey" value="" />
-        <button id="search" ><i>Go</i></button>
-    </div>
-    <ul>
+        <ul>
         @for(reddit <- searchResults) {
             <li>@reddit.getAuthor </li>
         }
-    </ul>
+        </ul>
+    </div>
+
+
 
 }
