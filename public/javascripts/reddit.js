@@ -34,9 +34,8 @@ $(document).ready(function () {
             data: "term="+a.toString(),
             async: true,
             type: "get",
-
         });
-        console.log(htmlobj.responseText);
-       jQuery("#text").html(htmlobj.responseText);
+       console.log(htmlobj.responseText);
+      //jQuery("#text").html(htmlobj.responseText);
     });
 });

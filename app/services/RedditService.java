@@ -2,21 +2,14 @@ package services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Reddit;
 import play.libs.ws.WSResponse;
-
-
-import play.libs.ws.WSResponse;
-
 import javax.inject.Inject;
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;
-import javax.inject.Inject;
-import javax.naming.directory.SearchResult;
-import java.util.concurrent.CompletionStage;
+
 
 public class RedditService {
 
@@ -36,7 +29,7 @@ public class RedditService {
      * @param keywords keyword
      * @return CompletionStage of a SearchResult
      */
-    public CompletionStage<List> getRedditsts(final String keywords) {
+    public CompletionStage<List<Reddit>> getRedditsts(final String keywords) {
         try {
 
             return redditImplementation.search(keywords)
@@ -54,7 +47,7 @@ public class RedditService {
      * @param result JsonNode jsonNode extracted from the redditImplementation
      * @return SearchResult search results as a POJO
      */
-    public List parseReddits(JsonNode result) {
+    public List<Reddit> parseReddits(JsonNode result) {
         try {
             List<Reddit> res = new ArrayList<>();
             result = result.get("data");
