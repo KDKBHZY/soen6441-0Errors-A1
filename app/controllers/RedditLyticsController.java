@@ -24,13 +24,13 @@ public class RedditLyticsController extends Controller {
     private HttpExecutionContext httpExecutionContext;
 
     @Inject
-public RedditLyticsController(RedditService redditService ,HttpExecutionContext httpExecutionContext){
-        this.httpExecutionContext = httpExecutionContext;
-        this.redditService = redditService;
-}
-//
-    public Result rlyticsIndex() {
-        return ok(views.html.rlytics.render());
+    public RedditLyticsController(RedditService redditService ,HttpExecutionContext httpExecutionContext){
+            this.httpExecutionContext = httpExecutionContext;
+            this.redditService = redditService;
+    }
+
+    public CompletionStage<Result> rlyticsIndex() {
+        return CompletableFuture.completedFuture(ok(rlytics.render()));
     }
 
     public CompletionStage<Result> search(String term) {

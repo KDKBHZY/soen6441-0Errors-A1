@@ -6,7 +6,7 @@
 GET     /                           controllers.HomeController.index()
 
 GET     /redditlytics               controllers.RedditLyticsController.rlyticsIndex()
-GET     /search                   controllers.RedditLyticsController.search(term:String ?= "")
+GET     /search                     controllers.RedditLyticsController.search(term:String ?= "")
 #GET     /res                  controllers.RedditLyticsController.res()
 
 # Map static resources from the /public folder to the /assets URL path
