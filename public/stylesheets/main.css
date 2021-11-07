@@ -30,3 +30,6 @@ padding-left: 10px;
 .search button:hover{
     font-size: 18px;
 }
+.results{
+    margin:0 50px auto;
+}
