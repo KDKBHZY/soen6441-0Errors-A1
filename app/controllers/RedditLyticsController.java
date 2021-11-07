@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Reddit;
+import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSResponse;
 import play.mvc.*;
@@ -30,6 +31,7 @@ public class RedditLyticsController extends Controller {
     }
 
     public CompletionStage<Result> rlyticsIndex() {
+
         return CompletableFuture.completedFuture(ok(rlytics.render()));
     }
 
@@ -38,8 +40,7 @@ public class RedditLyticsController extends Controller {
         //System.out.println("json data:::::::"+redditService.getRedditsts(term));
 
         return redditService.getRedditsts(term)
-                .thenApplyAsync(res->ok(views.html.result.render(res)));
-                       // httpExecutionContext.current());
+                .thenApplyAsync(res->ok(Json.toJson(res)));
 
         //return CompletableFuture.completedFuture(ok(rlytics.render()));
     }

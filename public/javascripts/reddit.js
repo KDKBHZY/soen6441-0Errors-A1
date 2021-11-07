@@ -34,8 +34,12 @@ $(document).ready(function () {
             data: "term="+a.toString(),
             async: true,
             type: "get",
+            success: function(data){
+                console.log(data);
+                jQuery("#text").html(data);
+
+            }
+
         });
-       console.log(htmlobj.responseText);
-      //jQuery("#text").html(htmlobj.responseText);
     });
 });
