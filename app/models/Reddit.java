@@ -7,38 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Reddit {
 
     @JsonProperty("id")
-    private String subreddit_id;
+    private String subredditID;
     private String author;
     private String subreddit;
     private String title;
-
-    public Reddit() {
-
-    }
-
-//    public Reddit(String subreddit_id, String author, String subReddit, String title) {
-//        this.subreddit_id = subreddit_id;
-//        this.author = author;
-//        this.subreddit = subReddit;
-//        this.title = title;
-//    }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Reddit reddit = (Reddit) o;
-//        return Objects.equals(subreddit_id, reddit.subreddit_id)
-//                && Objects.equals(author, reddit.author)
-//                && Objects.equals(subreddit, reddit.subreddit)
-//                && Objects.equals(title, reddit.title);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash()
-//    }
 
     @Override
     public String toString() {
@@ -46,11 +18,11 @@ public class Reddit {
     }
 
     public String getRedditID() {
-        return subreddit_id;
+        return subredditID;
     }
 
-    public void setSubreddit_id(String id) {
-        this.subreddit_id = id;
+    public void setSubredditID(String id) {
+        this.subredditID = id;
     }
 
     public String getAuthor() {
