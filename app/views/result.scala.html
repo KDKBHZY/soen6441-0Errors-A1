@@ -1,17 +1,16 @@
-
 @import java.util
-@(searchResults: util.List[Reddit], res:String)
+@(searchResults: util.List[Reddit], res: String)
 
-@main("result") {
-    <div style="text-align: center;">
-        <h1>subReddit:@res</h1>
-        <ul>
+@main(res+"result") {
+    <div>
+        <h1 align="center">subReddit: @res</h1>
+
+        <ol style="margin-left: 50px;">
         @for(reddit <- searchResults) {
-            <li>@reddit.toString </li>
+            <li style="margin-bottom:15px ">@reddit.toString</li>
         }
-        </ul>
+        </ol>
     </div>
-
 
 
 }

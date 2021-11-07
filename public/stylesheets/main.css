@@ -4,7 +4,7 @@
 }
 .search{
     width: 30%;
-    margin: 100px auto;
+    margin: 20px auto;
     display: flex;
 }
 .search input{
@@ -32,4 +32,8 @@ padding-left: 10px;
 }
 .results{
     margin:0 50px auto;
+}
+
+ol.d {
+    list-style-type: lower-alpha;
 }
