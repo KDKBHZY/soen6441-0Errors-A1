@@ -4,14 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Reddit;
 import play.libs.ws.WSResponse;
-import javax.inject.Inject;
 
+import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
-
-public class RedditService {
+public class SubredditService {
 
     @Inject
     private RedditImplemention redditImplementation;
@@ -21,20 +20,16 @@ public class RedditService {
     /**
      * Default constructor
      */
-    public RedditService() {
+    public SubredditService() {
         this.mapper = new ObjectMapper();
     }
 
-    /**
-     * Parse the reddits for a keyword
-     * @param keywords keyword
-     * @return CompletionStage of a SearchResult
-     */
-    public CompletionStage<List<Reddit>> getRedditsts(final String keywords) {
+
+    public CompletionStage<List<Reddit>> getsubRedditsts(final String keywords) {
         try {
-            return redditImplementation.search(keywords)
+            return redditImplementation.searchSubreddit(keywords)
                     .thenApplyAsync(WSResponse::asJson)
-                    .thenApplyAsync(this::parseReddits);
+                    .thenApplyAsync(this::parsesubReddits);
         }catch (Exception e){
             System.out.println("error!!!");
             return null;
@@ -42,18 +37,13 @@ public class RedditService {
 
     }
 
-    /**
-     * Convert the reddits from a JsonNode to a SearchResult using jackson
-     * @param result JsonNode jsonNode extracted from the redditImplementation
-     * @return SearchResult search results as a List of Reddit
-     */
-    public List<Reddit> parseReddits(JsonNode result) {
+    public List<Reddit> parsesubReddits(JsonNode result) {
         try {
+            System.out.println(Arrays.asList(mapper.treeToValue(result.get("data"), Reddit[].class)));
             return Arrays.asList(mapper.treeToValue(result.get("data"), Reddit[].class));
         } catch (Exception e) {
             System.out.println("Cannot parse json data");
             return null;
         }
     }
-
 }

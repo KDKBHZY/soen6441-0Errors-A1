@@ -14,19 +14,6 @@
 // }
 
 $(document).ready(function () {
-    // $("#loadData").click(function () {                     //这里用到jQuery，需要在布局页中引用jQuery
-    //     htmlobj = jQuery.ajax({url: "/Content/txtData.txt",async: false});
-    //     $("#demo").text(htmlobj.responseText);       //将从后台获取的数据展现在h3元素上
-    // })
-    //
-    // $("#loadDataFromDb").click(function () {
-    //     htmlobj = jQuery.ajax({
-    //         url: "/GetData/Index", async: false });
-    //     $("#demo").text(htmlobj.responseText);
-    // })
-
-
-
     jQuery("#search").click(function () {
         var a = document.getElementById("searchKey").value;
         htmlobj = jQuery.ajax({
@@ -45,18 +32,18 @@ $(document).ready(function () {
                         return false;
                     }
                     $("#text").append(
-                        `<div>${i + 1}. Author: ${item.author}, ${item.subReddit}, "${item.submission}"</div>`);
+                        `<div>${i + 1}. Author: ${item.author}, <a href="http://localhost:9000/searchsub?term='${item.subReddit}'">${item.subReddit}</a>, "${item.submission}"</div>`);
                 });
-             //document.getElementById("text").innerHTML = data;
-
             }
 
         });
     });
 
     $('#searchKey').bind('keypress', function (event) {
-        if (event.keyCode == "13") {
+        if (event.keyCode === "13") {
             $("#search").click();
         }
     })
+
+
 });

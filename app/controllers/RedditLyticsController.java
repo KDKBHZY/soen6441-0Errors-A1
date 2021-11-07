@@ -7,6 +7,7 @@ import play.libs.ws.WSResponse;
 import play.mvc.*;
 import services.RedditImplemention;
 import services.RedditService;
+import services.SubredditService;
 import views.html.*;
 import javax.inject.Inject;
 import play.api.*;
@@ -23,11 +24,13 @@ import java.util.concurrent.CompletionStage;
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
     private HttpExecutionContext httpExecutionContext;
+    private SubredditService subredditService;
 
     @Inject
-    public RedditLyticsController(RedditService redditService ,HttpExecutionContext httpExecutionContext){
+    public RedditLyticsController(RedditService redditService ,HttpExecutionContext httpExecutionContext,SubredditService subredditService){
             this.httpExecutionContext = httpExecutionContext;
             this.redditService = redditService;
+            this.subredditService = subredditService;
     }
 
     public CompletionStage<Result> rlyticsIndex() {
@@ -41,8 +44,12 @@ public class RedditLyticsController extends Controller {
 
         return redditService.getRedditsts(term)
                 .thenApplyAsync(res->ok(Json.toJson(res)));
+    }
 
-        //return CompletableFuture.completedFuture(ok(rlytics.render()));
+    public CompletionStage<Result> searchSubreddit(String term) {
+
+        return subredditService.getsubRedditsts(term)
+                .thenApplyAsync(res->ok(Json.toJson(res)));
     }
 
 

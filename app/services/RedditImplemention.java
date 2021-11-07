@@ -27,4 +27,14 @@ public class RedditImplemention implements RedditApi {
                 .addQueryParameter("sort", "desc")
                 .get();
           }
+
+    @Override
+    public CompletionStage<WSResponse> searchSubreddit(String keyword) {
+         String subUrl = "https://api.pushshift.io/reddit/search/submission";
+        return ws.url(subUrl)
+                .addQueryParameter("subreddit", keyword)
+                .addQueryParameter("size", "10")
+                .addQueryParameter("sort", "desc")
+                .get();
+    }
 }
