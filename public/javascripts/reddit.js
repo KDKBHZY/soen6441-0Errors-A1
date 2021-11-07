@@ -36,7 +36,7 @@ $(document).ready(function () {
             type: "get",
             success: function(data){
                 console.log(data);
-                jQuery("#text").html(data);
+             document.getElementById("text").innerHTML = data;
 
             }
 
