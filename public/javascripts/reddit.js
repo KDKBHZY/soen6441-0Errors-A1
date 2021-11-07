@@ -37,9 +37,15 @@ $(document).ready(function () {
             success: function(data){
                 console.log(data);
 
+                $("#text").append(
+                    `<div><br><h2>Search terms: ${a.toString()}</h2></div>`
+                );
                 $.each(data, function(i, item) {
+                    if(i>=10){
+                        return false;
+                    }
                     $("#text").append(
-                        "<div>"+item.author +"</div>");
+                        `<div>${i + 1}. Author: ${item.author}, ${item.subReddit}, "${item.submission}"</div>`);
                 });
              //document.getElementById("text").innerHTML = data;
 
@@ -47,4 +53,10 @@ $(document).ready(function () {
 
         });
     });
+
+    $('#searchKey').bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            $("#search").click();
+        }
+    })
 });
