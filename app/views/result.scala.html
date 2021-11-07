@@ -3,22 +3,13 @@
 @(searchResults: util.List[Reddit], res:String)
 
 @main("result") {
-    <style>
-            ul.a {list-style-type:circle;}
-            ul.b {list-style-type:square;}
-            ol.c {list-style-type:upper-roman;}
-            ol.d {list-style-type:lower-alpha;}
-    </style>
-    <div>
+    <div style="text-align: center;">
         <h1>subReddit:@res</h1>
-
-            <ol class="d">
-            @for(reddit <- searchResults) {
-                <li>@reddit.toString </li>
-            }
-            </ol>
-
-
+        <ul>
+        @for(reddit <- searchResults) {
+            <li>@reddit.toString </li>
+        }
+        </ul>
     </div>
 
 
