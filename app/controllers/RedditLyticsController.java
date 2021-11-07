@@ -44,15 +44,6 @@ public class RedditLyticsController extends Controller {
 
         //return CompletableFuture.completedFuture(ok(rlytics.render()));
     }
-//    public Result res() {
-//        Reddit p1=new Reddit("vsdcv","cvsvd","vs","vd");
-//        Reddit p2=new Reddit("vs","cv","vs","vd");
-//        List<Reddit> l= new ArrayList<>();
-//        l.add(p1);
-//        l.add(p2);//这里是将对象加入到list中
-//        redditService.getRedditsts("trump")
-//        .thenRunAsync(System.out::println);
-//        return ok(views.html.result.render(l));
-//    }
+
 
 }

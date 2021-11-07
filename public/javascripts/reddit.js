@@ -36,7 +36,12 @@ $(document).ready(function () {
             type: "get",
             success: function(data){
                 console.log(data);
-             document.getElementById("text").innerHTML = data;
+
+                $.each(data, function(i, item) {
+                    $("#text").append(
+                        "<div>"+item.author +"</div>");
+                });
+             //document.getElementById("text").innerHTML = data;
 
             }
 
