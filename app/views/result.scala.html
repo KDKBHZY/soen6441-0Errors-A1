@@ -1,10 +1,10 @@
 
 @import java.util
-@(searchResults: util.List[Reddit])
+@(searchResults: util.List[Reddit], res:String)
 
 @main("result") {
     <div style="text-align: center;">
-        <h1>Result</h1>
+        <h1>subReddit:@res</h1>
         <ul>
         @for(reddit <- searchResults) {
             <li>@reddit.toString </li>

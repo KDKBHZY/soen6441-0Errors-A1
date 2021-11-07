@@ -32,7 +32,7 @@ $(document).ready(function () {
                         return false;
                     }
                     $("#text").append(
-                        `<div>${i + 1}. Author: ${item.author}, <a href="http://localhost:9000/searchsub?term='${item.subReddit}'">${item.subReddit}</a>, "${item.submission}"</div>`);
+                        `<div>${i + 1}. Author: ${item.author},   <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>,   "${item.submission}"</div>`);
                 });
             }
 
