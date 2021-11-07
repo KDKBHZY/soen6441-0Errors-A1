@@ -12,6 +12,7 @@ public class RedditImplemention implements RedditApi {
 
     /**
      * Constructor
+     *
      * @param ws WSClient provided by Guice
      */
     @Inject
@@ -26,12 +27,11 @@ public class RedditImplemention implements RedditApi {
                 .addQueryParameter("size", "250")
                 .addQueryParameter("sort", "desc")
                 .get();
-          }
+    }
 
     @Override
     public CompletionStage<WSResponse> searchSubreddit(String keyword) {
-         String subUrl = "https://api.pushshift.io/reddit/search/submission";
-        return ws.url(subUrl)
+        return ws.url(baseUrl)
                 .addQueryParameter("subreddit", keyword)
                 .addQueryParameter("size", "10")
                 .addQueryParameter("sort", "desc")

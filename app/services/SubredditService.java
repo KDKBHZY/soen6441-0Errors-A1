@@ -24,17 +24,15 @@ public class SubredditService {
         this.mapper = new ObjectMapper();
     }
 
-
     public CompletionStage<List<Reddit>> getsubRedditsts(final String keywords) {
         try {
             return redditImplementation.searchSubreddit(keywords)
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parsesubReddits);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("error!!!");
             return null;
         }
-
     }
 
     public List<Reddit> parsesubReddits(JsonNode result) {

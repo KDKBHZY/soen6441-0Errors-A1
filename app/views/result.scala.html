@@ -1,26 +1,35 @@
-
 @import java.util
-@(searchResults: util.List[Reddit], res:String)
+@(searchResults: util.List[Reddit], res: String)
 
 @main("result") {
     <style>
-            ul.a {list-style-type:circle;}
-            ul.b {list-style-type:square;}
-            ol.c {list-style-type:upper-roman;}
-            ol.d {list-style-type:lower-alpha;}
+            ul.a {
+                list-style-type: circle;
+            }
+
+            ul.b {
+                list-style-type: square;
+            }
+
+            ol.c {
+                list-style-type: upper-roman;
+            }
+
+            ol.d {
+                list-style-type: lower-alpha;
+            }
     </style>
     <div>
         <h1>subReddit:@res</h1>
 
-            <ol class="d">
-            @for(reddit <- searchResults) {
-                <li>@reddit.toString </li>
-            }
-            </ol>
+        <ol class="d">
+        @for(reddit <- searchResults) {
+            <li>@reddit.toString </li>
+        }
+        </ol>
 
 
     </div>
-
 
 
 }
