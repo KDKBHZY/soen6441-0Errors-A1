@@ -3,10 +3,6 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
@@ -27,12 +23,6 @@ public class User {
     private String createDate;
     @JsonProperty("snoovatar_img")
     private String snoovatarImgUrl;
-
-    private List<Reddit> postedSubmissions;
-
-    public User() {
-        this.postedSubmissions = new ArrayList<>();
-    }
 
     public String getUserID() {
         return userID;
@@ -104,9 +94,5 @@ public class User {
 
     public void setSnoovatarImgUrl(String snoovatarImgUrl) {
         this.snoovatarImgUrl = snoovatarImgUrl;
-    }
-
-    public List<Reddit> getPostedSubmissions() {
-        return postedSubmissions;
     }
 }

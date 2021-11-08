@@ -1,4 +1,5 @@
-@(author: User)
+@import java.util
+@(author: User, submissions: util.List[Reddit])
 
     @main("User Profile") {
         <div class="results">
@@ -22,11 +23,11 @@
                 </ul>
             </div>
 
-            @* <div><br><h2>@author</h2></div>*@
-            @* <ol class="c">*@
-            @* @for(reddit <- result) {*@
-            @* <li>@reddit.toString </li>*@
-            @* }*@
-            @* </ol>*@
+             <div><br><h2>Latest submissions:</h2></div>
+             <ol class="c">
+             @for(reddit <- submissions) {
+             <li>@reddit.toString </li>
+             }
+             </ol>
         </div>
     }

@@ -1,10 +1,13 @@
 package controllers;
 
+import models.Reddit;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.RedditService;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -12,20 +15,16 @@ import java.util.concurrent.CompletionStage;
  * to the application's userProfile page.
  */
 public class RedditUserProfileController extends Controller {
-    private RedditService redditService;
+    private final RedditService redditService;
 
     @Inject
     public RedditUserProfileController(RedditService redditService) {
         this.redditService = redditService;
     }
 
-//    public CompletionStage<Result> searchSubmission(String author) {
-//        return redditService.getSubRedditsByAuthor(author)
-//                .thenApplyAsync(res -> ok(views.html.profile.render(res, author)));
-//    }
-
     public CompletionStage<Result> getAuthorProfile(String author) {
+        List<Reddit> authorSubmissions = redditService.getSubRedditsByAuthor(author).toCompletableFuture().join();
         return redditService.getAuthorProfile(author)
-                .thenApplyAsync(res -> ok(views.html.profile.render(res)));
+                .thenApplyAsync(res -> ok(views.html.profile.render(res, authorSubmissions)));
     }
 }
