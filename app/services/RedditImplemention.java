@@ -37,4 +37,13 @@ public class RedditImplemention implements RedditApi {
                 .addQueryParameter("sort", "desc")
                 .get();
     }
+
+    @Override
+    public CompletionStage<WSResponse> searchByAuthor(String author) {
+        return ws.url(baseUrl)
+                .addQueryParameter("author", author)
+                .addQueryParameter("size", "10")
+                .addQueryParameter("sort", "desc")
+                .get();
+    }
 }

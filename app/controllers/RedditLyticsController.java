@@ -18,12 +18,10 @@ import java.util.concurrent.CompletionStage;
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
-    private HttpExecutionContext httpExecutionContext;
     private SubredditService subredditService;
 
     @Inject
-    public RedditLyticsController(RedditService redditService, HttpExecutionContext httpExecutionContext, SubredditService subredditService) {
-        this.httpExecutionContext = httpExecutionContext;
+    public RedditLyticsController(RedditService redditService, SubredditService subredditService) {
         this.redditService = redditService;
         this.subredditService = subredditService;
     }

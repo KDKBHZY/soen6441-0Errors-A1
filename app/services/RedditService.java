@@ -43,8 +43,19 @@ public class RedditService {
         }
     }
 
+    public CompletionStage<List<Reddit>> getSubRedditsByAuthor(final String author) {
+        try {
+            return redditImplementation.searchByAuthor(author)
+                    .thenApplyAsync(WSResponse::asJson)
+                    .thenApplyAsync(this::parseReddits);
+        } catch (Exception e) {
+            System.out.println("error!!!");
+            return null;
+        }
+    }
+
     /**
-     * Convert the reddits from a JsonNode to a SearchResult using jackson
+     * Convert the reddits from a JsonNode to a List of Reddit using jackson
      *
      * @param result JsonNode jsonNode extracted from the redditImplementation
      * @return SearchResult search results as a List of Reddit

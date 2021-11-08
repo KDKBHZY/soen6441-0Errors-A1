@@ -1,0 +1,13 @@
+@import java.util
+@(result: util.List[Reddit], author: String)
+
+@main("User Profile") {
+    <div class="results">
+        <div><br><h2>@author</h2></div>
+        <ol class="c">
+        @for(reddit <- result) {
+            <li>@reddit.toString </li>
+        }
+        </ol>
+    </div>
+}

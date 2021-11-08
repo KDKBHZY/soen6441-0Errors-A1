@@ -11,4 +11,6 @@ public interface RedditApi {
     CompletionStage<WSResponse> search(String keyword);
 
     CompletionStage<WSResponse> searchSubreddit(String keyword);
+
+    CompletionStage<WSResponse> searchByAuthor(String author);
 }
