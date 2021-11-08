@@ -31,9 +31,5 @@ public class RedditLyticsController extends Controller {
                 .thenApplyAsync(res -> ok(Json.toJson(res)));
     }
 
-    public CompletionStage<Result> searchSubreddit(String term) {
-        return redditService.getsubRedditsts(term)
-                //.thenApplyAsync(Json::toJson)
-                .thenApplyAsync(res -> ok(views.html.result.render(res, term)));
-    }
+
 }
