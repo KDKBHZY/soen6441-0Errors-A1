@@ -8,17 +8,27 @@ $(document).ready(function () {
             type: "get",
             success: function (data) {
                 console.log(data);
-
-                $("#text").append(
-                    `<div><br><h2>Search terms: ${a.toString()}</h2></div>`
-                );
                 $.each(data, function (i, item) {
                     if (i >= 10) {
                         return;
                     }
+                    if (i == 0){
+                        $("#text").append(
+                            `<div>
+                                  <br>
+                                      <h2>Search terms: ${a.toString()}</h2>
+                                      <ol>`
+                        );
+                    }
+
                     $("#text").append(
-                        `<div>${i + 1}. Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</div>`);
+                        ` <li style="margin-bottom:10px ">${i+1}: Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</li></ol>
+                              </div>`);
                 });
+            },
+            err: function () {
+                     alert("error!");
+                window.location.reload();
             }
         });
     });
