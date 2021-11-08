@@ -1,10 +1,8 @@
 package controllers;
 
 import play.libs.Json;
-import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.*;
 import services.RedditService;
-import services.SubredditService;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -18,12 +16,10 @@ import java.util.concurrent.CompletionStage;
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
-    private SubredditService subredditService;
 
     @Inject
-    public RedditLyticsController(RedditService redditService, SubredditService subredditService) {
+    public RedditLyticsController(RedditService redditService) {
         this.redditService = redditService;
-        this.subredditService = subredditService;
     }
 
     public CompletionStage<Result> rlyticsIndex() {
@@ -36,7 +32,7 @@ public class RedditLyticsController extends Controller {
     }
 
     public CompletionStage<Result> searchSubreddit(String term) {
-        return subredditService.getsubRedditsts(term)
+        return redditService.getsubRedditsts(term)
                 //.thenApplyAsync(Json::toJson)
                 .thenApplyAsync(res -> ok(views.html.result.render(res, term)));
     }

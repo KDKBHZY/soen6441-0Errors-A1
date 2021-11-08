@@ -45,6 +45,17 @@ public class RedditService {
         }
     }
 
+    public CompletionStage<List<Reddit>> getsubRedditsts(final String keywords) {
+        try {
+            return redditImplementation.searchSubreddit(keywords)
+                    .thenApplyAsync(WSResponse::asJson)
+                    .thenApplyAsync(this::parseReddits);
+        } catch (Exception e) {
+            System.out.println("error!!!");
+            return null;
+        }
+    }
+
     public CompletionStage<List<Reddit>> getSubRedditsByAuthor(final String author) {
         try {
             return redditImplementation.searchByAuthor(author)
