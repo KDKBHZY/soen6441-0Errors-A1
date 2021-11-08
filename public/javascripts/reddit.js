@@ -8,23 +8,25 @@ $(document).ready(function () {
             type: "get",
             success: function (data) {
                 console.log(data);
+                    var resdiv=$('<div></div>');        //创建一个父div
+                      //给父div设置id
+                $("#result").prepend(resdiv);
                 $.each(data, function (i, item) {
-                    if (i >= 10) {
-                        return;
-                    }
-                    if (i == 0){
-                        $("#text").append(
-                            `<div>
+                        if (i >= 10) {
+                            return;
+                        }
+                        if (i == 0){
+                            resdiv.append(
+                                `<div>
                                   <br>
                                       <h2>Search terms: ${a.toString()}</h2>
                                       <ol>`
-                        );
-                    }
-
-                    $("#text").append(
-                        ` <li style="margin-bottom:10px ">${i+1}: Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</li></ol>
+                            );
+                        }
+                        resdiv.append(
+                            ` <li style="margin-bottom:10px ">${i+1}: Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</li></ol>
                               </div>`);
-                });
+                    })
             },
             err: function () {
                      alert("error!");
