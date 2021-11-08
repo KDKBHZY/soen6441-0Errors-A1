@@ -1,6 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,15 +10,24 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
+    @JsonProperty("id")
     private String userID;
     private String name;
+    @JsonProperty("awardee_karma")
     private int awardeeKarma;
+    @JsonProperty("awarder_karma")
     private int awarderKarma;
+    @JsonProperty("link_karma")
     private int linkKarma;
+    @JsonProperty("comment_karma")
     private int commentKarma;
+    @JsonProperty("total_karma")
     private int totalKarma;
-    private Date createDate;
+    @JsonProperty("created")
+    private String createDate;
+    @JsonProperty("snoovatar_img")
     private String snoovatarImgUrl;
+
     private List<Reddit> postedSubmissions;
 
     public User() {
@@ -56,7 +66,7 @@ public class User {
         this.awarderKarma = awarderKarma;
     }
 
-    public int getlinkKarma() {
+    public int getLinkKarma() {
         return this.linkKarma;
     }
 
@@ -80,12 +90,12 @@ public class User {
         this.totalKarma = totalKarma;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return this.createDate;
     }
 
-    public void setCreateDate(String epochString) {
-        this.createDate = new Date(Long.parseLong(epochString) * 1000);
+    public void setCreateDate(long epoch) {
+        this.createDate = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (epoch * 1000));
     }
 
     public String getSnoovatarImgUrl() {

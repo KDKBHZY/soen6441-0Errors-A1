@@ -1,8 +1,10 @@
 package services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Reddit;
+import models.User;
 import play.libs.ws.WSResponse;
 
 import javax.inject.Inject;
@@ -69,4 +71,23 @@ public class RedditService {
         }
     }
 
+    public CompletionStage<User> getAuthorProfile(final String author) {
+        try {
+            return redditImplementation.getAuthorProfile(author)
+                    .thenApplyAsync(WSResponse::asJson)
+                    .thenApplyAsync(this::parseUser);
+        } catch (Exception e) {
+            System.out.println("error!!!");
+            return null;
+        }
+    }
+
+    public User parseUser(JsonNode result) {
+        try {
+            return mapper.treeToValue(result.get("data"), User.class);
+        } catch (JsonProcessingException e) {
+            System.out.println("Cannot parse json data");
+            return null;
+        }
+    }
 }

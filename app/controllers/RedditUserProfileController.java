@@ -19,8 +19,13 @@ public class RedditUserProfileController extends Controller {
         this.redditService = redditService;
     }
 
-    public CompletionStage<Result> searchSubmission(String author) {
-        return redditService.getSubRedditsByAuthor(author)
-                .thenApplyAsync(res -> ok(views.html.profile.render(res, author)));
+//    public CompletionStage<Result> searchSubmission(String author) {
+//        return redditService.getSubRedditsByAuthor(author)
+//                .thenApplyAsync(res -> ok(views.html.profile.render(res, author)));
+//    }
+
+    public CompletionStage<Result> getAuthorProfile(String author) {
+        return redditService.getAuthorProfile(author)
+                .thenApplyAsync(res -> ok(views.html.profile.render(res)));
     }
 }
