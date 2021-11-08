@@ -8,7 +8,8 @@ import java.util.concurrent.CompletionStage;
 
 public class RedditImplemention implements RedditApi {
     private final WSClient ws;
-    private String baseUrl = "https://api.pushshift.io/reddit/search/submission";
+    private final String baseUrl = "https://api.pushshift.io/reddit/search/submission";
+    private final String userInfoBaseUrl ="https://www.reddit.com/user/";
 
     /**
      * Constructor
@@ -36,5 +37,20 @@ public class RedditImplemention implements RedditApi {
                 .addQueryParameter("size", "10")
                 .addQueryParameter("sort", "desc")
                 .get();
+    }
+
+    @Override
+    public CompletionStage<WSResponse> searchByAuthor(String author) {
+        return ws.url(baseUrl)
+                .addQueryParameter("author", author)
+                .addQueryParameter("size", "10")
+                .addQueryParameter("sort", "desc")
+                .get();
+    }
+
+    @Override
+    public CompletionStage<WSResponse> getAuthorProfile(String author) {
+        String userInfoUrl = userInfoBaseUrl + author + "/about.json";
+        return ws.url(userInfoUrl).get();
     }
 }

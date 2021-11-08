@@ -1,0 +1,33 @@
+@import java.util
+@(author: User, submissions: util.List[Reddit])
+
+    @main("User Profile") {
+        <div class="results">
+            <div>
+                <br><h1>Author: @author.getName <br></h1>
+                <ul>
+                    <li>User ID: @author.getUserID</li>
+                    <li>Create Date: @author.getCreateDate</li>
+                    <li>Total Karma: @author.getTotalKarma</li>
+                    <li>Awardee Karma: @author.getAwardeeKarma</li>
+                    <li>Awarder Karma: @author.getAwarderKarma</li>
+                    <li>Comment Karma: @author.getCommentKarma</li>
+                    <li>Link karma: @author.getLinkKarma()</li>
+                    <li>Snoovatar Img:
+                        @if(author.getSnoovatarImgUrl != "") {
+                            <a href="@author.getSnoovatarImgUrl" target="_blank"> Snoovatar </a>
+                        } else {
+                            The user hasn't set the snoovatar yet
+                        }
+                    </li>
+                </ul>
+            </div>
+
+             <div><br><h2>Latest submissions:</h2></div>
+             <ol class="c">
+             @for(reddit <- submissions) {
+             <li>@reddit.toString </li>
+             }
+             </ol>
+        </div>
+    }

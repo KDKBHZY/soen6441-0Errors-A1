@@ -17,7 +17,7 @@ $(document).ready(function () {
                         return;
                     }
                     $("#text").append(
-                        `<div>${i + 1}. Author: ${item.author}, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</div>`);
+                        `<div>${i + 1}. Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</div>`);
                 });
             }
         });

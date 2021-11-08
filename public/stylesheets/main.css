@@ -1,22 +1,25 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
-.search{
+
+.search {
     width: 30%;
-    margin: 20px auto;
+    margin: 100px auto;
     display: flex;
 }
-.search input{
-    float: left;//左浮动
-    height: 30px;
+
+.search input {
+    float: left;
+/ / 左浮动 height: 30 px;
     width: 400px;
     outline: none;
     border: 1px solid black;
     box-sizing: border-box;
-padding-left: 10px;
+    padding-left: 10px;
 }
-.search button{
+
+.search button {
     height: 30px;
     width: 100px;
     background-color: blue;
@@ -24,16 +27,19 @@ padding-left: 10px;
     border-style: none;
     outline: none;
 }
-.search button i{
+
+.search button i {
     font-style: normal;
 }
-.search button:hover{
+
+.search button:hover {
     font-size: 18px;
 }
-.results{
-    margin:0 50px auto;
+
+.results {
+    margin: 0 50px auto;
 }
 
-ol.d {
-    list-style-type: lower-alpha;
+ol.c {
+    list-style-type: decimal;
 }
