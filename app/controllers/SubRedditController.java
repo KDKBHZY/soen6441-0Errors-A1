@@ -22,10 +22,9 @@ public class SubRedditController extends Controller {
     }
 
     /**
-     * @des: use subredit from main page to search 10 latest submission in this submit
+     * @des: use subredit from main page to search 10 latest submission in this subreddit
      * @author: ZeYu Huang
      * @param subreddit
-     * @return
      */
 
     public  CompletionStage<Result> searchSubreddit(String subreddit) {
