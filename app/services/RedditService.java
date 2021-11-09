@@ -29,10 +29,9 @@ public class RedditService {
     }
 
     /**
-     * Parse the reddits for a keyword
-     *
+     * @des: Parse the reddits for a keyword
+     * @author: ZeYu Huang
      * @param keywords keyword
-     * @return CompletionStage of a SearchResult
      */
     public CompletionStage<List<Reddit>> getRedditsts(final String keywords) {
         try {
@@ -45,9 +44,14 @@ public class RedditService {
         }
     }
 
-    public CompletionStage<List<Reddit>> getsubRedditsts(final String keywords) {
+    /**
+     * @des: Parse the reddits for a subreddit
+     * @author: ZeYu Huang
+     * @param subreddit
+     */
+    public CompletionStage<List<Reddit>> getsubRedditsts(final String subreddit) {
         try {
-            return redditImplementation.searchSubreddit(keywords)
+            return redditImplementation.searchSubreddit(subreddit)
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parseReddits);
         } catch (Exception e) {

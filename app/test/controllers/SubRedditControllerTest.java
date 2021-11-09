@@ -50,10 +50,10 @@ public class SubRedditControllerTest {
      */
     @Test
     public void testSearchSubreddit() throws Exception {
-//    Result result = subRedditController.searchSubreddit("nba").toCompletableFuture().get();
-//    assertEquals(OK, result.status());
-//    assertEquals("text/html", result.contentType().get());
-//    assertEquals("utf-8", result.charset().get());
+    Result result = new SubRedditController(redditService).searchSubreddit("nba").toCompletableFuture().get();
+    assertEquals(OK, result.status());
+    assertEquals("text/html", result.contentType().get());
+    assertEquals("utf-8", result.charset().get());
 
 
     }

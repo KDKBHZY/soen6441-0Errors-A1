@@ -13,6 +13,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's redditLytics page.
+ * @author: ZeYu Huang
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
@@ -22,10 +23,21 @@ public class RedditLyticsController extends Controller {
         this.redditService = redditService;
     }
 
+    /**
+     * @des: display search page
+     * @author: ZeYu Huang
+     * @return
+     */
     public CompletionStage<Result> rlyticsIndex() {
         return CompletableFuture.completedFuture(ok(rlytics.render()));
     }
 
+    /**
+     * @des: use term to search 10 latest submission
+     * @param term
+     * @author: ZeYu Huang
+     * @return
+     */
     public CompletionStage<Result> search(String term) {
         return redditService.getRedditsts(term)
                 .thenApplyAsync(res -> ok(Json.toJson(res)));

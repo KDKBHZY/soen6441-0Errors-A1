@@ -21,6 +21,12 @@ public class RedditImplemention implements RedditApi {
         this.ws = ws;
     }
 
+    /**
+     * @des: send a request to submission API to get 10 latest submission of this keyword
+     * @author: ZeYu Huang
+     * @param keyword
+     */
+
     @Override
     public CompletionStage<WSResponse> search(String keyword) {
         return ws.url(baseUrl)
@@ -30,10 +36,16 @@ public class RedditImplemention implements RedditApi {
                 .get();
     }
 
+    /**
+     * @des: send a request to submission API to get 10 latest submission in this subreddit
+     * @author: ZeYu Huang
+     * @param subreddit
+     */
+
     @Override
-    public CompletionStage<WSResponse> searchSubreddit(String keyword) {
+    public CompletionStage<WSResponse> searchSubreddit(String subreddit) {
         return ws.url(baseUrl)
-                .addQueryParameter("subreddit", keyword)
+                .addQueryParameter("subreddit", subreddit)
                 .addQueryParameter("size", "10")
                 .addQueryParameter("sort", "desc")
                 .get();

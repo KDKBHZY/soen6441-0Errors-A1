@@ -11,13 +11,26 @@ import java.util.concurrent.CompletionStage;
 public class SubRedditController extends Controller {
     private RedditService redditService;
 
+    /**
+     * @des:    Constructor function
+     * @author: ZeYu Huang
+     * @param redditService
+     */
     @Inject
-    public SubRedditController(RedditService redditService, HttpExecutionContext ec) {
+    public SubRedditController(RedditService redditService) {
         this.redditService = redditService;
     }
-    public  CompletionStage<Result> searchSubreddit(String term) {
-        return redditService.getsubRedditsts(term)
+
+    /**
+     * @des: use subredit from main page to search 10 latest submission in this submit
+     * @author: ZeYu Huang
+     * @param subreddit
+     * @return
+     */
+
+    public  CompletionStage<Result> searchSubreddit(String subreddit) {
+        return redditService.getsubRedditsts(subreddit)
                 //.thenApplyAsync(Json::toJson)
-                .thenApplyAsync(res -> ok(views.html.result.render(res, term)));
+                .thenApplyAsync(res -> ok(views.html.result.render(res, subreddit)));
     }
 }
