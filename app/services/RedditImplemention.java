@@ -29,10 +29,10 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> search(String keyword) {
-        return ws.url(baseUrl)
+        return (ws.url(baseUrl)
                 .addQueryParameter("q", keyword)
                 .addQueryParameter("size", "250")
-                .addQueryParameter("sort", "desc")
+                .addQueryParameter("sort", "desc"))
                 .get();
     }
 

@@ -26,5 +26,6 @@ public class RedditUserProfileController extends Controller {
         List<Reddit> authorSubmissions = redditService.getSubRedditsByAuthor(author).toCompletableFuture().join();
         return redditService.getAuthorProfile(author)
                 .thenApplyAsync(res -> ok(views.html.profile.render(res, authorSubmissions)));
+
     }
 }

@@ -22,7 +22,7 @@ public class SubRedditController extends Controller {
     }
 
     /**
-     * @des: use subredit from main page to search 10 latest submission in this subreddit
+     * @des: use subreddit from main page to search 10 latest submission in this subreddit
      * @author: ZeYu Huang
      * @param subreddit
      */

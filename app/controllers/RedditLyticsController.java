@@ -26,7 +26,6 @@ public class RedditLyticsController extends Controller {
     /**
      * @des: display search page
      * @author: ZeYu Huang
-     * @return
      */
     public CompletionStage<Result> rlyticsIndex() {
         return CompletableFuture.completedFuture(ok(rlytics.render()));
@@ -36,7 +35,6 @@ public class RedditLyticsController extends Controller {
      * @des: use term to search 10 latest submission
      * @param term
      * @author: ZeYu Huang
-     * @return
      */
     public CompletionStage<Result> search(String term) {
         return redditService.getRedditsts(term)
