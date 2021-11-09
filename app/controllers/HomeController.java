@@ -1,6 +1,10 @@
 package controllers;
 
 import play.mvc.*;
+import views.html.index;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -14,8 +18,8 @@ public class HomeController extends Controller {
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
-    public Result index() {
-        return ok(views.html.index.render());
+    public CompletionStage<Result> index() {
+        return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }
 
 }

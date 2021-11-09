@@ -17,15 +17,12 @@ $(document).ready(function () {
                         }
                         if (i == 0){
                             resdiv.append(
-                                `<div>
-                                  <br>
-                                      <h2>Search terms: ${a.toString()}</h2>
-                                      <ol>`
+                                ` <br><h2>Search terms: ${a.toString()}</h2> `
                             );
                         }
                         resdiv.append(
-                            ` <li style="margin-bottom:10px ">${i+1}: Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</li></ol>
-                              </div>`);
+                            ` <li style="margin-bottom:10px ">${i+1}: Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</li>
+                              `);
                     })
             },
             err: function () {

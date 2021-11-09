@@ -8,7 +8,7 @@ import java.util.concurrent.CompletionStage;
 
 public class RedditImplemention implements RedditApi {
     private final WSClient ws;
-    private final String baseUrl = "https://api.pushshift.io/reddit/search/submission";
+    private String baseUrl = "https://api.pushshift.io/reddit/search/submission";
     private final String userInfoBaseUrl ="https://www.reddit.com/user/";
 
     /**
@@ -52,5 +52,9 @@ public class RedditImplemention implements RedditApi {
     public CompletionStage<WSResponse> getAuthorProfile(String author) {
         String userInfoUrl = userInfoBaseUrl + author + "/about.json";
         return ws.url(userInfoUrl).get();
+    }
+
+    public void setBaseUrl(String baseurl) {
+        this.baseUrl = baseUrl;
     }
 }
