@@ -7,6 +7,8 @@ import views.html.*;
 
 import javax.inject.Inject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -17,10 +19,11 @@ import java.util.concurrent.CompletionStage;
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
-
+    private List<String> searchtermHistory;
     @Inject
     public RedditLyticsController(RedditService redditService) {
         this.redditService = redditService;
+        this.searchtermHistory = new ArrayList<>();
     }
 
     /**
@@ -37,8 +40,15 @@ public class RedditLyticsController extends Controller {
      * @author: ZeYu Huang
      */
     public CompletionStage<Result> search(String term) {
-        return redditService.getRedditsts(term)
-                .thenApplyAsync(res -> ok(Json.toJson(res)));
+         if (searchtermHistory.contains(term)){
+             return CompletableFuture.completedFuture(ok(term));
+         }
+         else {
+             searchtermHistory.add(term);
+             return redditService.getRedditsts(term)
+                     .thenApplyAsync(res -> ok(Json.toJson(res)));
+         }
+
     }
 
 

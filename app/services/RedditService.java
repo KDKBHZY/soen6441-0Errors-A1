@@ -88,13 +88,20 @@ public class RedditService {
 
     public CompletionStage<User> getAuthorProfile(final String author) {
         try {
-            return redditImplementation.getAuthorProfile(author)
+            CompletionStage<User> user = redditImplementation.getAuthorProfile(author)
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parseUser);
+            return user.thenCombineAsync(getSubRedditsByAuthor(author), (this::addPostedReddit));
+
         } catch (Exception e) {
             System.out.println("error!!!");
             return null;
         }
+    }
+
+    private User addPostedReddit(User user, List<Reddit> reddits) {
+        reddits.forEach(r -> user.getPostedReddits().add(r));
+        return user;
     }
 
     public User parseUser(JsonNode result) {

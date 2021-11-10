@@ -1,5 +1,4 @@
-@import java.util
-@(author: User, submissions: util.List[Reddit])
+@(author: User)
 
     @main("User Profile") {
         <div class="results">
@@ -12,7 +11,7 @@
                     <li>Awardee Karma: @author.getAwardeeKarma</li>
                     <li>Awarder Karma: @author.getAwarderKarma</li>
                     <li>Comment Karma: @author.getCommentKarma</li>
-                    <li>Link karma: @author.getLinkKarma()</li>
+                    <li>Link karma: @author.getLinkKarma</li>
                     <li>Snoovatar Img:
                         @if(author.getSnoovatarImgUrl != "") {
                             <a href="@author.getSnoovatarImgUrl" target="_blank"> Snoovatar </a>
@@ -25,7 +24,7 @@
 
              <div><br><h2>Latest submissions:</h2></div>
              <ol class="c">
-             @for(reddit <- submissions) {
+             @for(reddit <- author.getPostedReddits) {
              <li>@reddit.toString </li>
              }
              </ol>

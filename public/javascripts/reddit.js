@@ -8,25 +8,34 @@ $(document).ready(function () {
             type: "get",
             success: function (data) {
                 console.log(data);
-                    var resdiv=$('<div></div>');        //创建一个父div
-                      //给父div设置id
-                $("#result").prepend(resdiv);
-                $.each(data, function (i, item) {
+                if (data == a){
+                    alert("You have searched "+ a +" before");
+                    var text=$('#result').html();
+                    var findtext = text.split(":  "+a);
+                    text= findtext.join('<font style="color:yellow; font-size: 28px">:  ' + a + '</font> ');
+                    $('#result').html(text);
+                }
+                else{
+                    var resdiv = $('<div></div>');        //创建一个父div
+                    //给父div设置id
+                    $("#result").prepend(resdiv);
+                    resdiv.append(
+                        `<h2>Search terms<a href="http://localhost:9000/wordstats?term=${a.toString()}" target="_blank">:  ${a.toString()}</a></h2>
+                    <ol id="result-list"></ol> <br/>`
+                    );
+                    $.each(data, function (i, item) {
                         if (i >= 10) {
                             return;
                         }
-                        if (i == 0){
-                            resdiv.append(
-                                ` <br><h2>Search terms: ${a.toString()}</h2> `
-                            );
-                        }
-                        resdiv.append(
-                            ` <li style="margin-bottom:10px ">${i+1}: Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}">${item.subReddit}</a>, "${item.submission}"</li>
+
+                        $("#result-list").append(
+                            ` <li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=${item.author}" target="_blank"> ${item.author}</a>, <a href="http://localhost:9000/searchsub?term=${item.subReddit}" target="_blank">${item.subReddit}</a>, "${item.submission}"</li></ol>
                               `);
-                    })
+                    })}
+
             },
             err: function () {
-                     alert("error!");
+                alert("error!");
                 window.location.reload();
             }
         });
