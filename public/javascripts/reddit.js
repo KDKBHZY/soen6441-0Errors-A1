@@ -19,7 +19,7 @@ $(document).ready(function () {
                             resdiv.append(
                                 `<div>
                                   <br>
-                                      <h2>Search terms: ${a.toString()}</h2>
+                                      <h2>Search terms: <a href="http://localhost:9000/wordstats?term=${a.toString()}" target="_blank">${a.toString()}</a></h2>
                                       <ol>`
                             );
                         }

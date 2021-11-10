@@ -1,0 +1,16 @@
+@import java.util.List
+@import javafx.util.Pair
+@(statsResults: List[Pair[String, Long]], term: String)
+
+@main("Word stats") {
+    <div class="results">
+        <div><h1>Word stats of latest submissions with term &quot@term&quot</h1></div>
+        <ol class="c">
+        @for(word <- statsResults) {
+            <li>@word.getKey(): @word.getValue()</li>
+        }
+        </ol>
+    </div>
+
+
+}
