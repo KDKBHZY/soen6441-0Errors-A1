@@ -1,13 +1,10 @@
 package controllers;
 
-import models.Reddit;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.RedditService;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 /**
