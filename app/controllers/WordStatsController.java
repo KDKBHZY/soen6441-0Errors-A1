@@ -1,7 +1,5 @@
 package controllers;
 
-import javafx.util.Pair;
-import play.libs.Json;
 import play.mvc.*;
 import models.Reddit;
 import services.RedditService;
@@ -47,14 +45,13 @@ public class WordStatsController extends Controller {
      * @param  reddits Search results to be handled
      * @return A list of Pairs contains words and frequencies
      */
-    private List<Pair<String, Long>> statistics(List<Reddit> reddits) {
+    private List<Map.Entry<String, Long>> statistics(List<Reddit> reddits) {
         Map<String, Long> words = reddits.stream()
                 .map(Reddit::getSubmission)
                 .flatMap(w -> {return Stream.of(w.split("[\\W]"));})
                 .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
-        List<Pair<String, Long>> res = words.entrySet().stream()
+        List<Map.Entry<String, Long>> res = words.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .map(w -> new Pair<>(w.getKey(), w.getValue()))
                 .filter(w -> w.getKey().length()>0)
                 .collect(Collectors.toList());
         System.out.println("List of "+ res.size());
