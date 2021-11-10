@@ -12,7 +12,7 @@ $(document).ready(function () {
                     alert("You have searched "+ a +" before");
                     var text=$('#result').html();
                     var findtext = text.split(":  "+a);
-                    text= findtext.join('<font style="color:yellow; font-size: 28px">:  ' + a + '</font> ');
+                    text= findtext.join('<font style="color:yellow; font-size: 28px">  ' + a + '</font> ');
                     $('#result').html(text);
                 }
                 else{
