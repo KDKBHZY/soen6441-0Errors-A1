@@ -15,38 +15,21 @@ import java.util.stream.*;
 
 /**
  * This controller contains an action to handle HTTP requests
- * to the application's wordStats page.
- * @author Shuo Gao
+ * to the application's userProfile page.
  */
 public class WordStatsController extends Controller {
     private RedditService redditService;
 
-    /**
-     * Constructor function
-     * @author Shuo Gao
-     * @param  redditService Service for getting reddits.
-     */
     @Inject
     public WordStatsController(RedditService redditService) {
         this.redditService = redditService;
     }
 
-    /**
-     * Display statistics result
-     * @author Shuo Gao
-     * @param  term Key word for the searching.
-     */
     public CompletionStage<Result> statistics(String term) {
         return redditService.getRedditsts(term)
                 .thenApplyAsync(res -> ok(views.html.wordstats.render(statistics(res), term)));
     }
 
-    /**
-     * Perform the statistics of words
-     * @author Shuo Gao
-     * @param  reddits Search results to be handled
-     * @return A list of Pairs contains words and frequencies
-     */
     private List<Pair<String, Long>> statistics(List<Reddit> reddits) {
         Map<String, Long> words = reddits.stream()
                 .map(Reddit::getSubmission)
