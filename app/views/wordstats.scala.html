@@ -1,6 +1,6 @@
 @import java.util.List
-@import javafx.util.Pair
-@(statsResults: List[Pair[String, Long]], term: String)
+@import java.util.Map
+@(statsResults: List[Map.Entry[String, Long]], term: String)
 
 @main("Word stats") {
     <div class="results">
