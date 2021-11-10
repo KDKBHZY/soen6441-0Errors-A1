@@ -23,8 +23,7 @@ public class RedditUserProfileController extends Controller {
     }
 
     public CompletionStage<Result> getAuthorProfile(String author) {
-        List<Reddit> authorSubmissions = redditService.getSubRedditsByAuthor(author).toCompletableFuture().join();
         return redditService.getAuthorProfile(author)
-                .thenApplyAsync(res -> ok(views.html.profile.render(res, authorSubmissions)));
+                .thenApplyAsync(res -> ok(views.html.profile.render(res)));
     }
 }
