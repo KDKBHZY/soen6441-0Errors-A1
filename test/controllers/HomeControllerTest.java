@@ -1,9 +1,6 @@
 package controllers;
 
-import controllers.HomeController;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import play.mvc.Result;
 

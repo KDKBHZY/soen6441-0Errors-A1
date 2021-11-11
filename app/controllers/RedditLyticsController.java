@@ -29,6 +29,10 @@ public class RedditLyticsController extends Controller {
         this.redditService = redditService;
         this.searchtermHistory = new ArrayList<>();
     }
+    public CompletionStage<Result> index() {
+        return CompletableFuture.completedFuture(ok(views.html.index.render()));
+    }
+
 
     /**
      * display search page

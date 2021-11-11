@@ -3,7 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET        /                    controllers.HomeController.index()
+GET        /                    controllers.RedditLyticsController.index()
 
 GET        /redditlytics        controllers.RedditLyticsController.rlyticsIndex()
 GET        /search              controllers.RedditLyticsController.search(term:String ?= "")
