@@ -1,5 +1,3 @@
-package test.controllers;
-
 import org.junit.jupiter.api.AfterAll;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;

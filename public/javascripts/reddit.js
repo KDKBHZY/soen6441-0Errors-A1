@@ -12,9 +12,8 @@ $(document).ready(function () {
                     alert("You have searched "+ a +" before");
                     var text=$('#result').html();
                     var findtext = text.split(":  "+a);
-                    text= findtext.join('<font id="highlight" style="color:yellow; font-size: 28px">  ' + a + '</font> ');
+                    text= findtext.join('<font id="highlight" style="color:yellowgreen; font-size: 28px">  ' + a + '</font> ');
                     $('#result').html(text);
-
                     $("html,body").animate({scrollTop: $("#highlight").offset().top}, 1000);
                 }
                 else{
