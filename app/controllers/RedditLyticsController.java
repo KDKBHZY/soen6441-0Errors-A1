@@ -85,7 +85,7 @@ public class RedditLyticsController extends Controller {
      */
     private List<Map.Entry<String, Long>> statistics(List<Reddit> reddits) {
         Map<String, Long> words = reddits.stream()
-                .map(Reddit::getSubmission)
+                .map(Reddit::getTitle)
                 .flatMap(w -> {return Stream.of(w.split("[\\W]"));})
                 .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
         List<Map.Entry<String, Long>> res = words.entrySet().stream()

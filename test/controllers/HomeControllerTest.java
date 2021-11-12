@@ -3,6 +3,7 @@ package controllers;
 import org.junit.jupiter.api.Test;
 
 import play.mvc.Result;
+import services.RedditService;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +26,9 @@ public class HomeControllerTest {
 */ 
 @Test
 public void testIndex() throws Exception {
-    Result result = new HomeController().index().toCompletableFuture().get();
+     RedditService redditService = new RedditService();
+
+    Result result = new RedditLyticsController(redditService).index().toCompletableFuture().get();
     assertEquals(OK, result.status());
     assertEquals("text/html", result.contentType().get());
     assertEquals("utf-8", result.charset().get());
