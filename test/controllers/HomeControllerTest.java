@@ -23,13 +23,13 @@ public class HomeControllerTest {
 * Method: index() 
 * 
 */ 
-@Test
-public void testIndex() throws Exception {
-    Result result = new HomeController().index().toCompletableFuture().get();
-    assertEquals(OK, result.status());
-    assertEquals("text/html", result.contentType().get());
-    assertEquals("utf-8", result.charset().get());
-}
+//@Test
+//public void testIndex() throws Exception {
+//    Result result = new HomeController().index().toCompletableFuture().get();
+//    assertEquals(OK, result.status());
+//    assertEquals("text/html", result.contentType().get());
+//    assertEquals("utf-8", result.charset().get());
+//}
 
 
 } 
