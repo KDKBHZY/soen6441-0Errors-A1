@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Reddit {
 
     @JsonProperty("id")
-    private String subredditID;
+    private String redditID;
     private String author;
     private String subreddit;
     private String title;
@@ -18,11 +18,11 @@ public class Reddit {
     }
 
     public String getRedditID() {
-        return subredditID;
+        return redditID;
     }
 
-    public void setSubredditID(String id) {
-        this.subredditID = id;
+    public void setRedditID(String id) {
+        this.redditID = id;
     }
 
     public String getAuthor() {
@@ -41,7 +41,7 @@ public class Reddit {
         this.subreddit = subreddit;
     }
 
-    public String getSubmission() {
+    public String getTitle() {
         return title;
     }
 
