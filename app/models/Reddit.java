@@ -17,7 +17,7 @@ public class Reddit {
         return String.format("Author: %s, %s, \"%s\"", this.author, this.subreddit, this.title);
     }
 
-    public String getRedditID() {
+    public String getRedditID(String s) {
         return subredditID;
     }
 

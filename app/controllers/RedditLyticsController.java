@@ -23,11 +23,9 @@ import java.util.stream.Stream;
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
-    private List<String> searchtermHistory;
     @Inject
     public RedditLyticsController(RedditService redditService) {
         this.redditService = redditService;
-        this.searchtermHistory = new ArrayList<>();
     }
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
@@ -48,15 +46,8 @@ public class RedditLyticsController extends Controller {
      * @author ZeYu Huang
      */
     public CompletionStage<Result> search(String term) {
-         if (searchtermHistory.contains(term)){
-             return CompletableFuture.completedFuture(ok(term));
-         }
-         else {
-             searchtermHistory.add(term);
              return redditService.getRedditsts(term)
                      .thenApplyAsync(res -> ok(Json.toJson(res)));
-         }
-
     }
 
 
