@@ -22,9 +22,9 @@ public class RedditImplemention implements RedditApi {
     }
 
     /**
-     * @des: send a request to submission API to get 10 latest submission of this keyword
-     * @author: ZeYu Huang
-     * @param keyword
+     * send a request to submission API to get 10 latest submission of this keyword
+     * @author ZeYu Huang
+     * @param keyword keyword
      */
 
     @Override
@@ -37,9 +37,9 @@ public class RedditImplemention implements RedditApi {
     }
 
     /**
-     * @des: send a request to submission API to get 10 latest submission in this subreddit
-     * @author: ZeYu Huang
-     * @param subreddit
+     * send a request to submission API to get 10 latest submission in this subreddit
+     * @author ZeYu Huang
+     * @param subreddit subreddit
      */
 
     @Override

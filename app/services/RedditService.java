@@ -29,8 +29,8 @@ public class RedditService {
     }
 
     /**
-     * @des: Parse the reddits for a keyword
-     * @author: ZeYu Huang
+     * Parse the reddits for a keyword
+     * @author ZeYu Huang
      * @param keywords keyword
      */
     public CompletionStage<List<Reddit>> getRedditsts(final String keywords) {
@@ -45,9 +45,9 @@ public class RedditService {
     }
 
     /**
-     * @des: Parse the reddits for a subreddit
-     * @author: ZeYu Huang
-     * @param subreddit
+     * Parse the reddits for a subreddit
+     * @author ZeYu Huang
+     * @param subreddit subreddit
      */
     public CompletionStage<List<Reddit>> getsubRedditsts(final String subreddit) {
         try {
