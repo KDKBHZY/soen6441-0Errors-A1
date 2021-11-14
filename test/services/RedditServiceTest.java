@@ -65,12 +65,12 @@ public class RedditServiceTest {
      */
     @Test
     public void getSubreddits() {
-        List<Reddit> badresult = redditService.getSubreddits("test")
+        List<Reddit> badresult = redditService.getSubreddits("")
                 .toCompletableFuture()
                 .join();
         assertNull(badresult);
 
-        List<Reddit> result = redditService.getSubreddits("test subreddit")
+        List<Reddit> result = redditService.getSubreddits("test")
                 .toCompletableFuture()
                 .join();
 
@@ -83,7 +83,7 @@ public class RedditServiceTest {
      */
     @Test
     public void getSubredditsByAuthor() {
-        List<Reddit> badresult = redditService.getSubredditsByAuthor("test")
+        List<Reddit> badresult = redditService.getSubredditsByAuthor("")
                 .toCompletableFuture()
                 .join();
         assertNull(badresult);
@@ -126,7 +126,7 @@ public class RedditServiceTest {
      */
     @Test
     public void getAuthorProfile() {
-        User badresult = redditService.getAuthorProfile("testAuthor")
+        User badresult = redditService.getAuthorProfile("testFalseAuthor")
                 .toCompletableFuture()
                 .join();
         assertNull(badresult);

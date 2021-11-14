@@ -33,9 +33,16 @@ public class RedditImplementationMock implements RedditApi {
         server = Server.forRouter((components) ->
                 RoutingDsl.fromComponents(components)
                         .GET("/search/submission")
-                        .routingTo(request -> ok().sendResource("searchReddits.json"))
+                        .routingTo(request -> ok().sendResource(
+                                (request.queryString("q").isEmpty()?"":(request.queryString("q").get().equals("")?"":"searchReddits"))
+                                        + (request.queryString("subreddit").isEmpty()?"":(request.queryString("subreddit").get().equals("")?"":"searchReddits"))
+                                        + (request.queryString("author").isEmpty()?"":(request.queryString("author").get().equals("")?"":"searchReddits"))
+                                        + ".json"))
+//                        .routingTo(request -> ok().sendResource("searchReddits.json"))
                         .GET("/testAuthor/about.json")
                         .routingTo(request -> ok().sendResource("userProfile.json"))
+                        .GET("/testFalseAuthor/about.json")
+                        .routingTo(request -> ok().sendResource("json"))
                         .build());
 
         ws = play.test.WSTestClient.newClient(server.httpPort());
