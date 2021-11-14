@@ -13,7 +13,7 @@ libraryDependencies += ws
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
 // Javadoc
-sources in (Compile, doc) ~= (_ filter (_.getName endsWith ".java"))
+//sources in (Compile, doc) ~= (_ filter (_.getName endsWith ".java"))
 
 libraryDependencies += "org.mockito" % "mockito-core" % "4.0.0" % "test"
 

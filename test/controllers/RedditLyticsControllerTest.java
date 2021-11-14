@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Reddit;
@@ -59,7 +60,7 @@ public class RedditLyticsControllerTest {
     public void rlyticsIndex() throws ExecutionException, InterruptedException {
         Result result = redditLyticsController.rlyticsIndex()
                 .toCompletableFuture()
-                .get();
+                .join();
         assertEquals(OK, result.status());
         assertEquals("text/html", result.contentType().get());
         assertEquals("utf-8", result.charset().get());
@@ -67,13 +68,15 @@ public class RedditLyticsControllerTest {
     }
 
     @Test
-    public void search() throws Exception {
+    public void search() throws ExecutionException, InterruptedException, JsonProcessingException {
        // ObjectMapper mapper = new ObjectMapper();
         Result result = redditLyticsController.search("test")
                 .toCompletableFuture()
-                .get();
-        assertEquals(OK, result.status());
-        assertEquals("application/json", result.contentType().get());
+                .join();
+          assertEquals(OK, result.status());
+          assertEquals("application/json", result.contentType().get());
+       // assertEquals("text/html", result.contentType().get());
+
 //        JsonNode result1 = mapper.readTree(contentAsString(result));
 //        assertEquals("\"testAuthor\"",result1.get(0).get("author").toString());
 //        assertEquals("\"test subreddit\"",result1.get(0).get("subReddit").toString());
