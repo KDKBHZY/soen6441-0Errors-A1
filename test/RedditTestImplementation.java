@@ -34,7 +34,7 @@ public class RedditTestImplementation  {
 //                        ok().sendResource("search.json")
 //                )
 //                .GET("/statuses/user_timeline.json").routeTo(() ->
-//                        ok().sendResource("profile.json")
+//                        ok().sendResource("userProfile.json")
 //                )
 //                .build()
 //        );

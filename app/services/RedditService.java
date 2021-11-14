@@ -10,9 +10,9 @@ import play.libs.ws.WSResponse;
 import javax.inject.Inject;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
-
 
 public class RedditService {
 
@@ -33,7 +33,7 @@ public class RedditService {
      * @author: ZeYu Huang
      * @param keywords keyword
      */
-    public CompletionStage<List<Reddit>> getRedditsts(final String keywords) {
+    public CompletionStage<List<Reddit>> getReddits(final String keywords) {
         try {
             return redditImplementation.search(keywords)
                     .thenApplyAsync(WSResponse::asJson)
@@ -49,7 +49,7 @@ public class RedditService {
      * @author: ZeYu Huang
      * @param subreddit
      */
-    public CompletionStage<List<Reddit>> getsubRedditsts(final String subreddit) {
+    public CompletionStage<List<Reddit>> getSubreddits(final String subreddit) {
         try {
             return redditImplementation.searchSubreddit(subreddit)
                     .thenApplyAsync(WSResponse::asJson)
@@ -60,7 +60,7 @@ public class RedditService {
         }
     }
 
-    public CompletionStage<List<Reddit>> getSubRedditsByAuthor(final String author) {
+    public CompletionStage<List<Reddit>> getSubredditsByAuthor(final String author) {
         try {
             return redditImplementation.searchByAuthor(author)
                     .thenApplyAsync(WSResponse::asJson)
@@ -82,7 +82,7 @@ public class RedditService {
             return Arrays.asList(mapper.treeToValue(result.get("data"), Reddit[].class));
         } catch (Exception e) {
             System.out.println("Cannot parse json data");
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -91,7 +91,7 @@ public class RedditService {
             CompletionStage<User> user = redditImplementation.getAuthorProfile(author)
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parseUser);
-            return user.thenCombineAsync(getSubRedditsByAuthor(author), (this::addPostedReddit));
+            return user.thenCombineAsync(getSubredditsByAuthor(author), (this::addPostedReddit));
 
         } catch (Exception e) {
             System.out.println("error!!!");
@@ -99,7 +99,7 @@ public class RedditService {
         }
     }
 
-    private User addPostedReddit(User user, List<Reddit> reddits) {
+    public User addPostedReddit(User user, List<Reddit> reddits) {
         reddits.forEach(r -> user.getPostedReddits().add(r));
         return user;
     }

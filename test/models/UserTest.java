@@ -6,8 +6,15 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for the {@link User} class
+ * @author Yongshi Liang
+ */
 public class UserTest {
 
+    /**
+     * Getter test for UserID
+     */
     @Test
     public void getUserID() {
         String ID = "userId";
@@ -16,6 +23,9 @@ public class UserTest {
         assertEquals(ID, user.getUserID());
     }
 
+    /**
+     * Setter test for UserID
+     */
     @Test
     public void setUserID() {
         String ID = "userId";
@@ -24,6 +34,9 @@ public class UserTest {
         assertEquals(ID, user.getUserID());
     }
 
+    /**
+     * Getter test for Name
+     */
     @Test
     public void getName() {
         String name = "username";
@@ -32,6 +45,9 @@ public class UserTest {
         assertEquals(name, user.getName());
     }
 
+    /**
+     * Setter test for Name
+     */
     @Test
     public void setName() {
         String name = "username";
@@ -40,6 +56,9 @@ public class UserTest {
         assertEquals(name, user.getName());
     }
 
+    /**
+     * Getter test for AwardeeKarma
+     */
     @Test
     public void getAwardeeKarma() {
         int awardeeKarma = 384;
@@ -48,6 +67,9 @@ public class UserTest {
         assertEquals(awardeeKarma, user.getAwardeeKarma());
     }
 
+    /**
+     * Setter test for AwardeeKarma
+     */
     @Test
     public void setAwardeeKarma() {
         int awardeeKarma = 0;
@@ -56,6 +78,9 @@ public class UserTest {
         assertEquals(awardeeKarma, user.getAwardeeKarma());
     }
 
+    /**
+     * Getter test for AwarderKarma
+     */
     @Test
     public void getAwarderKarma() {
         int awarderKarma = -3;
@@ -64,6 +89,9 @@ public class UserTest {
         assertEquals(awarderKarma, user.getAwarderKarma());
     }
 
+    /**
+     * Setter test for AwarderKarma
+     */
     @Test
     public void setAwarderKarma() {
         int awarderKarma = -289;
@@ -72,6 +100,9 @@ public class UserTest {
         assertEquals(awarderKarma, user.getAwarderKarma());
     }
 
+    /**
+     * Getter test for LinkKarma
+     */
     @Test
     public void getLinkKarma() {
         int linkKarma = 834;
@@ -80,6 +111,9 @@ public class UserTest {
         assertEquals(linkKarma, user.getLinkKarma());
     }
 
+    /**
+     * Setter test for LinkKarma
+     */
     @Test
     public void setLinkKarma() {
         int linkKarma = -834;
@@ -88,6 +122,9 @@ public class UserTest {
         assertEquals(linkKarma, user.getLinkKarma());
     }
 
+    /**
+     * Getter test for CommentKarma
+     */
     @Test
     public void getCommentKarma() {
         int commentKarma = 299;
@@ -96,6 +133,9 @@ public class UserTest {
         assertEquals(commentKarma, user.getCommentKarma());
     }
 
+    /**
+     * Setter test for CommentKarma
+     */
     @Test
     public void setCommentKarma() {
         int commentKarma = -299;
@@ -104,6 +144,9 @@ public class UserTest {
         assertEquals(commentKarma, user.getCommentKarma());
     }
 
+    /**
+     * Getter test for TotalKarma
+     */
     @Test
     public void getTotalKarma() {
         int totalKarma = 3923;
@@ -112,6 +155,9 @@ public class UserTest {
         assertEquals(totalKarma, user.getTotalKarma());
     }
 
+    /**
+     * Setter test for TotalKarma
+     */
     @Test
     public void setTotalKarma() {
         int totalKarma = -3923;
@@ -120,6 +166,9 @@ public class UserTest {
         assertEquals(totalKarma, user.getTotalKarma());
     }
 
+    /**
+     * Getter test for CreateDate
+     */
     @Test
     public void getCreateDate() {
         String createDate = "11/11/2021 19:00:00";
@@ -129,6 +178,9 @@ public class UserTest {
         assertEquals(createDate, user.getCreateDate());
     }
 
+    /**
+     * Setter test for CreateDate
+     */
     @Test
     public void setCreateDate() {
         long epochTimestamp = 1636675200;
@@ -139,6 +191,9 @@ public class UserTest {
         assertEquals(new java.text.SimpleDateFormat(formatter).format(createDate), user.getCreateDate());
     }
 
+    /**
+     * Getter test for SnoovatarImgUrl
+     */
     @Test
     public void getSnoovatarImgUrl() {
         String url = "Http://_jdkasjflkdjsa";
@@ -147,6 +202,9 @@ public class UserTest {
         assertEquals(url, user.getSnoovatarImgUrl());
     }
 
+    /**
+     * Setter test for SnoovatarImgUrl
+     */
     @Test
     public void setSnoovatarImgUrl() {
         String url = "";
@@ -155,6 +213,9 @@ public class UserTest {
         assertEquals(url, user.getSnoovatarImgUrl());
     }
 
+    /**
+     * Getter test for PostedReddits
+     */
     @Test
     public void getPostedReddits() {
         List<Reddit> reddits = Arrays.asList(new Reddit(), new Reddit(), new Reddit());

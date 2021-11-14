@@ -7,9 +7,10 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
 public class RedditImplemention implements RedditApi {
-    private final WSClient ws;
-    private String baseUrl = "https://api.pushshift.io/reddit/search/submission";
-    private final String userInfoBaseUrl ="https://www.reddit.com/user/";
+    private WSClient ws;
+    private String baseUrl = "https://api.pushshift.io/reddit";
+    private static final String path = "/search/submission";
+    private String userInfoBaseUrl ="https://www.reddit.com/user";
 
     /**
      * Constructor
@@ -29,7 +30,7 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> search(String keyword) {
-        return (ws.url(baseUrl)
+        return (ws.url(baseUrl + path)
                 .addQueryParameter("q", keyword)
                 .addQueryParameter("size", "250")
                 .addQueryParameter("sort", "desc"))
@@ -44,7 +45,7 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> searchSubreddit(String subreddit) {
-        return ws.url(baseUrl)
+        return ws.url(baseUrl + path)
                 .addQueryParameter("subreddit", subreddit)
                 .addQueryParameter("size", "10")
                 .addQueryParameter("sort", "desc")
@@ -53,7 +54,7 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> searchByAuthor(String author) {
-        return ws.url(baseUrl)
+        return ws.url(baseUrl + path)
                 .addQueryParameter("author", author)
                 .addQueryParameter("size", "10")
                 .addQueryParameter("sort", "desc")
@@ -62,11 +63,15 @@ public class RedditImplemention implements RedditApi {
 
     @Override
     public CompletionStage<WSResponse> getAuthorProfile(String author) {
-        String userInfoUrl = userInfoBaseUrl + author + "/about.json";
+        String userInfoUrl = userInfoBaseUrl + "/" + author + "/about.json";
         return ws.url(userInfoUrl).get();
     }
 
     public void setBaseUrl(String baseurl) {
         this.baseUrl = baseUrl;
+    }
+
+    public void setUserInfoBaseUrl(String userInfoBaseUrl) {
+        this.userInfoBaseUrl = userInfoBaseUrl;
     }
 }
