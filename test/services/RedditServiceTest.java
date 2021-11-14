@@ -13,6 +13,8 @@ import play.inject.guice.GuiceInjectorBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,26 +66,18 @@ public class RedditServiceTest {
     }
 
     @Test
-    public void parseReddits() throws IOException {
-        ObjectMapper mapper = mock(ObjectMapper.class);
-        List<Reddit> reddits = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Reddit reddit = new Reddit();
-            reddit.setRedditID("redditId " + i);
-            reddit.setAuthor("author "+ i);
-            reddit.setSubreddit("subreddit");
-            reddit.setTitle("submission_title " + i);
-            reddits.add(reddit);
-        }
-        File from = new File("resources/searchReddits.json");
-        JsonNode submissions = mapper.readTree(from);
+    public void parseReddits() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+
+        String jsonStr = readFileAsString("test/resources/searchReddits.json");
+        JsonNode submissions = mapper.readTree(jsonStr);
         List<Reddit> result = redditService.parseReddits(submissions);
 
-        assertEquals(10, result.size());
-        assertEquals(reddits.get(4).getRedditID(), result.get(4).getRedditID());
-        assertEquals(reddits.get(4).getAuthor(), result.get(4).getAuthor());
-        assertEquals(reddits.get(4).getSubReddit(), result.get(4).getSubReddit());
-        assertEquals(reddits.get(4).getTitle(), result.get(4).getTitle());
+        assertEquals(25, result.size());
+        assertEquals("qtbyzc", result.get(0).getRedditID());
+        assertEquals("testAuthor", result.get(0).getAuthor());
+        assertEquals("test subreddit", result.get(0).getSubReddit());
+        assertEquals("[ISO][US] Malezia urea moisturizer", result.get(0).getTitle());
     }
 
     @Test
@@ -97,8 +91,8 @@ public class RedditServiceTest {
     }
 
     @Test
-    public void parseUser() throws IOException {
-        ObjectMapper mapper = mock(ObjectMapper.class);
+    public void parseUser() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
         User user = new User();
         user.setUserID("test userID");
         user.setName("testAuthor");
@@ -110,17 +104,18 @@ public class RedditServiceTest {
         user.setCreateDate(1636675200);
         user.setSnoovatarImgUrl("test img Url");
 
-        File from = new File("resources/userProfile.json");
-        JsonNode profile = mapper.readTree(from);
+        String jsonStr = readFileAsString("test/resources/userProfile.json");
+        JsonNode profile = mapper.readTree(jsonStr);
         User result = redditService.parseUser(profile);
 
+        assertNotNull(result);
         assertEquals(user.getUserID(), result.getUserID());
         assertEquals(user.getName(), result.getName());
         assertEquals(user.getAwardeeKarma(), result.getAwardeeKarma());
         assertEquals(user.getAwarderKarma(), result.getAwarderKarma());
         assertEquals(user.getLinkKarma(), result.getLinkKarma());
         assertEquals(user.getCommentKarma(), result.getCommentKarma());
-        assertEquals(user.getTotalKarma(), result.getCommentKarma());
+        assertEquals(user.getTotalKarma(), result.getTotalKarma());
         assertEquals(user.getCreateDate(), result.getCreateDate());
         assertEquals(user.getSnoovatarImgUrl(), result.getSnoovatarImgUrl());
     }
@@ -139,8 +134,13 @@ public class RedditServiceTest {
         User user = mock(User.class);
         when(user.getPostedReddits()).thenReturn(reddits);
 
-        User result = redditService.addPostedReddit(user, reddits);
+        User result = redditService.addPostedReddit(new User(), reddits);
 
         assertEquals(user.getPostedReddits().size(), result.getPostedReddits().size());
+    }
+
+    private static String readFileAsString(String file)throws Exception
+    {
+        return new String(Files.readAllBytes(Paths.get(file)));
     }
 }
