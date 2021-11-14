@@ -86,7 +86,7 @@ public class RedditService {
             return Arrays.asList(new ObjectMapper().treeToValue(result.get("data"), Reddit[].class));
         } catch (Exception e) {
             System.out.println("Cannot parse json data");
-            return Collections.emptyList();
+            return null;
         }
     }
 

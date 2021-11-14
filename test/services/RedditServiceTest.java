@@ -47,6 +47,11 @@ public class RedditServiceTest {
      */
     @Test
     public void getReddits() {
+        List<Reddit> badresult = redditService.getReddits("")
+                .toCompletableFuture()
+                .join();
+        assertNull(badresult);
+
         List<Reddit> result = redditService.getReddits("test")
                 .toCompletableFuture()
                 .join();
@@ -60,6 +65,11 @@ public class RedditServiceTest {
      */
     @Test
     public void getSubreddits() {
+        List<Reddit> badresult = redditService.getSubreddits("test")
+                .toCompletableFuture()
+                .join();
+        assertNull(badresult);
+
         List<Reddit> result = redditService.getSubreddits("test subreddit")
                 .toCompletableFuture()
                 .join();
@@ -73,6 +83,10 @@ public class RedditServiceTest {
      */
     @Test
     public void getSubredditsByAuthor() {
+        List<Reddit> badresult = redditService.getSubredditsByAuthor("test")
+                .toCompletableFuture()
+                .join();
+        assertNull(badresult);
         List<Reddit> result = redditService.getSubredditsByAuthor("testAuthor")
                 .toCompletableFuture()
                 .join();
@@ -88,6 +102,12 @@ public class RedditServiceTest {
     @Test
     public void parseReddits() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
+//     test exception
+        String badjsonStr = readFileAsString("test/resources/userProfile.json");
+        JsonNode baddata = mapper.readTree(badjsonStr);
+        List<Reddit> result1 = redditService.parseReddits(baddata);
+        assertNull(result1);
+
 
         String jsonStr = readFileAsString("test/resources/searchReddits.json");
         JsonNode submissions = mapper.readTree(jsonStr);
@@ -106,6 +126,11 @@ public class RedditServiceTest {
      */
     @Test
     public void getAuthorProfile() {
+        User badresult = redditService.getAuthorProfile("testAuthor")
+                .toCompletableFuture()
+                .join();
+        assertNull(badresult);
+
         User result = redditService.getAuthorProfile("testAuthor")
                 .toCompletableFuture()
                 .join();
@@ -123,8 +148,8 @@ public class RedditServiceTest {
     public void parseUser() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         User user = new User();
-        user.setUserID("test userID");
         user.setName("testAuthor");
+        user.setUserID("test userID");
         user.setAwardeeKarma(6);
         user.setAwarderKarma(4);
         user.setLinkKarma(20);
@@ -133,10 +158,15 @@ public class RedditServiceTest {
         user.setCreateDate(1636675200);
         user.setSnoovatarImgUrl("test img Url");
 
+        String badjsonStr = readFileAsString("test/resources/searchReddits.json");
+        JsonNode baddata = mapper.readTree(badjsonStr);
+        User result1= redditService.parseUser(baddata);
+        assertNull(result1);
+
+
         String jsonStr = readFileAsString("test/resources/userProfile.json");
         JsonNode profile = mapper.readTree(jsonStr);
         User result = redditService.parseUser(profile);
-
         assertNotNull(result);
         assertEquals(user.getUserID(), result.getUserID());
         assertEquals(user.getName(), result.getName());
