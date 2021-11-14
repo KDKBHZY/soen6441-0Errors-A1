@@ -8,7 +8,6 @@ import views.html.*;
 
 import javax.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import java.util.stream.Stream;
  * to the application's redditLytics page.
  */
 public class RedditLyticsController extends Controller {
+    @Inject
     private RedditService redditService;
     @Inject
     public RedditLyticsController(RedditService redditService) {
@@ -46,7 +46,7 @@ public class RedditLyticsController extends Controller {
      * @author ZeYu Huang
      */
     public CompletionStage<Result> search(String term) {
-             return redditService.getRedditsts(term)
+             return redditService.getReddits(term)
                      .thenApplyAsync(res -> ok(Json.toJson(res)));
     }
 
@@ -63,7 +63,7 @@ public class RedditLyticsController extends Controller {
      */
 
     public  CompletionStage<Result> searchSubreddit(String subreddit) {
-        return redditService.getsubRedditsts(subreddit)
+        return redditService.getSubreddits(subreddit)
                 .thenApplyAsync(res -> ok(views.html.result.render(res, subreddit)));
     }
 
@@ -73,7 +73,7 @@ public class RedditLyticsController extends Controller {
      * @param  term Key word for the searching.
      */
     public CompletionStage<Result> statistics(String term) {
-        return redditService.getRedditsts(term)
+        return redditService.getReddits(term)
                 .thenApplyAsync(res -> ok(views.html.wordstats.render(statistics(res), term)));
     }
 
