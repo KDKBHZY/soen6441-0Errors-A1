@@ -6,13 +6,9 @@ import models.Reddit;
 import models.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import play.Application;
 import play.inject.Injector;
-import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.guice.GuiceInjectorBuilder;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,20 +21,30 @@ import static play.inject.Bindings.bind;
 
 /**
  * Test the {@link RedditService} class
+ *
+ * @author Yongshi Liang
  */
 public class RedditServiceTest {
 
     private static RedditService redditService;
 
+    /**
+     * Initialize the test application and bind {@link RedditApi} interface to
+     * its mock implementation {@link RedditImplementationMock}
+     */
     @BeforeClass
     public static void initTestApp() {
         Injector testApp = new GuiceInjectorBuilder()
-                .overrides((bind(RedditApi.class).to(RedditImplementationMock.class)))
+                .overrides(bind(RedditApi.class).to(RedditImplementationMock.class))
                 .build();
         redditService = testApp.instanceOf(RedditService.class);
 
     }
 
+    /**
+     * Test for getReddits by comparing the sample result and
+     * the result returned by the mock implementation
+     */
     @Test
     public void getReddits() {
         List<Reddit> result = redditService.getReddits("test")
@@ -48,18 +54,25 @@ public class RedditServiceTest {
         assertEquals(25, result.size());
     }
 
+    /**
+     * Test for getSubreddits by comparing the sample result and
+     * the result returned by the mock implementation
+     */
     @Test
-    public void getsubRedditsts() {
-        List<Reddit> result = redditService.getSubreddits("test")
+    public void getSubreddits() {
+        List<Reddit> result = redditService.getSubreddits("test subreddit")
                 .toCompletableFuture()
                 .join();
-        assertEquals("test",result.get(0).getSubReddit());
 
         assertEquals(25, result.size());
     }
 
+    /**
+     * Test for getSubredditsByAuthor by comparing the sample result and
+     * the result returned by the mock implementation
+     */
     @Test
-    public void getSubRedditsByAuthor() {
+    public void getSubredditsByAuthor() {
         List<Reddit> result = redditService.getSubredditsByAuthor("testAuthor")
                 .toCompletableFuture()
                 .join();
@@ -67,6 +80,11 @@ public class RedditServiceTest {
         assertEquals(25, result.size());
     }
 
+    /**
+     * Test for parseReddits by using the given test sample Json file
+     *
+     * @throws Exception when given test sample file is not found
+     */
     @Test
     public void parseReddits() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -82,6 +100,10 @@ public class RedditServiceTest {
         assertEquals("[ISO][US] Malezia urea moisturizer", result.get(0).getTitle());
     }
 
+    /**
+     * Test for getAuthorProfile by comparing the sample result and
+     * the result returned by the mock implementation
+     */
     @Test
     public void getAuthorProfile() {
         User result = redditService.getAuthorProfile("testAuthor")
@@ -92,6 +114,11 @@ public class RedditServiceTest {
         assertEquals(25, result.getPostedReddits().size());
     }
 
+    /**
+     * Test for parseUser by using the given test sample Json file
+     *
+     * @throws Exception when given test sample file is not found
+     */
     @Test
     public void parseUser() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -122,6 +149,9 @@ public class RedditServiceTest {
         assertEquals(user.getSnoovatarImgUrl(), result.getSnoovatarImgUrl());
     }
 
+    /**
+     * Test for addPostedReddit
+     */
     @Test
     public void addPostedReddit() {
         List<Reddit> reddits = new ArrayList<>();
@@ -141,8 +171,14 @@ public class RedditServiceTest {
         assertEquals(user.getPostedReddits().size(), result.getPostedReddits().size());
     }
 
-    private static String readFileAsString(String file)throws Exception
-    {
+    /**
+     * Converts the input Json file with the given path into string
+     *
+     * @param file Json file path
+     * @return File string
+     * @throws Exception when given file in not found
+     */
+    private static String readFileAsString(String file) throws Exception {
         return new String(Files.readAllBytes(Paths.get(file)));
     }
 }

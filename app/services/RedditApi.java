@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 /**
- * an interface for Reddit
+ * Interface for the RedditApi requests
+ *
  * @author Yongshi Liang && ZeYu Huang
  */
 public interface RedditApi {
+
     CompletionStage<WSResponse> search(String keyword);
 
     CompletionStage<WSResponse> searchSubreddit(String keyword);

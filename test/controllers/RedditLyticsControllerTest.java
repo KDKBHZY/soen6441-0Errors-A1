@@ -1,16 +1,26 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import models.Reddit;
+import models.User;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
+import play.libs.Json;
 import play.mvc.Result;
 import services.RedditApi;
 import services.RedditImplementationMock;
 import services.RedditService;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static play.inject.Bindings.bind;
@@ -52,37 +62,60 @@ public class RedditLyticsControllerTest {
     }
 
     @Test
-    public void search() throws ExecutionException, InterruptedException {
+    public void search() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
         Result result = redditLyticsController.search("test")
                 .toCompletableFuture()
                 .get();
         assertEquals(OK, result.status());
+        assertEquals("application/json", result.contentType().get());
+        JsonNode result1 = mapper.readTree(contentAsString(result));
+        assertEquals("\"testAuthor\"",result1.get(0).get("author").toString());
+        assertEquals("\"test subreddit\"",result1.get(0).get("subReddit").toString());
+        assertEquals("\"[ISO][US] Malezia urea moisturizer\"",result1.get(0).get("title").toString());
+    }
+
+    @Test
+    public void getAuthorProfile() throws ExecutionException, InterruptedException {
+        Result result = redditLyticsController.getAuthorProfile("testAuthor")
+                .toCompletableFuture()
+                .get();
+        assertEquals(OK, result.status());
         assertEquals("text/html", result.contentType().get());
-        assertEquals("utf-8", result.charset().get());
-        assertTrue(contentAsString(result).contains("<ol>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"[ISO][US] Malezia urea moisturizer\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"Hire Me: Gen Chem, Org Chem, Biochemistry, Biology Tutor with 100+ (Vouches Included) Disc : dheeraj#1893\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"test 2\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"MRW someone in an egg donation group asks if they can buy “boy eggs”. No, she doesn’t want embryos. Just eggs. Eggs that will make boys. Can she test the eggs to make sure they have just a Y chromosome and no X? Her last 2 cycles “only gave me girl embryos, so now I want to start with boy eggs”.\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"Nowhere else really to post, but I'm pretty damn stoked after my 2nd to last trial yesterday.\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"Do you need a covid test for domestic flights in Egypt?\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"Test\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"UK DAS test for A2\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"Combine sklearn RepeatedStratifiedKFold with PredefinedSplit?\"</li>\n" +
-                "        <li>Author: testAuthor, test subreddit, \"Tp roll test\"</li>\n" +
-                "    </ol>"));
+        assertTrue(contentAsString(result).contains("Author: testAuthor"));
 
     }
 
     @Test
-    public void getAuthorProfile() {
+    public void searchSubreddit() throws ExecutionException, InterruptedException {
+        Result result = redditLyticsController.searchSubreddit("test subreddit")
+                .toCompletableFuture()
+                .get();
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertTrue(contentAsString(result).contains("SubReddit: test subreddit"));
     }
 
     @Test
-    public void searchSubreddit() {
+    public void statistics() throws ExecutionException, InterruptedException {
+        Result result = redditLyticsController.statistics("test")
+                .toCompletableFuture()
+                .get();
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertTrue(contentAsString(result).contains("Word stats of latest submissions with term &quottest&quot"));
+
+       // System.out.println(contentAsString(result));
+    }
+    /**
+     * Converts the input Json file with the given path into string
+     *
+     * @param file Json file path
+     * @return File string
+     * @throws Exception when given file in not found
+     */
+    private static String readFileAsString(String file) throws Exception {
+        return new String(Files.readAllBytes(Paths.get(file)));
     }
 
-    @Test
-    public void statistics() {
-    }
 }
