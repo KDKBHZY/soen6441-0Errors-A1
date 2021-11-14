@@ -16,11 +16,9 @@ public class RedditImplementionTest {
 
     private static RedditApi redditImplementationMock;
 
-    private static Injector testApp;
-
     @BeforeClass
     public static void initTestApp() {
-        testApp = new GuiceInjectorBuilder()
+        Injector testApp = new GuiceInjectorBuilder()
                 .overrides((bind(RedditApi.class).to(RedditImplementationMock.class)))
                 .build();
         redditImplementationMock = testApp.instanceOf(RedditApi.class);

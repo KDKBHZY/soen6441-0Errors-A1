@@ -6,7 +6,9 @@ import models.Reddit;
 import models.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import play.Application;
 import play.inject.Injector;
+import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.guice.GuiceInjectorBuilder;
 
 import java.io.File;
@@ -28,10 +30,10 @@ public class RedditServiceTest {
 
     @BeforeClass
     public static void initTestApp() {
-        Injector testApp = new GuiceInjectorBuilder()
+        Application testApp = new GuiceApplicationBuilder()
                 .overrides(bind(RedditApi.class).to(RedditImplementationMock.class))
                 .build();
-        redditService = testApp.instanceOf(RedditService.class);
+        redditService = testApp.injector().instanceOf(RedditService.class);
     }
 
     @Test
@@ -40,7 +42,7 @@ public class RedditServiceTest {
                 .toCompletableFuture()
                 .join();
 
-        assertEquals(10, result.size());
+        assertEquals(100, result.size());
     }
 
     @Test
@@ -49,7 +51,7 @@ public class RedditServiceTest {
                 .toCompletableFuture()
                 .join();
 
-        assertEquals(10, result.size());
+        assertEquals(100, result.size());
     }
 
     @Test
@@ -58,7 +60,7 @@ public class RedditServiceTest {
                 .toCompletableFuture()
                 .join();
 
-        assertEquals(10, result.size());
+        assertEquals(100, result.size());
     }
 
     @Test
@@ -73,7 +75,7 @@ public class RedditServiceTest {
             reddit.setTitle("submission_title " + i);
             reddits.add(reddit);
         }
-        File from = new File("resources/userProfile.json");
+        File from = new File("resources/searchReddits.json");
         JsonNode submissions = mapper.readTree(from);
         List<Reddit> result = redditService.parseReddits(submissions);
 
