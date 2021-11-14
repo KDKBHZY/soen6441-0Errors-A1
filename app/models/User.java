@@ -6,6 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A POJO of User
+ *
+ * @author Yongshi Liang
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
@@ -29,82 +34,180 @@ public class User {
 
     private List<Reddit> postedReddits;
 
+    /**
+     * Constructor of a User
+     */
     public User() {
         this.postedReddits = new ArrayList<>();
     }
 
+    /**
+     * Gets userID of the user
+     *
+     * @return userID
+     */
     public String getUserID() {
         return userID;
     }
 
+    /**
+     * Sets userID of the user with the given id
+     *
+     * @param id given String of id
+     */
     public void setUserID(String id) {
         this.userID = id;
     }
 
+    /**
+     * Gets name of the user
+     *
+     * @return name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Sets name of the user by the given name
+     *
+     * @param name given string of name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets awardeeKarma of the user
+     *
+     * @return awardeeKarma
+     */
     public int getAwardeeKarma() {
         return this.awardeeKarma;
     }
 
+    /**
+     * Sets awardeeKarma of the user by given awardeeKarma
+     *
+     * @param awardeeKarma given integer of awardeeKarma
+     */
     public void setAwardeeKarma(int awardeeKarma) {
         this.awardeeKarma = awardeeKarma;
     }
 
+    /**
+     * Gets awarderKarma of the user
+     *
+     * @return awarderKarma
+     */
     public int getAwarderKarma() {
         return this.awarderKarma;
     }
 
+    /**
+     * Sets awarderKarma of the user by given awarderKarma
+     *
+     * @param awarderKarma given integer of awarderKarma
+     */
     public void setAwarderKarma(int awarderKarma) {
         this.awarderKarma = awarderKarma;
     }
 
+    /**
+     * Gets linkKarma of the user
+     *
+     * @return linkKarma
+     */
     public int getLinkKarma() {
         return this.linkKarma;
     }
 
+    /**
+     * Sets linkKarma of the user by given linkKarma
+     *
+     * @param linkKarma given integer of linkKarma
+     */
     public void setLinkKarma(int linkKarma) {
         this.linkKarma = linkKarma;
     }
 
+    /**
+     * Gets commentKarma of the user
+     *
+     * @return commentKarma
+     */
     public int getCommentKarma() {
         return this.commentKarma;
     }
 
+    /**
+     * Sets commentKarma of the user by given commentKarma
+     *
+     * @param commentKarma given integer of commentKarma
+     */
     public void setCommentKarma(int commentKarma) {
         this.commentKarma = commentKarma;
     }
 
+    /**
+     * Gets totalKarma of the user
+     *
+     * @return totalKarma
+     */
     public int getTotalKarma() {
         return this.totalKarma;
     }
 
+    /**
+     * Sets totalKarma of the user by given totalKarma
+     *
+     * @param totalKarma given integer of totalKarma
+     */
     public void setTotalKarma(int totalKarma) {
         this.totalKarma = totalKarma;
     }
 
+    /**
+     * Gets createDate of the user
+     *
+     * @return createDate
+     */
     public String getCreateDate() {
         return this.createDate;
     }
 
+    /**
+     * Sets createDate of the user by given epoch timestamp
+     *
+     * @param epoch given long of epoch timestamp
+     */
     public void setCreateDate(long epoch) {
-        this.createDate = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (epoch * 1000));
+        this.createDate = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date(epoch * 1000));
     }
 
+    /**
+     * Gets snoovatarImgUrl of the user
+     *
+     * @return snoovatarImgUrl
+     */
     public String getSnoovatarImgUrl() {
         return this.snoovatarImgUrl;
     }
 
+    /**
+     * Sets snoovatarImgUrl of the user by given snoovatarImgUrl
+     *
+     * @param snoovatarImgUrl given string of snoovatarImgUrl
+     */
     public void setSnoovatarImgUrl(String snoovatarImgUrl) {
         this.snoovatarImgUrl = snoovatarImgUrl;
     }
 
+    /**
+     * Gets a List of posted submissions of the user
+     *
+     * @return a list of {@link Reddit}
+     */
     public List<Reddit> getPostedReddits() {
         return postedReddits;
     }

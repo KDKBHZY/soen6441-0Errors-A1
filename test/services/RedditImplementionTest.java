@@ -12,10 +12,19 @@ import java.nio.file.Paths;
 import static org.junit.Assert.*;
 import static play.inject.Bindings.bind;
 
+/**
+ * Test the {@link RedditImplemention} class
+ *
+ * @author Yongshi Liang
+ */
 public class RedditImplementionTest {
 
     private static RedditApi redditImplementationMock;
 
+    /**
+     * Initialize the test application and bind {@link RedditApi} interface to
+     * its mock implementation {@link RedditImplementationMock}
+     */
     @BeforeClass
     public static void initTestApp() {
         Injector testApp = new GuiceInjectorBuilder()
@@ -24,6 +33,12 @@ public class RedditImplementionTest {
         redditImplementationMock = testApp.instanceOf(RedditApi.class);
     }
 
+    /**
+     * Test for search by comparing the sample result and
+     * the result returned by the mock implementation
+     *
+     * @throws Exception when given test sample file is not found
+     */
     @Test
     public void search() throws Exception {
         String jsonStr = readFileAsString("test/resources/searchReddits.json");
@@ -34,6 +49,12 @@ public class RedditImplementionTest {
         assertEquals(jsonStr, responseStr);
     }
 
+    /**
+     * Test for searchSubreddit by comparing the sample result and
+     * the result returned by the mock implementation
+     *
+     * @throws Exception when given test sample file is not found
+     */
     @Test
     public void searchSubreddit() throws Exception {
         String jsonStr = readFileAsString("test/resources/searchReddits.json");
@@ -44,6 +65,12 @@ public class RedditImplementionTest {
         assertEquals(jsonStr, responseStr);
     }
 
+    /**
+     * Test for searchByAuthor by comparing the sample result and
+     * the result returned by the mock implementation
+     *
+     * @throws Exception when given test sample file is not found
+     */
     @Test
     public void searchByAuthor() throws Exception {
         String jsonStr = readFileAsString("test/resources/searchReddits.json");
@@ -54,6 +81,12 @@ public class RedditImplementionTest {
         assertEquals(jsonStr, responseStr);
     }
 
+    /**
+     * Test for getAuthorProfile by comparing the sample result and
+     * the result returned by the mock implementation
+     *
+     * @throws Exception when given test sample file is not found
+     */
     @Test
     public void getAuthorProfile() throws Exception {
         String jsonStr = readFileAsString("test/resources/userProfile.json");
@@ -64,8 +97,14 @@ public class RedditImplementionTest {
         assertEquals(jsonStr, responseStr);
     }
 
-    private static String readFileAsString(String file)throws Exception
-    {
+    /**
+     * Converts the input Json file with the given path into string
+     *
+     * @param file Json file path
+     * @return File string
+     * @throws Exception when given file in not found
+     */
+    private static String readFileAsString(String file) throws Exception {
         return new String(Files.readAllBytes(Paths.get(file)));
     }
 }

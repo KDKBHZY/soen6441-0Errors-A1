@@ -22,10 +22,12 @@ import java.util.stream.Stream;
  */
 public class RedditLyticsController extends Controller {
     private RedditService redditService;
+
     @Inject
     public RedditLyticsController(RedditService redditService) {
         this.redditService = redditService;
     }
+
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }
@@ -33,6 +35,7 @@ public class RedditLyticsController extends Controller {
 
     /**
      * display search page
+     *
      * @author ZeYu Huang
      */
     public CompletionStage<Result> rlyticsIndex() {
@@ -41,15 +44,21 @@ public class RedditLyticsController extends Controller {
 
     /**
      * use term to search 10 latest submission
+     *
      * @param term keyword
      * @author ZeYu Huang
      */
     public CompletionStage<Result> search(String term) {
-             return redditService.getReddits(term)
-                     .thenApplyAsync(res -> ok(Json.toJson(res)));
+        return redditService.getReddits(term)
+                .thenApplyAsync(res -> ok(Json.toJson(res)));
     }
 
-
+    /**
+     * Displays the user profile and its latest submissions for the given author
+     *
+     * @param author username of the Reddit user
+     * @return CompletionStage of Result
+     */
     public CompletionStage<Result> getAuthorProfile(String author) {
         return redditService.getAuthorProfile(author)
                 .thenApplyAsync(res -> ok(views.html.profile.render(res)));
@@ -57,19 +66,20 @@ public class RedditLyticsController extends Controller {
 
     /**
      * use subreddit from main page to search 10 latest submission in this subreddit
-     * @author ZeYu Huang
+     *
      * @param subreddit keyword
+     * @author ZeYu Huang
      */
-
-    public  CompletionStage<Result> searchSubreddit(String subreddit) {
+    public CompletionStage<Result> searchSubreddit(String subreddit) {
         return redditService.getSubreddits(subreddit)
                 .thenApplyAsync(res -> ok(views.html.result.render(res, subreddit)));
     }
 
     /**
      * Display statistics result
+     *
+     * @param term Key word for the searching.
      * @author Shuo Gao
-     * @param  term Key word for the searching.
      */
     public CompletionStage<Result> statistics(String term) {
         return redditService.getReddits(term)
@@ -78,20 +88,23 @@ public class RedditLyticsController extends Controller {
 
     /**
      * Perform the statistics of words
-     * @author Shuo Gao
-     * @param  reddits Search results to be handled
+     *
+     * @param reddits Search results to be handled
      * @return A list of Pairs contains words and frequencies
+     * @author Shuo Gao
      */
     private List<Map.Entry<String, Long>> statistics(List<Reddit> reddits) {
         Map<String, Long> words = reddits.stream()
                 .map(Reddit::getTitle)
-                .flatMap(w -> {return Stream.of(w.split("[\\W]"));})
+                .flatMap(w -> {
+                    return Stream.of(w.split("[\\W]"));
+                })
                 .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
         List<Map.Entry<String, Long>> res = words.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .filter(w -> w.getKey().length()>0)
+                .filter(w -> w.getKey().length() > 0)
                 .collect(Collectors.toList());
-        System.out.println("List of "+ res.size());
+        System.out.println("List of " + res.size());
         return res;
     }
 
