@@ -67,7 +67,7 @@ public class RedditImplemention implements RedditApi {
         return ws.url(userInfoUrl).get();
     }
 
-    public void setBaseUrl(String baseurl) {
+    public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
