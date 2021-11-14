@@ -10,7 +10,6 @@ import play.libs.ws.WSResponse;
 import javax.inject.Inject;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
@@ -22,6 +21,12 @@ public class RedditService {
 
     @Inject
     private RedditApi redditImplementation;
+
+    private ObjectMapper mapper;
+
+    public RedditService() {
+        mapper = new ObjectMapper();
+    }
 
     /**
      * Parse the reddits for a keyword
@@ -83,7 +88,7 @@ public class RedditService {
      */
     public List<Reddit> parseReddits(JsonNode result) {
         try {
-            return Arrays.asList(new ObjectMapper().treeToValue(result.get("data"), Reddit[].class));
+            return Arrays.asList(mapper.treeToValue(result.get("data"), Reddit[].class));
         } catch (Exception e) {
             System.out.println("Cannot parse json data");
             return null;
@@ -103,7 +108,6 @@ public class RedditService {
                     .thenApplyAsync(WSResponse::asJson)
                     .thenApplyAsync(this::parseUser);
             return user.thenCombineAsync(getSubredditsByAuthor(author), (this::addPostedReddit));
-
         } catch (Exception e) {
             System.out.println("error!!!");
             return null;
@@ -118,6 +122,12 @@ public class RedditService {
      * @return an instance of {@link User} contains the Reddit submission posted by itself
      */
     public User addPostedReddit(User user, List<Reddit> reddits) {
+        if (user == null) {
+            return null;
+        }
+        if (reddits == null) {
+            return user;
+        }
         reddits.forEach(r -> user.getPostedReddits().add(r));
         return user;
     }
@@ -130,10 +140,14 @@ public class RedditService {
      */
     public User parseUser(JsonNode result) {
         try {
-            return new ObjectMapper().treeToValue(result.get("data"), User.class);
+            return mapper.treeToValue(result.get("data"), User.class);
         } catch (JsonProcessingException e) {
             System.out.println("Cannot parse json data");
             return null;
         }
+    }
+
+    public void setObjectMapper(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 }
