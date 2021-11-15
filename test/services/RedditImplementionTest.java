@@ -105,6 +105,5 @@ public class RedditImplementionTest {
      * @throws Exception when given file in not found
      */
     private static String readFileAsString(String file) throws Exception {
-        return new String(Files.readAllBytes(Paths.get(file)));
-    }
+        return Files.readString(Paths.get(file));    }
 }

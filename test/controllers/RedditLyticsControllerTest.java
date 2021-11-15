@@ -69,18 +69,16 @@ public class RedditLyticsControllerTest {
 
     @Test
     public void search() throws ExecutionException, InterruptedException, JsonProcessingException {
-       // ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         Result result = redditLyticsController.search("test")
                 .toCompletableFuture()
                 .join();
           assertEquals(OK, result.status());
           assertEquals("application/json", result.contentType().get());
-       // assertEquals("text/html", result.contentType().get());
-
-//        JsonNode result1 = mapper.readTree(contentAsString(result));
-//        assertEquals("\"testAuthor\"",result1.get(0).get("author").toString());
-//        assertEquals("\"test subreddit\"",result1.get(0).get("subReddit").toString());
-//        assertEquals("\"[ISO][US] Malezia urea moisturizer\"",result1.get(0).get("title").toString());
+        JsonNode result1 = mapper.readTree(contentAsString(result));
+        assertEquals("\"testAuthor\"",result1.get(0).get("author").toString());
+        assertEquals("\"test subreddit\"",result1.get(0).get("subReddit").toString());
+        assertEquals("\"[ISO][US] Malezia urea moisturizer\"",result1.get(0).get("title").toString());
     }
 
     @Test
@@ -115,15 +113,4 @@ public class RedditLyticsControllerTest {
 
        // System.out.println(contentAsString(result));
     }
-    /**
-     * Converts the input Json file with the given path into string
-     *
-     * @param file Json file path
-     * @return File string
-     * @throws Exception when given file in not found
-     */
-    private static String readFileAsString(String file) throws Exception {
-        return new String(Files.readAllBytes(Paths.get(file)));
-    }
-
 }
