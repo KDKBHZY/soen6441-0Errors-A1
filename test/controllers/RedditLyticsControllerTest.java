@@ -67,19 +67,19 @@ public class RedditLyticsControllerTest {
         assertTrue(contentAsString(result).contains("Welcome to RedditLytics"));
     }
 
-    @Test
-    public void search() throws ExecutionException, InterruptedException, JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Result result = redditLyticsController.search("test")
-                .toCompletableFuture()
-                .join();
-          assertEquals(OK, result.status());
-          assertEquals("application/json", result.contentType().get());
-        JsonNode result1 = mapper.readTree(contentAsString(result));
-        assertEquals("\"testAuthor\"",result1.get(0).get("author").toString());
-        assertEquals("\"test subreddit\"",result1.get(0).get("subReddit").toString());
-        assertEquals("\"[ISO][US] Malezia urea moisturizer\"",result1.get(0).get("title").toString());
-    }
+//    @Test
+//    public void search() throws ExecutionException, InterruptedException, JsonProcessingException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        Result result = redditLyticsController.search("test")
+//                .toCompletableFuture()
+//                .join();
+//          assertEquals(OK, result.status());
+//          assertEquals("application/json", result.contentType().get());
+//        JsonNode result1 = mapper.readTree(contentAsString(result));
+//        assertEquals("\"testAuthor\"",result1.get(0).get("author").toString());
+//        assertEquals("\"test subreddit\"",result1.get(0).get("subReddit").toString());
+//        assertEquals("\"[ISO][US] Malezia urea moisturizer\"",result1.get(0).get("title").toString());
+//    }
 
     @Test
     public void getAuthorProfile() throws ExecutionException, InterruptedException {

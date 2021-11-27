@@ -8,6 +8,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 scalaVersion := "2.13.6"
 
 libraryDependencies += guice
+
 libraryDependencies += ws
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
@@ -20,3 +21,5 @@ libraryDependencies += "org.mockito" % "mockito-core" % "4.0.0" % "test"
 libraryDependencies += "junit" % "junit" % "4.13.2" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+
+//libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.6.17"
