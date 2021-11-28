@@ -1,3 +1,5 @@
+import actors.RedditActor;
+import actors.RedditParentActor;
 import com.google.inject.AbstractModule;
 import play.libs.akka.AkkaGuiceSupport;
 import services.RedditApi;
@@ -17,6 +19,8 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
      */
     @Override
     public void configure() {
+        bindActor(RedditParentActor.class, "reddit-ParentActor");
+        bindActorFactory(RedditActor.class, RedditActor.Factory.class);
         bind(RedditApi.class).to(RedditImplemention.class);
     }
 }

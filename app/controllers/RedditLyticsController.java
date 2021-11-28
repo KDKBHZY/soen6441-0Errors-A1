@@ -1,16 +1,12 @@
 package controllers;
 
 import actors.Messages;
-import actors.RedditResultActor;
 import akka.NotUsed;
 import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
-import akka.actor.typed.Scheduler;
-import akka.actor.typed.javadsl.Adapter;
-import akka.actor.typed.javadsl.AskPattern;
 import akka.stream.javadsl.Flow;
 import akka.util.Timeout;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.name.Named;
 import models.Reddit;
 import org.slf4j.Logger;
 import play.libs.F;
@@ -21,7 +17,6 @@ import services.RedditService;
 import views.html.*;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -42,14 +37,22 @@ public class RedditLyticsController extends Controller {
     private final Timeout t = new Timeout(Duration.create(1, TimeUnit.SECONDS));
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.RedditLyticsController");
     private final ActorRef redditparentactor;
+
     /**
      * Constructor
-     * @param redditParentActor userParentActor provided by Guice
      */
     @Inject
-    public RedditLyticsController(@Named("userParentActor") ActorRef redditParentActor) {
-        this.redditparentactor = redditParentActor;
+    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor) {
+        this.redditparentactor = redditparentactor;
     }
+
+
+//
+//    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef RedditParentActor) {
+//        this.redditparentactor = RedditParentActor;
+//
+//
+//    }
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }

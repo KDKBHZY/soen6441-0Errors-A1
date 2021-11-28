@@ -5,7 +5,7 @@ var resArr =[];
         if($("#search").length === 1) {
             var ws;
             console.log("Waiting for WebSocket");
-            ws = new WebSocket($("body").data("data-ws-url"));
+            ws = new WebSocket("ws://" + location.host + "/ws")
             ws.onmessage = function (event) {
                 var message;
                 message = JSON.parse(event.data);

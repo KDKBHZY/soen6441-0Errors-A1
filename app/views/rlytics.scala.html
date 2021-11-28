@@ -1,7 +1,7 @@
 
 @main("RedditLytics") {
     <html>
-    <body data-ws-url="@routes.RedditLyticsController.ws">
+    <body data-ws-url="ws://localhost:9000/ws">
     <div style="text-align: center;">
         <h1>Welcome to RedditLytics</h1>
     </div>
@@ -11,8 +11,8 @@
     </div>
     <div class="results" id="result">
     </div>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"></script>
-    <script src="@routes.Assets.versioned("javascripts/reddit.js")" type="text/javascript"></script>
     </body>
+        <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/reddit.js")" type="text/javascript"></script>
     </html>
 }

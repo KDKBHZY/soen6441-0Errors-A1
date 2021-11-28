@@ -2,6 +2,7 @@ package actors;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.util.Timeout;
 import play.libs.akka.InjectedActorSupport;
 

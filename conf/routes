@@ -10,7 +10,7 @@ GET        /search              controllers.RedditLyticsController.search(term:S
 GET        /searchsub           controllers.RedditLyticsController.searchSubreddit(term:String ?= "")
 GET        /user/profile        controllers.RedditLyticsController.getAuthorProfile(author:String ?= "")
 GET        /wordstats           controllers.RedditLyticsController.statistics(term:String ?="")
-GET     /ws                         controllers.RedditLyticsController.ws
+GET        /ws                         controllers.RedditLyticsController.ws
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
