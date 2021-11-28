@@ -23,8 +23,8 @@ public class RedditResultActor extends AbstractActorWithTimers {
     private ActorRef redditactor;
 
 
-    public RedditResultActor(ActorRef redditactor){
-        this.redditactor = redditactor;
+    public RedditResultActor(){
+        this.redditactor = null;
         this.query = null;
 }
 
@@ -48,7 +48,7 @@ public class RedditResultActor extends AbstractActorWithTimers {
                     }
                 })
                 .match(Messages.WatchSearchResults.class, message -> {
-                    logger.info("Received message WatchSearchResults {}", message);
+                    System.out.println("Received message WatchSearchResults: "+message);
                     if (message != null && message.query != null) {
                         watchSearchResult(message);
                     }
@@ -74,13 +74,13 @@ public class RedditResultActor extends AbstractActorWithTimers {
 
             // Add all the statuses to the list
             reddits.addAll(searchResults);
-
+          System.out.println("!!!reddits,,,okkkkk");
           //  reddits.forEach(status -> status.setQuery(query));
 
-            Messages.RedditsMessage statusesMessage =
+            Messages.RedditsMessage redditMessage =
                     new Messages.RedditsMessage(reddits, query);
 
-            redditactor.tell(statusesMessage, self());
+            redditactor.tell(redditMessage, self());
         });
     }
 

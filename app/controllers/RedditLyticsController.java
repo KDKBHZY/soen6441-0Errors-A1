@@ -46,13 +46,6 @@ public class RedditLyticsController extends Controller {
         this.redditparentactor = redditparentactor;
     }
 
-
-//
-//    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef RedditParentActor) {
-//        this.redditparentactor = RedditParentActor;
-//
-//
-//    }
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }
@@ -61,8 +54,7 @@ public class RedditLyticsController extends Controller {
         return WebSocket.Json.acceptOrResult(request -> {
             if (sameOriginCheck(request)) {
                 final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wsFutureFlow(request);
-                final CompletionStage<F.Either<Result, Flow<JsonNode, JsonNode, ?>>> stage = future.thenApply(F.Either::Right);
-                return stage.exceptionally(this::logException);
+                return future.thenApply(F.Either::Right);
             } else {
                 return forbiddenResult();
             }
@@ -71,10 +63,12 @@ public class RedditLyticsController extends Controller {
 
     private CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(Http.RequestHeader request) {
         long id = request.asScala().id();
-        Messages.WatchSearchResults create = new Messages.WatchSearchResults(Long.toString(id));
+        Messages.UserParentActorCreate create = new Messages.UserParentActorCreate(Long.toString(id));
 
         return ask(redditparentactor, create, t).thenApply((Object flow) -> {
+
             final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
+
             return f.named("websocket");
         });
     }

@@ -106,12 +106,14 @@ public class RedditActor extends AbstractActor{
      */
     private void askForStatuses(String query) {
         ActorRef actorForQuery = searchResultsActors.get(query);
+        System.out.println("!!!res:"+query);
         if (actorForQuery != null) {
             actorForQuery.tell(new Messages.WatchSearchResults(query), self());
         } else {
             actorForQuery = getContext().actorOf(Props.create(GuiceInjectedActor.class, injector,
                     RedditResultActor.class));
             searchResultsActors.put(query, actorForQuery);
+            actorForQuery.tell(new Messages.RegisterActor(), self());
             actorForQuery.tell(new Messages.WatchSearchResults(query), self());
         }
     }
@@ -123,7 +125,7 @@ public class RedditActor extends AbstractActor{
     public AbstractActor.Receive createReceive() {
         return receiveBuilder()
                 .match(Messages.WatchSearchResults.class, watchSearchResults -> {
-                    logger.info("Received message WatchSearchResults {}", watchSearchResults);
+                    logger.info("!!!!Received message WatchSearchResults {}", watchSearchResults);
                     if (watchSearchResults != null) {
                         // Ask the searchResultsActors for a stream containing these searchResults
                         askForStatuses(watchSearchResults.query);
@@ -138,7 +140,7 @@ public class RedditActor extends AbstractActor{
                     }
                 })
                 .match(Messages.RedditsMessage.class, message -> {
-                    logger.info("Received message StatusesMessage {}", message);
+                    System.out.println("Received message StatusesMessage:  "+message);
                     if (message != null) {
                         addStatuses(message);
                         sender().tell(websocketFlow, self());
