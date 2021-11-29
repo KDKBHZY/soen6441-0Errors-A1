@@ -80,11 +80,6 @@ public class RedditLyticsController extends Controller {
         return CompletableFuture.completedFuture(left);
     }
 
-    private F.Either<Result, Flow<JsonNode, JsonNode, ?>> logException(Throwable throwable) {
-        logger.error("Cannot create websocket", throwable);
-        Result result = Results.internalServerError("error");
-        return F.Either.Left(result);
-    }
 
     private boolean sameOriginCheck(Http.RequestHeader rh) {
         final Optional<String> origin = rh.header("Origin");

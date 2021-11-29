@@ -9,9 +9,8 @@
     display: flex;
 }
 
-.search input {
+.search input[type=text] {
     float: left;
-/ / 左浮动 height: 30 px;
     width: 400px;
     outline: none;
     border: 1px solid black;
@@ -19,7 +18,7 @@
     padding-left: 10px;
 }
 
-.search button {
+.search input[type=submit]  {
     height: 30px;
     width: 100px;
     background-color: blue;
@@ -28,11 +27,11 @@
     outline: none;
 }
 
-.search button i {
+.search input[type=submit] i {
     font-style: normal;
 }
 
-.search button:hover {
+.search input[type=submit]:hover {
     font-size: 18px;
 }
 

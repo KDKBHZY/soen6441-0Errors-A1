@@ -42,7 +42,7 @@ public class RedditResultActor extends AbstractActorWithTimers {
             getSender().tell("UserActor registered", getSelf());
         })
                 .match(Filter.class, message -> {
-                    logger.info("Received message Filter {}", message);
+                    System.out.println("Received message Filter {}"+message);
                     if (query != null) {
                        filterMessage();
                     }
@@ -105,10 +105,10 @@ public class RedditResultActor extends AbstractActorWithTimers {
 
            // newReddits.forEach(status -> status.setQuery(query));
 
-            Messages.RedditsMessage statusesMessage =
+            Messages.RedditsMessage redditsMessage =
                     new Messages.RedditsMessage(newReddits, query);
 
-            redditactor.tell(statusesMessage, self());
+            redditactor.tell(redditsMessage, self());
         });
     }
 }
