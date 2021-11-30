@@ -156,9 +156,6 @@ public class RedditActor extends AbstractActor{
      */
     public void addStatuses(Messages.RedditsMessage message) {
         List<Reddit> reddits = message.reddits;
-        System.out.println(reddits.get(9));
-        System.out.println(reddits.get(10));
-
         String query = message.query;
         Source<JsonNode, NotUsed> getSource = Source.from(reddits)
                 .map(Json::toJson);

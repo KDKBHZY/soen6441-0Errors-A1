@@ -28,7 +28,7 @@ public class RedditParentActor extends AbstractActor implements InjectedActorSup
     @Inject
     public RedditParentActor(RedditActor.Factory childFactory) {
         this.childFactory = childFactory;
-        this.query = "no way home"; // default keyword
+        this.query = "test"; // default keyword
     }
 
 

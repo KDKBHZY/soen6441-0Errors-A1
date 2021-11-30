@@ -62,10 +62,11 @@ public class Messages {
         public final String query;
 
         public RedditsMessage(List<Reddit> reddits, String query) {
-            Reddit r = new Reddit();
-            r.setAuthor(query);
+
             this.reddits = requireNonNull(reddits);
-            this.reddits.add(r);
+            for (Reddit reddit : this.reddits) {
+                reddit.setTerm(query);
+            }
             this.query = requireNonNull(query);
         }
 

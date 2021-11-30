@@ -18,7 +18,8 @@ public class Reddit {
     private String author;
     private String subreddit;
     private String title;
-    
+    private String term;
+
     /**
      * Parse the POJO of Reddit to a String
      *
@@ -28,7 +29,23 @@ public class Reddit {
     public String toString() {
         return String.format("Author: %s, %s, \"%s\"", this.author, this.subreddit, this.title);
     }
+    /**
+     * Gets term of the Reddit
+     *
+     * @return redditID
+     */
+    public String getTerm() {
+        return term;
+    }
 
+    /**
+     * Sets term of the Reddit by given term
+     *
+     * @param term given string of id
+     */
+    public void setTerm(String term) {
+        this.term = term;
+    }
     /**
      * Gets redditID of the Reddit
      *
@@ -123,7 +140,7 @@ public class Reddit {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(redditID, author, subreddit,title);
+        return Objects.hash(redditID, author, subreddit);
     }
 
 }

@@ -68,7 +68,6 @@ public class RedditLyticsController extends Controller {
         return ask(redditparentactor, create, t).thenApply((Object flow) -> {
 
             final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
-              System.out.println(flow);
             return f.named("websocket");
         });
     }

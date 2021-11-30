@@ -3,22 +3,24 @@
     margin: 0;
 }
 
-.search {
+.searchform {
     width: 30%;
     margin: 30px auto;
     display: flex;
 }
 
-.search form input[type=text] {
+
+.search input {
     float: left;
     width: 400px;
+/ / 左浮动 height: 30 px;
     outline: none;
     border: 1px solid black;
     box-sizing: border-box;
     padding-left: 10px;
 }
 
-.search form button[type=submit]  {
+.searchform button  {
     height: 30px;
     width: 100px;
     background-color: blue;

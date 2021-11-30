@@ -92,10 +92,12 @@ public class RedditResultActor extends AbstractActorWithTimers {
      * @return CompletionStage of void
      */
     public CompletionStage<Void> filterMessage() {
-        // Every 5 seconds, check for new tweets if we have a query
         return redditService.getReddits(query).thenAcceptAsync(searchResults -> {
 
             List<Reddit> oldReddits = new ArrayList<>(reddits);
+            //update  local reddits
+            reddits.clear();
+            reddits.addAll(searchResults.subList(0,10));
             System.out.println("old:"+oldReddits.get(0).getRedditID());
 
             List<Reddit> newReddits = new ArrayList<>(10);
@@ -103,6 +105,7 @@ public class RedditResultActor extends AbstractActorWithTimers {
             System.out.println("new:"+newReddits.get(0).getRedditID());
             if (!newReddits.get(0).getRedditID().equals(oldReddits.get(0).getRedditID())){
                 newReddits.removeAll(oldReddits);
+                System.out.println("!!!!change: "+query+ " number:  "+newReddits.size());
                 Messages.RedditsMessage redditsMessage =
                         new Messages.RedditsMessage(newReddits, query);
 

@@ -1,29 +1,30 @@
 
 var resArr =[];
+
+var searchterm;
+var ws;
+console.log("Waiting for WebSocket");
+ws = new WebSocket("ws://" + location.host + "/ws");
 (function() {
     var parseTweets;
     $(function() {
         if($("#search").length === 1) {
-            var ws;
-            console.log("Waiting for WebSocket");
-            ws = new WebSocket("ws://" + location.host + "/ws");
+
             ws.onmessage = function (event) {
 
-                console.log(event.data[10].author.toString());
                 message = JSON.parse(event.data);
 
-              // console.log(message);
-                // switch (message.type) {
-                //     case "status":
-                        return parseTweets(message);
-                //     default:
-                //         return null;
-                //
-                // }
+               if (message.term == searchterm ){
+                   console.log(message);
+                   return parseTweets(message);
+               }
+
+
             };
             return $("#searchForm").submit(function (event) {
                 event.preventDefault();
                 if ($("#searchKey").val() !== '') {
+                    searchterm = $("#searchKey").val();
                     console.log("Sending WS with value " + $("#searchKey").val());
                     ws.send(JSON.stringify({
                         query: $("#searchKey").val()
@@ -35,12 +36,13 @@ var resArr =[];
     });
 
     parseTweets = function(message) {
-        var query = $("#searchKey").val();
+        //handle blank
+        var query = searchterm.replace(/ /g,'');
         tweetsListQuery = $("#tweetsList"+query);
         if (tweetsListQuery.length === 0) {
             $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="tweetsList'+query+'"></ol></div>');
         }
-        tweetsListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
+        tweetsListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
 
     }
 
