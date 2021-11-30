@@ -23,6 +23,22 @@ public class Messages {
             return "UserParentActorCreate(" + id + ")";
         }
     }
+
+    /**
+     * Create SubredditActor Message
+     */
+    public static final class SubredditActorCreate {
+        public final String id;
+
+        public SubredditActorCreate(String id) {
+            this.id = requireNonNull(id);
+        }
+
+        @Override
+        public String toString() {
+            return "UserParentActorCreate(" + id + ")";
+        }
+    }
     /**
      * WatchSearchResults Message
      */
@@ -35,6 +51,21 @@ public class Messages {
         @Override
         public String toString() {
             return "WatchSearchResults(" + query + ")";
+        }
+    }
+
+    /**
+     * WatchsubRedditResults Message
+     */
+    public static final class WatchsubRedditResults {
+        public final String query;
+
+        public WatchsubRedditResults(String query) {
+            this.query = requireNonNull(query);
+        }
+        @Override
+        public String toString() {
+            return "WatchsubRedditResults(" + query + ")";
         }
     }
 

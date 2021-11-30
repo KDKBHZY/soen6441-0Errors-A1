@@ -98,11 +98,11 @@ public class RedditResultActor extends AbstractActorWithTimers {
             //update  local reddits
             reddits.clear();
             reddits.addAll(searchResults.subList(0,10));
-            System.out.println("old:"+oldReddits.get(0).getRedditID());
+            System.out.println("old:  "+query+"  id: "+oldReddits.get(0).getRedditID());
 
             List<Reddit> newReddits = new ArrayList<>(10);
             newReddits.addAll(searchResults.subList(0,10));
-            System.out.println("new:"+newReddits.get(0).getRedditID());
+            System.out.println("new:  "+query+"  id: "+newReddits.get(0).getRedditID());
             if (!newReddits.get(0).getRedditID().equals(oldReddits.get(0).getRedditID())){
                 newReddits.removeAll(oldReddits);
                 System.out.println("!!!!change: "+query+ " number:  "+newReddits.size());

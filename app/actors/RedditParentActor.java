@@ -40,6 +40,12 @@ public class RedditParentActor extends AbstractActor implements InjectedActorSup
                     ActorRef child = injectedChild(() -> childFactory.create(create.id), "redditActor-" + create.id);
                     CompletionStage<Object> future = ask(child, new Messages.WatchSearchResults(query), timeout);
                     pipe(future, context().dispatcher()).to(sender());
-                }).build();
+                })
+                .match(Messages.SubredditActorCreate.class, create -> {
+            ActorRef child = injectedChild(() -> childFactory.create(create.id), "subRedditActor-" + create.id);
+            CompletionStage<Object> future = ask(child, new Messages.WatchsubRedditResults(query), timeout);
+            pipe(future, context().dispatcher()).to(sender());
+                })
+                .build();
     }
 }

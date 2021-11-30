@@ -15,7 +15,6 @@ ws = new WebSocket("ws://" + location.host + "/ws");
                 message = JSON.parse(event.data);
 
                if (message.term == searchterm ){
-                   console.log(message);
                    return parseTweets(message);
                }
 
@@ -40,13 +39,25 @@ ws = new WebSocket("ws://" + location.host + "/ws");
         var query = searchterm.replace(/ /g,'');
         tweetsListQuery = $("#tweetsList"+query);
         if (tweetsListQuery.length === 0) {
+
             $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="tweetsList'+query+'"></ol></div>');
+            tweetsListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
+
         }
+        console.log(message);
+
         tweetsListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
 
-    }
+    };
+    $('#searchKey').bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            $("#searchForm").submit();
+        }
+    });
 
 }).call(this);
+
+
 
 // $(document).ready(function () {
 //     jQuery("#search").click(function () {
@@ -96,9 +107,5 @@ ws = new WebSocket("ws://" + location.host + "/ws");
 //         }
 //     });
 //
-//     $('#searchKey').bind('keypress', function (event) {
-//         if (event.keyCode == "13") {
-//             $("#search").click();
-//         }
-//     })
+
 // });

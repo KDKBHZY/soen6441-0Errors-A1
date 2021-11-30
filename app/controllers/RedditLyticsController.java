@@ -49,7 +49,38 @@ public class RedditLyticsController extends Controller {
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }
+    /**
+     * searchpage websocket
+     * @author: Zeyu Huang
+     * @return data to front end
+     */
+    public WebSocket subRedditws() {
+        return WebSocket.Json.acceptOrResult(request -> {
+            if (sameOriginCheck(request)) {
+                final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = subRedditwsFutureFlow(request);
+                return future.thenApply(F.Either::Right);
+            } else {
+                return forbiddenResult();
+            }
+        });
+    }
 
+    private CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> subRedditwsFutureFlow(Http.RequestHeader request) {
+        long id = request.asScala().id();
+        Messages.SubredditActorCreate create = new Messages.SubredditActorCreate(Long.toString(id));
+
+        return ask(redditparentactor, create, t).thenApply((Object flow) -> {
+
+            final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
+            return f.named("subredditsocket");
+        });
+    }
+
+    /**
+     * searchpage websocket
+     * @author: Zeyu Huang
+     * @return data to front end
+     */
     public WebSocket ws() {
         return WebSocket.Json.acceptOrResult(request -> {
             if (sameOriginCheck(request)) {
