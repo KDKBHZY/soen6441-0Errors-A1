@@ -2,6 +2,7 @@ package actors;
 
 import models.Reddit;
 
+import java.util.List;
 import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
@@ -57,11 +58,14 @@ public class Messages {
      * RedditsMessage Message
      */
     public static final class RedditsMessage {
-        public final Set<Reddit> reddits;
+        public final List<Reddit> reddits;
         public final String query;
 
-        public RedditsMessage(Set<Reddit> reddits, String query) {
+        public RedditsMessage(List<Reddit> reddits, String query) {
+            Reddit r = new Reddit();
+            r.setAuthor(query);
             this.reddits = requireNonNull(reddits);
+            this.reddits.add(r);
             this.query = requireNonNull(query);
         }
 

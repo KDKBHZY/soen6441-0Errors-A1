@@ -36,7 +36,7 @@ public class RedditImplemention implements RedditApi {
     public CompletionStage<WSResponse> search(String keyword) {
         return (ws.url(baseUrl + path)
                 .addQueryParameter("q", keyword)
-                .addQueryParameter("size", "10")
+                .addQueryParameter("size", "250")
                 .addQueryParameter("sort", "desc"))
                 .get();
     }

@@ -9,7 +9,7 @@
     display: flex;
 }
 
-.search input[type=text] {
+.search form input[type=text] {
     float: left;
     width: 400px;
     outline: none;
@@ -18,7 +18,7 @@
     padding-left: 10px;
 }
 
-.search input[type=submit]  {
+.search form button[type=submit]  {
     height: 30px;
     width: 100px;
     background-color: blue;
@@ -27,11 +27,11 @@
     outline: none;
 }
 
-.search input[type=submit] i {
+.search form button[type=submit] i {
     font-style: normal;
 }
 
-.search input[type=submit]:hover {
+.search form button[type=submit]:hover {
     font-size: 18px;
 }
 

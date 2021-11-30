@@ -8,15 +8,17 @@ var resArr =[];
             console.log("Waiting for WebSocket");
             ws = new WebSocket("ws://" + location.host + "/ws");
             ws.onmessage = function (event) {
-                var message;
-                //console.log(event.data);
+
+                console.log(event.data[10].author.toString());
                 message = JSON.parse(event.data);
-                console.log(message);
+
+              // console.log(message);
                 // switch (message.type) {
                 //     case "status":
                         return parseTweets(message);
                 //     default:
-                //         return message;
+                //         return null;
+                //
                 // }
             };
             return $("#searchForm").submit(function (event) {
@@ -36,9 +38,9 @@ var resArr =[];
         var query = $("#searchKey").val();
         tweetsListQuery = $("#tweetsList"+query);
         if (tweetsListQuery.length === 0) {
-            $("#result").prepend('<div class="results"><p>Search terms: '+query+'</p><ul id="tweetsList'+query+'"></ul></div>');
+            $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="tweetsList'+query+'"></ol></div>');
         }
-        tweetsListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+message.subReddit+'</a>,'+ message.title+'</li>');
+        tweetsListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
 
     }
 

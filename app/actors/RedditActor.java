@@ -20,6 +20,7 @@ import play.libs.Json;
 
 import javax.inject.Inject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
@@ -143,7 +144,7 @@ public class RedditActor extends AbstractActor{
                     System.out.println("Received message StatusesMessage:  "+message);
                     if (message != null) {
                         addStatuses(message);
-                        sender().tell(websocketFlow, self());
+                        sender().tell(message, self());
                     }
                 })
                 .build();
@@ -154,11 +155,11 @@ public class RedditActor extends AbstractActor{
      * @param message StatusesMessage message contaning the query and the statuses
      */
     public void addStatuses(Messages.RedditsMessage message) {
-        Set<Reddit> reddits = message.reddits;
+        List<Reddit> reddits = message.reddits;
+        System.out.println(reddits.get(9));
+        System.out.println(reddits.get(10));
+
         String query = message.query;
-
-        logger.info("Adding statuses {} for query {}", reddits, query);
-
         Source<JsonNode, NotUsed> getSource = Source.from(reddits)
                 .map(Json::toJson);
 

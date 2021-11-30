@@ -3,6 +3,8 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 /**
  * A POJO of Reddit
  *
@@ -16,7 +18,7 @@ public class Reddit {
     private String author;
     private String subreddit;
     private String title;
-
+    
     /**
      * Parse the POJO of Reddit to a String
      *
@@ -98,4 +100,30 @@ public class Reddit {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    /**
+     * Override equals method, used for the Sets
+     * @param o object to compare
+     * @return boolean Statuses same or not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reddit status = (Reddit) o;
+        return Objects.equals(redditID, status.redditID) &&
+                Objects.equals(author, status.author) &&
+                Objects.equals(subreddit, status.subreddit)&&
+                Objects.equals(title, status.title);
+    }
+
+    /**
+     * Override equals method, used for the Sets
+     * @return int hashCode
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(redditID, author, subreddit,title);
+    }
+
 }
