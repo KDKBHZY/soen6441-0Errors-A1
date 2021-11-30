@@ -2,15 +2,21 @@
 @(searchResults: util.List[Reddit], res: String)
 
 @main(res+"result") {
+    <html>
+        <body data-ws-url="ws://localhost:9000/subredditws">
     <div>
         <br><h1 align="center">SubReddit: @res</h1>
 
-        <ol style="margin-left: 50px;">
+        <ol id="resquery" style="margin-left: 50px;">
         @for(reddit <- searchResults) {
             <li style="margin-bottom:15px ">@reddit.toString</li>
         }
         </ol>
     </div>
+            <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"></script>
 
+            <script src="@routes.Assets.versioned("javascripts/subreddit.js")" type="text/javascript"></script>
 
+        </body>
+    </html>
 }

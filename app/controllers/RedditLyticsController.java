@@ -37,13 +37,15 @@ public class RedditLyticsController extends Controller {
     private final Timeout t = new Timeout(Duration.create(1, TimeUnit.SECONDS));
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.RedditLyticsController");
     private final ActorRef redditparentactor;
+    private final ActorRef subredditparentactor;
 
     /**
      * Constructor
      */
     @Inject
-    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor) {
+    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor) {
         this.redditparentactor = redditparentactor;
+        this.subredditparentactor = subredditparentactor;
     }
 
     public CompletionStage<Result> index() {
@@ -69,7 +71,7 @@ public class RedditLyticsController extends Controller {
         long id = request.asScala().id();
         Messages.SubredditActorCreate create = new Messages.SubredditActorCreate(Long.toString(id));
 
-        return ask(redditparentactor, create, t).thenApply((Object flow) -> {
+        return ask(subredditparentactor, create, t).thenApply((Object flow) -> {
 
             final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
             return f.named("subredditsocket");

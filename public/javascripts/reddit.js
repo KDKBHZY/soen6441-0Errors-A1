@@ -6,7 +6,7 @@ var ws;
 console.log("Waiting for WebSocket");
 ws = new WebSocket("ws://" + location.host + "/ws");
 (function() {
-    var parseTweets;
+    var parseReddits;
     $(function() {
         if($("#search").length === 1) {
 
@@ -15,7 +15,7 @@ ws = new WebSocket("ws://" + location.host + "/ws");
                 message = JSON.parse(event.data);
 
                if (message.term == searchterm ){
-                   return parseTweets(message);
+                   return parseReddits(message);
                }
 
 
@@ -34,7 +34,7 @@ ws = new WebSocket("ws://" + location.host + "/ws");
         }
     });
 
-    parseTweets = function(message) {
+    parseReddits = function(message) {
         //handle blank
         var query = searchterm.replace(/ /g,'');
         tweetsListQuery = $("#tweetsList"+query);
