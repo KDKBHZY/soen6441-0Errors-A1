@@ -15,16 +15,18 @@ ws.onmessage = function(event){
     }
 };
 function parseReddits(message) {
-    //handle blank
-    //console.log(message);
     console.log(count);
     redditListQuery = $("#resquery");
-    var size = document.getElementsByTagName("li");
+    var size = document.getElementsByTagName("li").length;
     console.log(size);
-    if (count > 10){
+    if (count>10) {
+        console.log(size);
+        var oUl = document.querySelector("#resquery");
+        var oList = oUl.querySelectorAll("li");
         count-=1;
-        redditListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
-         redditListQuery.deleteRow(size-1);
+        console.log(oList[size-1]);
+        oList[size-1].remove();
+        redditListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
     }
 
 

@@ -5,6 +5,7 @@ var searchterm;
 var ws;
 console.log("Waiting for WebSocket");
 ws = new WebSocket("ws://" + location.host + "/ws");
+
 (function() {
     var parseReddits;
     $(function() {
@@ -37,16 +38,24 @@ ws = new WebSocket("ws://" + location.host + "/ws");
     parseReddits = function(message) {
         //handle blank
         var query = searchterm.replace(/ /g,'');
-        tweetsListQuery = $("#tweetsList"+query);
-        if (tweetsListQuery.length === 0) {
-
-            $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="tweetsList'+query+'"></ol></div>');
-            tweetsListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
-
+        redditListQuery = $("#redditsList"+query);
+        if (redditListQuery.length === 0) {
+            $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="redditsList'+query+'"></ol></div>');
         }
         console.log(message);
+        var oUl = document.querySelector("#redditsList"+query);
+        var oList = oUl.querySelectorAll("li");
+        var size = oList.length;
 
-        tweetsListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author='+ message.author+'" target="_blank">'+  message.author+'</a>, <a href="http://localhost:9000/searchsub?term='+message.subReddit+'" target="_blank">'+  message.subReddit+'</a>,'+  message.title+'</li>');
+        if (size>9) {
+            console.log(size);
+            console.log(oList[size-1]);
+            oList[size-1].remove();
+            redditListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
+        }else {
+            redditListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
+
+        }
 
     };
     $('#searchKey').bind('keypress', function (event) {
