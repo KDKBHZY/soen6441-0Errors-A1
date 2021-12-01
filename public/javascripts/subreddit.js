@@ -15,10 +15,8 @@ ws.onmessage = function(event){
     }
 };
 function parseReddits(message) {
-    console.log(count);
     redditListQuery = $("#resquery");
     var size = document.getElementsByTagName("li").length;
-    console.log(size);
     if (count>10) {
         console.log(size);
         var oUl = document.querySelector("#resquery");

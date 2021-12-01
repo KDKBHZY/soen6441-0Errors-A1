@@ -31,7 +31,7 @@ public class SubredditResultActor  extends AbstractActorWithTimers {
 
     @Override
     public void preStart() {
-        getTimers().startPeriodicTimer("Timer", new SubredditResultActor.Filter(), Duration.create(15, TimeUnit.SECONDS));
+        getTimers().startPeriodicTimer("Timer", new SubredditResultActor.Filter(), Duration.create(8, TimeUnit.SECONDS));
     }
     @Override
     public Receive createReceive() {
