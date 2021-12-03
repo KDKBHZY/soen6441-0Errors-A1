@@ -185,7 +185,7 @@ public class RedditLyticsController extends Controller {
      */
     public CompletionStage<Result> statistics(String term) {
         return redditService.getReddits(term)
-                .thenApplyAsync(res -> ok(views.html.wordstats.render(statistics(res), term)));
+                .thenApplyAsync(res -> ok(wordstats.render(statistics(res), term)));
     }
 
     /**

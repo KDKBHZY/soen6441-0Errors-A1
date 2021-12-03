@@ -28,7 +28,7 @@ public class RedditParentActor extends AbstractActor implements InjectedActorSup
     @Inject
     public RedditParentActor(RedditActor.Factory childFactory) {
         this.childFactory = childFactory;
-        this.query = "nba"; // default keyword
+        this.query = "test"; // default keyword
     }
 
 
@@ -40,11 +40,6 @@ public class RedditParentActor extends AbstractActor implements InjectedActorSup
                     ActorRef child = injectedChild(() -> childFactory.create(create.id), "redditActor-" + create.id);
                     CompletionStage<Object> future = ask(child, new Messages.WatchSearchResults(query), timeout);
                     pipe(future, context().dispatcher()).to(sender());
-                })
-                .match(Messages.SubredditActorCreate.class, create -> {
-            ActorRef child = injectedChild(() -> childFactory.create(create.id), "subRedditActor-" + create.id);
-            CompletionStage<Object> future = ask(child, new Messages.WatchsubRedditResults(query), timeout);
-            pipe(future, context().dispatcher()).to(sender());
                 })
                 .build();
     }
