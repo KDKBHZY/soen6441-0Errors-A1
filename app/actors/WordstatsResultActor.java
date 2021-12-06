@@ -99,7 +99,7 @@ public class WordstatsResultActor  extends AbstractActorWithTimers {
             List<Reddit> newReddits = new ArrayList<>(searchResults);
             System.out.println("new:  "+query+"  id: "+newReddits.get(0).getRedditID());
             if (!newReddits.get(0).getRedditID().equals(oldReddits.get(0).getRedditID())){
-                newReddits.removeAll(oldReddits);
+//                newReddits.removeAll(oldReddits);
                 System.out.println("!!!!change: "+query+ " number:  "+newReddits.size());
                 Messages.WordstatsMessage wordstatsMessage =
                         new Messages.WordstatsMessage(newReddits, query);

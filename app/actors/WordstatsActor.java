@@ -158,8 +158,8 @@ public class WordstatsActor extends AbstractActor {
     public void addStatuses(Messages.WordstatsMessage message) {
         List<Reddit> reddits = message.reddits;
         String query = message.query;
-        String stats = statistics(reddits);
-        Source<JsonNode, NotUsed> getSource = Source.from(reddits)
+        List<Words> stats = statistics(reddits, query);
+        Source<JsonNode, NotUsed> getSource = Source.from(stats)
                 .map(Json::toJson);
 
         // Set up a flow that will let us pull out a killswitch for this specific stock,
@@ -185,7 +185,7 @@ public class WordstatsActor extends AbstractActor {
      *
      * @param reddits Search results to be handled
      */
-    private String statistics(List<Reddit> reddits) {
+    private List<Words> statistics(List<Reddit> reddits, String query) {
         Map<String, Long> words = reddits.stream()
                 .map(Reddit::getTitle)
                 .flatMap(w -> {
@@ -196,16 +196,34 @@ public class WordstatsActor extends AbstractActor {
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .filter(w -> w.getKey().length() > 0)
                 .collect(Collectors.toList());
-        String str = "{";
-        for(Map.Entry<String, Long> node : res) {
-            if(str.length()>1){
-                str = str + ",";
-            }
-            str = java.lang.String.format("%s\"%s\":\"%s\"", str, node.getKey(), Long.toString(node.getValue()));
+        List<Words> resres = res.stream()
+                .map(w->new Words(w.getKey(),Long.toString(w.getValue()),query))
+                .collect(Collectors.toList());
+        return resres;
+//        String str = "{";
+//        for(Map.Entry<String, Long> node : res) {
+//            if(str.length()>1){
+//                str = str + ",";
+//            }
+//            str = java.lang.String.format("%s\"%s\":\"%s\"", str, node.getKey(), Long.toString(node.getValue()));
+//        }
+//        str = str + "}";
+//        System.out.println("List of " + res.size());
+//        return str;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Words {
+
+        public String key;
+        public String value;
+        public String term;
+
+        public Words(String key, String value, String term) {
+            this.key = key;
+            this.value = value;
+            this.term = term;
         }
-        str = str + "}";
-        System.out.println("List of " + res.size());
-        return str;
     }
 
     /**
