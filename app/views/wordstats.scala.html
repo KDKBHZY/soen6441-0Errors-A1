@@ -2,15 +2,20 @@
 @import java.util.Map
 @(statsResults: List[Map.Entry[String, Long]], term: String)
 
-@main("Word stats") {
-    <div class="results">
-        <div><h1>Word stats of latest submissions with term &quot@term&quot</h1></div>
-        <ol class="c">
-        @for(word <- statsResults) {
-            <li>@word.getKey(): @word.getValue()</li>
-        }
-        </ol>
-    </div>
+    @main("Word stats") {
+        <html>
+            <body data-ws-url="ws://localhost:9000/wordstatsws">
+                <div class="results">
+                    <div><h1>Word stats of latest submissions with term &quot@term&quot</h1></div>
+                    <ol class="c" id="stats">
+                    @for(word <- statsResults) {
+                        <li>@word.getKey(): @word.getValue()</li>
+                    }
+                    </ol>
+                </div>
+                <script src="@routes.Assets.versioned("javascripts/wordstats.js")" type="text/javascript"></script>
+            </body>
+        </html>
 
 
-}
+    }
