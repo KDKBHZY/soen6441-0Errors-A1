@@ -39,18 +39,18 @@ public class RedditLyticsController extends Controller {
     private final ActorRef redditparentactor;
     private final ActorRef subredditparentactor;
     private final ActorRef authorProfileParentActorRef;
-
+    private final ActorRef wordstatsparentactor;
     /**
      * Constructor
      */
     @Inject
-    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, @Named("authorProfile-ParentActor") ActorRef authorProfileParentActor, RedditService redditService) {
+    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, @Named("authorProfile-ParentActor") ActorRef authorProfileParentActor, @Named("wordstats-ParentActor") ActorRef wordstatsparentactor, RedditService redditService) {
         this.redditparentactor = redditparentactor;
         this.subredditparentactor = subredditparentactor;
         this.authorProfileParentActorRef = authorProfileParentActor;
+        this.wordstatsparentactor = wordstatsparentactor;
         this.redditService = redditService;
     }
-
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }
@@ -128,6 +128,33 @@ public class RedditLyticsController extends Controller {
 
             final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
             return f.named("websocket");
+        });
+    }
+
+    /**
+     * wordstats websocket
+     * @author: Shuo Gao
+     * @return data to front end
+     */
+    public WebSocket wordstatsws() {
+        return WebSocket.Json.acceptOrResult(request -> {
+            if (sameOriginCheck(request)) {
+                final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wordstatswsFutureFlow(request);
+                return future.thenApply(F.Either::Right);
+            } else {
+                return forbiddenResult();
+            }
+        });
+    }
+
+    private CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wordstatswsFutureFlow(Http.RequestHeader request) {
+        long id = request.asScala().id();
+        Messages.WordstatsActorCreate create = new Messages.WordstatsActorCreate(Long.toString(id));
+
+        return ask(wordstatsparentactor, create, t).thenApply((Object flow) -> {
+
+            final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
+            return f.named("wordstatssocket");
         });
     }
 
