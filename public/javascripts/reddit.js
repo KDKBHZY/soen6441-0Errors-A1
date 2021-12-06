@@ -39,27 +39,26 @@ ws = new WebSocket("ws://" + location.host + "/ws");
         //handle blank
         var query = searchterm.replace(/ /g,'');
         console.log(message);
-        //get li size
-        var size ;
-        var oList;
+
         redditListQuery = $("#redditsList"+query);
-        if (redditListQuery.length === 0){
+        if (redditListQuery.length === 0) {
             $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="redditsList'+query+'"></ol>');
             redditListQuery1 = $("#redditsList"+query);
             redditListQuery1.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
-            var oUl = document.querySelector("#redditsList"+query);
-            this.oList = oUl.querySelectorAll("li");
-            this.size = this.oList.length;
         }
-        else if (this.size>10) {
-            console.log(this.size);
-            this.size-=1;
-            console.log(this.oList[this.size-1]);
-            this.oList[this.size-1].remove();
+
+        var oUl = document.querySelector("#redditsList"+query);
+        var oList = oUl.querySelectorAll("li");
+        var size = oList.length;
+
+        if (size>9) {
+            console.log(size);
+            console.log(oList[size-1]);
+            oList[size-1].remove();
             redditListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
-        }
-       else {
+        } else {
             redditListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
+            console.log("!!!!data")
         }
 
     };

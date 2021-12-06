@@ -38,20 +38,45 @@ public class RedditLyticsController extends Controller {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.RedditLyticsController");
     private final ActorRef redditparentactor;
     private final ActorRef subredditparentactor;
+    private final ActorRef authorProfileParentActorRef;
 
     /**
      * Constructor
      */
     @Inject
-    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, RedditService redditservice) {
+    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, @Named("authorProfile-ParentActor") ActorRef authorProfileParentActor, RedditService redditService) {
         this.redditparentactor = redditparentactor;
         this.subredditparentactor = subredditparentactor;
-        this.redditService = redditservice;
+        this.authorProfileParentActorRef = authorProfileParentActor;
+        this.redditService = redditService;
     }
 
     public CompletionStage<Result> index() {
         return CompletableFuture.completedFuture(ok(views.html.index.render()));
     }
+
+    public WebSocket authorProfilews() {
+        return WebSocket.Json.acceptOrResult(request -> {
+            if (sameOriginCheck(request)) {
+                final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = authorProfileFutureFlow(request);
+                return future.thenApply(F.Either::Right);
+            } else {
+                return forbiddenResult();
+            }
+        });
+    }
+
+    private CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> authorProfileFutureFlow(Http.RequestHeader request) {
+        long id = request.asScala().id();
+        Messages.AuthorProfileActorCreate create = new Messages.AuthorProfileActorCreate(Long.toString(id));
+
+        return ask(authorProfileParentActorRef, create, t).thenApply((Object flow) -> {
+            final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
+            return f.named("authorProfileSocket");
+        });
+    }
+
+
     /**
      * searchpage websocket
      * @author: Zeyu Huang
@@ -186,7 +211,7 @@ public class RedditLyticsController extends Controller {
      */
     public CompletionStage<Result> statistics(String term) {
         return redditService.getReddits(term)
-                .thenApplyAsync(res -> ok(views.html.wordstats.render(statistics(res), term)));
+                .thenApplyAsync(res -> ok(wordstats.render(statistics(res), term)));
     }
 
     /**
