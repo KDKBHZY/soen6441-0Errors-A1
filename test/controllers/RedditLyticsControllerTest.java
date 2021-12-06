@@ -57,7 +57,7 @@ public class RedditLyticsControllerTest {
                 .build();
         redditService = testApp.instanceOf(RedditService.class);
 
-        redditLyticsController = new RedditLyticsController(null, null,null,redditService);
+        redditLyticsController = new RedditLyticsController(null, null,null,null,redditService);
     }
 
     /**
@@ -75,8 +75,9 @@ public class RedditLyticsControllerTest {
 
                 try {
                     String serverURL = "ws://localhost:37117/ws";
-                    String serverURL1 = "ws://localhost:37117//subredditws";
+                    String serverURL1 = "ws://localhost:37117/subredditws";
                     String serverURL2 = "ws://localhost:37117/authorprofilews";
+                    String serverURL3 = "ws://localhost:37117/wordstatsws";
 
                     WebSocketClient.LoggingListener listener = new WebSocketClient.LoggingListener(message -> {});
                     CompletableFuture<NettyWebSocket> completionStage = webSocketClient.call(serverURL, listener);
@@ -84,9 +85,12 @@ public class RedditLyticsControllerTest {
                     CompletableFuture<NettyWebSocket> completionStage1 = webSocketClient.call(serverURL1, listener1);
                     WebSocketClient.LoggingListener listener2 = new WebSocketClient.LoggingListener(message -> {});
                     CompletableFuture<NettyWebSocket> completionStage2 = webSocketClient.call(serverURL2, listener2);
+                    WebSocketClient.LoggingListener listener3 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage3 = webSocketClient.call(serverURL3, listener3);
                     await().until(completionStage::isDone);
                     await().until(completionStage1::isDone);
                     await().until(completionStage2::isDone);
+                    await().until(completionStage3::isDone);
 
                 } finally {
                     client.close();
@@ -120,6 +124,9 @@ public class RedditLyticsControllerTest {
                     String serverURL2 = "ws://localhost:19001/authorprofilews";
                     WebSocketClient.LoggingListener listener2 = new WebSocketClient.LoggingListener(message -> {});
                     CompletableFuture<NettyWebSocket> completionStage2 = webSocketClient.call(serverURL2, listener2);
+                    String serverURL3 = "ws://localhost:19001/wordstatsws";
+                    WebSocketClient.LoggingListener listener3 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage3 = webSocketClient.call(serverURL3, listener3);
                     await().until(completionStage::isDone);
                     assertThat(completionStage)
                             .hasNotFailed();
@@ -128,6 +135,9 @@ public class RedditLyticsControllerTest {
                             .hasNotFailed();
                     await().until(completionStage2::isDone);
                     assertThat(completionStage2)
+                            .hasNotFailed();
+                    await().until(completionStage3::isDone);
+                    assertThat(completionStage3)
                             .hasNotFailed();
                 } finally {
                     client.close();
@@ -171,6 +181,13 @@ public class RedditLyticsControllerTest {
                     CompletableFuture<NettyWebSocket> completionStage2 = webSocketClient.call(serverURL2, listener2);
                     await().until(completionStage2::isDone);
                     assertThat(completionStage2)
+                            .hasNotFailed();
+
+                    String serverURL3 = "ws://localhost:9000/wordstatsws";
+                    WebSocketClient.LoggingListener listener3 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage3 = webSocketClient.call(serverURL3, listener3);
+                    await().until(completionStage3::isDone);
+                    assertThat(completionStage3)
                             .hasNotFailed();
                 } finally {
                     client.close();
