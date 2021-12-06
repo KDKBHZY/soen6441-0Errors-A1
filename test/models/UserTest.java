@@ -223,4 +223,28 @@ public class UserTest {
         reddits.forEach(r -> user.getPostedReddits().add(r));
         assertEquals(reddits.size(), user.getPostedReddits().size());
     }
-}
+
+    @Test
+    public void testEquals() {
+        User user1 = new User();
+        user1.setName("test");
+        user1.setUserID("id");
+        user1.setAwardeeKarma(1);
+        user1.setAwarderKarma(1);
+        user1.setCommentKarma(1);
+        user1.setLinkKarma(1);
+        User user2 = new User();
+        user2.setName("test");
+        user2.setUserID("id");
+        user2.setAwardeeKarma(1);
+        user2.setAwarderKarma(1);
+        user2.setCommentKarma(1);
+        user2.setLinkKarma(1);
+
+        assertTrue(user1.equals(user2));
+
+        user2.setLinkKarma(2);
+        assertFalse(user1.equals(user2));
+    }
+
+    }
