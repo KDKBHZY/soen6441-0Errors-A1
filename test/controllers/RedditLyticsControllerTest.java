@@ -1,28 +1,18 @@
 package controllers;
 
-import akka.actor.ActorRef;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.inject.name.Named;
 import models.Reddit;
 import models.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import play.inject.Injector;
-import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.guice.GuiceInjectorBuilder;
 import play.libs.Json;
-import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Result;
-import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
-import play.shaded.ahc.org.asynchttpclient.AsyncHttpClientConfig;
-import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClient;
-import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import play.shaded.ahc.org.asynchttpclient.netty.ws.NettyWebSocket;
-import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
-import play.test.TestServer;
 import services.RedditApi;
 import services.RedditImplementationMock;
 import services.RedditService;
@@ -30,19 +20,29 @@ import services.RedditService;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.awaitility.Awaitility.await;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static play.inject.Bindings.bind;
 import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.*;
+import static play.test.Helpers.contentAsString;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClientConfig;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
+import org.junit.Test;
+import play.test.TestServer;
 
+import java.util.concurrent.CompletableFuture;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static play.test.Helpers.running;
+import static play.test.Helpers.testServer;
+import static org.awaitility.Awaitility.*;
 /**
  * Test the {@link RedditLyticsController} class
  *
@@ -51,15 +51,13 @@ import static play.test.Helpers.*;
 public class RedditLyticsControllerTest {
     private static RedditService redditService;
     private static RedditLyticsController redditLyticsController;
-
     @BeforeClass
     public static void initTestApp() {
         Injector testApp = new GuiceInjectorBuilder()
                 .overrides((bind(RedditApi.class).to(RedditImplementationMock.class)))
                 .build();
         redditService = testApp.instanceOf(RedditService.class);
-
-        redditLyticsController = new RedditLyticsController(null, null,null,redditService);
+        redditLyticsController = new RedditLyticsController(null,null,null,redditService);
     }
 
     /**
@@ -182,6 +180,8 @@ public class RedditLyticsControllerTest {
             }
         });
     }
+
+
 
     @Test
     public void index() throws ExecutionException, InterruptedException {

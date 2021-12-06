@@ -12,11 +12,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
-/**
- * create WebSocket
- *
- * inspired by https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/WebSocketClient.java
- */
 
 public class WebSocketClient {
     private AsyncHttpClient client;

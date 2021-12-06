@@ -25,13 +25,25 @@ ws = new WebSocket("ws://" + location.host + "/ws");
                 event.preventDefault();
                 if ($("#searchKey").val() !== '') {
                     searchterm = $("#searchKey").val();
-                    console.log("Sending WS with value " + $("#searchKey").val());
-                    ws.send(JSON.stringify({
-                        query: $("#searchKey").val()
-                    }));
-                    return $("#searchKey").val("");
+                    if (resArr.indexOf(searchterm)>=0){
+                        alert("You have searched "+ searchterm +" before");
+                        // var repeat = document.getElementById(a.toString());
+                        // repeat.style.color= "lightgreen";
+                        // $("html,body").animate({scrollTop: $("#"+a.toString()).offset().top}, 1000);
+                    }else {
+                        console.log(resArr);
+                        resArr.push(searchterm);
+                        searchterm = $("#searchKey").val();
+                        console.log("Sending WS with value " + $("#searchKey").val());
+                        ws.send(JSON.stringify({
+                            query: $("#searchKey").val()
+                        }));
+                        return $("#searchKey").val("");
+                    }
+                }else {
+                    alert("Please enter a keyword");
                 }
-            });
+                });
         }
     });
 
@@ -42,8 +54,7 @@ ws = new WebSocket("ws://" + location.host + "/ws");
 
         redditListQuery = $("#redditsList"+query);
         if (redditListQuery.length === 0) {
-            $("#result").prepend('<div class="results"><h2><a href="http://localhost:9000/wordstats?term=' + query +'" target="_blank">Search terms: '+query+'</a></h2><ol id="redditsList'+query+'"></ol>');
-            redditListQuery1 = $("#redditsList"+query);
+            $("#result").prepend('<div class="results"><h2><a href="http://localhost:9000/wordstats?term=' + query +'" target="_blank">Search terms: '+query+'</a></h2><ol id="redditsList'+query+'"></ol>');            redditListQuery1 = $("#redditsList"+query);
             redditListQuery1.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
         }
 

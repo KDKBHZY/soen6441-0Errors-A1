@@ -21,11 +21,8 @@ libraryDependencies += "org.mockito" % "mockito-core" % "4.0.0" % "test"
 libraryDependencies += "junit" % "junit" % "4.13.2" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
-libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.6.14" % "test"
-libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % "2.6.14" % "test"
 libraryDependencies += "org.assertj" % "assertj-core" % "3.8.0" % Test
 libraryDependencies += "org.awaitility" % "awaitility" % "3.0.0" % Test
 libraryDependencies += "org.mockito" % "mockito-core" % "1.10.19" % Test
 libraryDependencies += "nl.jqno.equalsverifier" % "equalsverifier" % "2.4.5" % Test
-
 //libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.6.17"
