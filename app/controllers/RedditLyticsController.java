@@ -39,7 +39,7 @@ public class RedditLyticsController extends Controller {
     private final ActorRef redditparentactor;
     private final ActorRef subredditparentactor;
     private final ActorRef authorProfileParentActorRef;
-    private final ActorRef wordstatsparentactor
+    private final ActorRef wordstatsparentactor;
 
     /**
      * Constructor

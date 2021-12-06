@@ -200,11 +200,11 @@ public class Messages {
     /**
      * Wordstats Message
      */
-    public static final class WordstatasMessage {
+    public static final class WordstatsMessage {
         public final List<Reddit> reddits;
         public final String query;
 
-        public WordstatasMessage(List<Reddit> reddits, String query) {
+        public WordstatsMessage(List<Reddit> reddits, String query) {
 
             this.reddits = requireNonNull(reddits);
             for (Reddit reddit : this.reddits) {

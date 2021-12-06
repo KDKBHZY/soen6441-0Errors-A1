@@ -19,15 +19,18 @@ import models.Reddit;
 import play.libs.Json;
 
 import javax.inject.Inject;
+import java.util.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
+import java.util.Objects;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Objects;
 
 public class WordstatsActor extends AbstractActor {
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this);
@@ -85,7 +88,7 @@ public class WordstatsActor extends AbstractActor {
         jsonSink = Sink.foreach((JsonNode json) -> {
             // When the user types in a stock in the upper right corner, this is triggered,
             String queryRequest = json.findPath("query").asText();
-            getSubreddit(queryRequest);
+            getRedditsForStats(queryRequest);
         });
 
         // Put the source and sink together to make a flow of hub source as output (aggregating all
@@ -94,7 +97,7 @@ public class WordstatsActor extends AbstractActor {
         this.websocketFlow = Flow.fromSinkAndSourceCoupled(jsonSink, hubSource)
                 .watchTermination((n, stage) -> {
                     // Stop the searchResultsActors
-                    searchsubredditActors.forEach((query, actor) -> stage.thenAccept(f -> context().stop(actor)));
+                    wordstatsActors.forEach((query, actor) -> stage.thenAccept(f -> context().stop(actor)));
 
                     // When the flow shuts down, make sure this actor also stops.
                     stage.thenAccept(f -> context().stop(self()));
@@ -138,8 +141,8 @@ public class WordstatsActor extends AbstractActor {
 //                        searchResultsMap.remove(unwatchSearchResults.query);
                     }
                 })
-                .match(Messages.WordstatasMessage.class, message -> {
-                    System.out.println("Received Wordstatas Message:  "+message);
+                .match(Messages.WordstatsMessage.class, message -> {
+                    System.out.println("Received Wordstats Message:  "+message);
                     if (message != null) {
                         addStatuses(message);
                         sender().tell(message, self());
@@ -152,7 +155,7 @@ public class WordstatsActor extends AbstractActor {
      * Adds a statuses to the hub.
      * @param message StatusesMessage message contaning the query and the statuses
      */
-    public void addStatuses(Messages.WordstatasMessage message) {
+    public void addStatuses(Messages.WordstatsMessage message) {
         List<Reddit> reddits = message.reddits;
         String query = message.query;
         String stats = statistics(reddits);
@@ -264,8 +267,8 @@ public class WordstatsActor extends AbstractActor {
      * Getter for the SearchResultsActor map
      * @return searchResultsActors Map of String and ActorRef a map of actor references for a given query
      */
-    public Map<String, ActorRef> getSearchResultsActors() {
-        return searchsubredditActors;
+    public Map<String, ActorRef> getWordstatsActors() {
+        return wordstatsActors;
     }
 
     /**

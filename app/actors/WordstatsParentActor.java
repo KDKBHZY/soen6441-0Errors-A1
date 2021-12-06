@@ -24,7 +24,7 @@ public class WordstatsParentActor extends AbstractActor implements InjectedActor
      * @param childFactory factory to create a UserActor
      */
     @Inject
-    public WordstatsParentActor(SubredditActor.Factory childFactory) {
+    public WordstatsParentActor(WordstatsActor.Factory childFactory) {
         this.query = "test";
         this.childFactory = childFactory;
     }
