@@ -68,7 +68,7 @@ public class RedditLyticsControllerTest {
                 .build();
         redditService = testApp.instanceOf(RedditService.class);
 
-        redditLyticsController = new RedditLyticsController(null, null,null,redditService);
+        redditLyticsController = new RedditLyticsController(null, null,null,null,redditService);
     }
 
     /**
