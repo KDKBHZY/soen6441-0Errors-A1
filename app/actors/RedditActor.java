@@ -82,7 +82,7 @@ public class RedditActor extends AbstractActor{
         jsonSink = Sink.foreach((JsonNode json) -> {
             // When the user types in a stock in the upper right corner, this is triggered,
             String queryRequest = json.findPath("query").asText();
-            askForStatuses(queryRequest);
+            getReddit(queryRequest);
         });
 
         // Put the source and sink together to make a flow of hub source as output (aggregating all
@@ -105,7 +105,7 @@ public class RedditActor extends AbstractActor{
      * Otherwise, create a new one, register the UserActor and wait the results
      * @param query
      */
-    private void askForStatuses(String query) {
+    private void getReddit(String query) {
         ActorRef actorForQuery = searchResultsActors.get(query);
         System.out.println("!!!res:"+query);
         if (actorForQuery != null) {
@@ -129,7 +129,7 @@ public class RedditActor extends AbstractActor{
                     logger.info("!!!!Received message WatchSearchResults {}", watchSearchResults);
                     if (watchSearchResults != null) {
                         // Ask the searchResultsActors for a stream containing these searchResults
-                        askForStatuses(watchSearchResults.query);
+                        getReddit(watchSearchResults.query);
                         sender().tell(websocketFlow, self());
                     }
                 })

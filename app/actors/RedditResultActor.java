@@ -41,7 +41,7 @@ public class RedditResultActor extends AbstractActorWithTimers {
                 .match(Messages.RegisterActor.class, message -> {
             logger.info("Registering actor {}", message);
             redditactor = sender();
-            getSender().tell("UserActor registered", getSelf());
+            getSender().tell("Redditactor registered", getSelf());
         })
                 .match(Filter.class, message -> {
                     System.out.println("Received message Filter {}"+message);

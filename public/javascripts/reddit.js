@@ -42,7 +42,7 @@ ws = new WebSocket("ws://" + location.host + "/ws");
 
         redditListQuery = $("#redditsList"+query);
         if (redditListQuery.length === 0) {
-            $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="redditsList'+query+'"></ol>');
+            $("#result").prepend('<div class="results"><h2><a href="http://localhost:9000/wordstats?term=' + query +'" target="_blank">Search terms: '+query+'</a></h2><ol id="redditsList'+query+'"></ol>');
             redditListQuery1 = $("#redditsList"+query);
             redditListQuery1.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
         }

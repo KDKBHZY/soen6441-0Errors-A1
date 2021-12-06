@@ -51,7 +51,7 @@ public class RedditResultActorTest {
 
             subject.tell(new Messages.RegisterActor(), getRef()); // test registration
             // await the correct response
-            expectMsg(duration("1 seconds"), "UserActor registered");
+            expectMsg(duration("1 seconds"), "Redditactor registered");
 
             // the run() method needs to finish within 3 seconds
             within(duration("3 seconds"), () -> {
