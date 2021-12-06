@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A POJO of User
@@ -39,6 +40,23 @@ public class User {
      */
     public User() {
         this.postedReddits = new ArrayList<>();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (obj == this)
+            return true;
+
+        return (Objects.equals(this.getUserID(), ((User) obj).getUserID())
+                && Objects.equals(this.getName(), ((User) obj).getName())
+                && Objects.equals(this.getAwardeeKarma(), ((User) obj).getAwardeeKarma())
+                && Objects.equals(this.getAwarderKarma(), ((User) obj).getAwarderKarma())
+                && Objects.equals(this.getCommentKarma(), ((User) obj).getCommentKarma())
+                && Objects.equals(this.getLinkKarma(), ((User) obj).getLinkKarma())
+                && Objects.equals(this.getTotalKarma(), ((User) obj).getTotalKarma())
+                && Objects.equals(this.getSnoovatarImgUrl(), ((User) obj).getSnoovatarImgUrl()));
     }
 
     /**

@@ -1,32 +1,39 @@
 @(author: User)
 
     @main("User Profile") {
-        <div class="results">
-            <div>
-                <br><h1>Author: @author.getName <br></h1>
-                <ul>
-                    <li>User ID: @author.getUserID</li>
-                    <li>Create Date: @author.getCreateDate</li>
-                    <li>Total Karma: @author.getTotalKarma</li>
-                    <li>Awardee Karma: @author.getAwardeeKarma</li>
-                    <li>Awarder Karma: @author.getAwarderKarma</li>
-                    <li>Comment Karma: @author.getCommentKarma</li>
-                    <li>Link karma: @author.getLinkKarma</li>
-                    <li>Snoovatar Img:
-                        @if(author.getSnoovatarImgUrl != "") {
-                            <img src="@author.getSnoovatarImgUrl" width="80px" height="80px"> Snoovatar </img>
-                        } else {
-                            The user hasn't set the snoovatar yet
-                        }
-                    </li>
-                </ul>
+        <body data-ws-url="ws://localhost:9000/authorprofilews">
+            <div class="results">
+                <div>
+                    <br><h1 id="name">Author: @author.getName <br></h1>
+                    <ul>
+                        <li id="user_id">User ID: @author.getUserID</li>
+                        <li id="create_date">Create Date: @author.getCreateDate</li>
+                        <li id="total">Total Karma: @author.getTotalKarma</li>
+                        <li id="awardee">Awardee Karma: @author.getAwardeeKarma</li>
+                        <li id="awarder">Awarder Karma: @author.getAwarderKarma</li>
+                        <li id="comment">Comment Karma: @author.getCommentKarma</li>
+                        <li id="link">Link karma: @author.getLinkKarma</li>
+                        <li >Snoovatar Img:
+                            @if(author.getSnoovatarImgUrl != "") {
+                                <img id="snoovatar" src="@author.getSnoovatarImgUrl" width="80px" height="80px"> Snoovatar </img>
+                            } else {
+                                The user hasn't set the snoovatar yet
+                            }
+                        </li>
+                    </ul>
+                </div>
+
+                <div><br><h2>Latest submissions:</h2></div>
+                <div id="submissions"></div>
+@*                <ol class="c">*@
+@*                @for(reddit <- author.getPostedReddits) {*@
+@*                    <li>@reddit.toString </li>*@
+@*                }*@
+@*                </ol>*@
             </div>
 
-             <div><br><h2>Latest submissions:</h2></div>
-             <ol class="c">
-             @for(reddit <- author.getPostedReddits) {
-             <li>@reddit.toString </li>
-             }
-             </ol>
-        </div>
+            <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"></script>
+
+            <script src="@routes.Assets.versioned("javascripts/authorProfile.js")" type="text/javascript"></script>
+        </body>
     }

@@ -45,19 +45,20 @@ ws = new WebSocket("ws://" + location.host + "/ws");
             $("#result").prepend('<div class="results"><h2>Search terms: '+query+'</h2><ol id="redditsList'+query+'"></ol>');
             redditListQuery1 = $("#redditsList"+query);
             redditListQuery1.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
-        }else {
-            redditListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
-            console.log("!!!!data")
         }
+
         var oUl = document.querySelector("#redditsList"+query);
         var oList = oUl.querySelectorAll("li");
         var size = oList.length;
 
-        if (size>10) {
+        if (size>9) {
             console.log(size);
             console.log(oList[size-1]);
             oList[size-1].remove();
             redditListQuery.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
+        } else {
+            redditListQuery.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message.author + '" target="_blank">' + message.author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message.subReddit + '" target="_blank">' + message.subReddit + '</a>,' + message.title + '</li>');
+            console.log("!!!!data")
         }
 
     };
