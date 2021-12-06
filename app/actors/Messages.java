@@ -186,16 +186,14 @@ public class Messages {
      */
     public static final class AuthorProfileMessage {
         public final User author;
-        public final String authorName;
 
-        public AuthorProfileMessage(User author, String authorName) {
+        public AuthorProfileMessage(User author) {
             this.author = requireNonNull(author);
-            this.authorName = requireNonNull(authorName);
         }
 
         @Override
         public String toString() {
-            return "AuthorProfileMessage(" + authorName + ")";
+            return "AuthorProfileMessage(" + author.getName() + ")";
         }
     }
 
@@ -230,5 +228,23 @@ public class Messages {
             return "RegisterActor";
         }
     }
+    /**
+     * UnwatchSearchResults Message
+     */
+
+    public static final class UnwatchAuthorProfile {
+        public final String query;
+
+        public UnwatchAuthorProfile(String query) {
+            this.query = requireNonNull(query);
+        }
+
+        @Override
+        public String toString() {
+            return "UnwatchAuthorProfile(" + query + ")";
+        }
+    }
+
+
 
 }
