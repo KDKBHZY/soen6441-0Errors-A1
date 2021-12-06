@@ -134,8 +134,8 @@ public class SubredditActor extends AbstractActor {
                 .match(Messages.UnwatchSearchResults.class, unwatchSearchResults -> {
                     logger.info("Received message UnwatchSearchResults {}", unwatchSearchResults);
                     if (unwatchSearchResults != null) {
-                        searchResultsMap.get(unwatchSearchResults.query).shutdown();
-                        searchResultsMap.remove(unwatchSearchResults.query);
+//                        searchResultsMap.get(unwatchSearchResults.query).shutdown();
+//                        searchResultsMap.remove(unwatchSearchResults.query);
                     }
                 })
                 .match(Messages.RedditsMessage.class, message -> {
@@ -177,7 +177,7 @@ public class SubredditActor extends AbstractActor {
     }
 
     /**
-     * Factory interface to create a UserActor from the UserParentActor
+     * Factory interface to create a SubredditActor from theS ubredditParentActor
      */
     public interface Factory {
         Actor create(String id);

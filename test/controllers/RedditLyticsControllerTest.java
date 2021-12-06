@@ -1,16 +1,20 @@
 package controllers;
 
+import akka.actor.ActorRef;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.name.Named;
 import models.Reddit;
 import models.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import play.inject.Injector;
+import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.guice.GuiceInjectorBuilder;
 import play.libs.Json;
+import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Result;
 import services.RedditApi;
 import services.RedditImplementationMock;
@@ -36,13 +40,15 @@ import static play.test.Helpers.contentAsString;
 public class RedditLyticsControllerTest {
     private static RedditService redditService;
     private static RedditLyticsController redditLyticsController;
+
     @BeforeClass
     public static void initTestApp() {
         Injector testApp = new GuiceInjectorBuilder()
                 .overrides((bind(RedditApi.class).to(RedditImplementationMock.class)))
                 .build();
         redditService = testApp.instanceOf(RedditService.class);
-        redditLyticsController = new RedditLyticsController(redditService);
+
+        redditLyticsController = new RedditLyticsController(null, null,redditService);
     }
 
     @Test

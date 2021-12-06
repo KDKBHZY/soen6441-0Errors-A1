@@ -135,10 +135,10 @@ public class RedditActor extends AbstractActor{
                 })
                 .match(Messages.UnwatchSearchResults.class, unwatchSearchResults -> {
                     logger.info("Received message UnwatchSearchResults {}", unwatchSearchResults);
-                    if (unwatchSearchResults != null) {
-                        searchResultsMap.get(unwatchSearchResults.query).shutdown();
-                        searchResultsMap.remove(unwatchSearchResults.query);
-                    }
+//                    if (unwatchSearchResults != null) {
+//                        searchResultsMap.get(unwatchSearchResults.query).shutdown();
+//                        searchResultsMap.remove(unwatchSearchResults.query);
+//                    }
                 })
                 .match(Messages.RedditsMessage.class, message -> {
                     System.out.println("Received message StatusesMessage:  "+message);
@@ -248,4 +248,6 @@ public class RedditActor extends AbstractActor{
     public void setSearchResultsActors(Map<String, ActorRef> searchResultsActors) {
         this.searchResultsActors = searchResultsActors;
     }
+
+
 }

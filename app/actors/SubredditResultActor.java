@@ -31,7 +31,7 @@ public class SubredditResultActor  extends AbstractActorWithTimers {
 
     @Override
     public void preStart() {
-        getTimers().startPeriodicTimer("Timer", new SubredditResultActor.Filter(), Duration.create(8, TimeUnit.SECONDS));
+        getTimers().startPeriodicTimer("Timer", new SubredditResultActor.Filter(), Duration.create(2, TimeUnit.SECONDS));
     }
     @Override
     public Receive createReceive() {
@@ -39,7 +39,7 @@ public class SubredditResultActor  extends AbstractActorWithTimers {
                 .match(Messages.RegisterActor.class, message -> {
                     logger.info("Registering actor {}", message);
                     subredditactor = sender();
-                    getSender().tell("UserActor registered", getSelf());
+                    getSender().tell("SubredditActor registered", getSelf());
                 })
                 .match(SubredditResultActor.Filter.class, message -> {
                     System.out.println("Received subreddit message Filter {}"+message);
@@ -56,7 +56,7 @@ public class SubredditResultActor  extends AbstractActorWithTimers {
                 .build();
     }
 
-    private static final class Filter {
+    public static final class Filter {
     }
 
     /**
@@ -108,8 +108,20 @@ public class SubredditResultActor  extends AbstractActorWithTimers {
                         new Messages.RedditsMessage(newReddits, query);
 
                 subredditactor.tell(redditsMessage, self());
+            }else {
+                Messages.UnwatchSearchResults nonewdata =
+                        new Messages.UnwatchSearchResults(query);
+
+                subredditactor.tell(nonewdata, self());
             }
 
         });
+    }
+    /**
+     * Set Reddit Service
+     * @param redditService twitterService
+     */
+    public void setRedditService(RedditService redditService) {
+        this.redditService = redditService;
     }
 }

@@ -43,9 +43,10 @@ public class RedditLyticsController extends Controller {
      * Constructor
      */
     @Inject
-    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor) {
+    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, RedditService redditservice) {
         this.redditparentactor = redditparentactor;
         this.subredditparentactor = subredditparentactor;
+        this.redditService = redditservice;
     }
 
     public CompletionStage<Result> index() {
@@ -185,7 +186,7 @@ public class RedditLyticsController extends Controller {
      */
     public CompletionStage<Result> statistics(String term) {
         return redditService.getReddits(term)
-                .thenApplyAsync(res -> ok(wordstats.render(statistics(res), term)));
+                .thenApplyAsync(res -> ok(views.html.wordstats.render(statistics(res), term)));
     }
 
     /**

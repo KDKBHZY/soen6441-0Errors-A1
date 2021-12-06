@@ -14,21 +14,21 @@ import static akka.pattern.PatternsCS.ask;
 import static akka.pattern.PatternsCS.pipe;
 
 public class RedditParentActor extends AbstractActor implements InjectedActorSupport {
-    private final Timeout timeout = new Timeout(2, TimeUnit.SECONDS);
+    private final Timeout timeout = new Timeout(1, TimeUnit.SECONDS);
     private final String query;
 
     private final RedditActor.Factory childFactory;
 
     /**
-     * Create the default UserParentActor
+     * Create the default RedditParentActor
      * Called by the WebSocketController
      * Runs a default search on the keyword "test"
-     * @param childFactory factory to create a UserActor
+     * @param childFactory factory to create a RedditParentActor
      */
     @Inject
     public RedditParentActor(RedditActor.Factory childFactory) {
         this.childFactory = childFactory;
-        this.query = "test"; // default keyword
+        this.query = "tesadata"; // default keyword
     }
 
 

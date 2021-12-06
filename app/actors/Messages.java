@@ -103,7 +103,7 @@ public class Messages {
 
         @Override
         public String toString() {
-            return "StatusesMessage(" + query + ")";
+            return "RedditMessage(" + query + ")";
         }
     }
 

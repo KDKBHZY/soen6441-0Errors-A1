@@ -21,5 +21,7 @@ libraryDependencies += "org.mockito" % "mockito-core" % "4.0.0" % "test"
 libraryDependencies += "junit" % "junit" % "4.13.2" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.6.14" % "test"
+libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % "2.6.14" % "test"
 
 //libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.6.17"

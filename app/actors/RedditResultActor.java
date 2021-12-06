@@ -33,7 +33,7 @@ public class RedditResultActor extends AbstractActorWithTimers {
 
     @Override
     public void preStart() {
-        getTimers().startPeriodicTimer("Timer", new Filter(), Duration.create(15, TimeUnit.SECONDS));
+        getTimers().startPeriodicTimer("Timer", new Filter(), Duration.create(2, TimeUnit.SECONDS));
     }
     @Override
     public Receive createReceive() {
@@ -58,7 +58,7 @@ public class RedditResultActor extends AbstractActorWithTimers {
                 .build();
     }
 
-    private static final class Filter {
+    public static final class Filter {
     }
 
     /**
@@ -110,8 +110,21 @@ public class RedditResultActor extends AbstractActorWithTimers {
                         new Messages.RedditsMessage(newReddits, query);
 
                 redditactor.tell(redditsMessage, self());
+            }else {
+                Messages.UnwatchSearchResults nonewdata =
+                        new Messages.UnwatchSearchResults(query);
+
+                redditactor.tell(nonewdata, self());
             }
 
+
         });
+    }
+    /**
+     * Set Reddit Service
+     * @param redditService twitterService
+     */
+    public void setRedditService(RedditService redditService) {
+        this.redditService = redditService;
     }
 }
