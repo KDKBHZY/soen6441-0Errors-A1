@@ -23,13 +23,26 @@ ws = new WebSocket("ws://" + location.host + "/ws");
             };
             return $("#searchForm").submit(function (event) {
                 event.preventDefault();
-                if ($("#searchKey").val() !== '') {
-                    searchterm = $("#searchKey").val();
-                    console.log("Sending WS with value " + $("#searchKey").val());
-                    ws.send(JSON.stringify({
-                        query: $("#searchKey").val()
-                    }));
-                    return $("#searchKey").val("");
+
+           if ($("#searchKey").val() !== '') {
+               searchterm = $("#searchKey").val();
+               if (resArr.indexOf(searchterm)>=0){
+                   alert("You have searched "+ searchterm +" before");
+                   // var repeat = document.getElementById(a.toString());
+                   // repeat.style.color= "lightgreen";
+                   // $("html,body").animate({scrollTop: $("#"+a.toString()).offset().top}, 1000);
+               }else {
+                   console.log(resArr);
+                  resArr.push(searchterm);
+                   searchterm = $("#searchKey").val();
+                   console.log("Sending WS with value " + $("#searchKey").val());
+                   ws.send(JSON.stringify({
+                       query: $("#searchKey").val()
+                   }));
+                   return $("#searchKey").val("");
+               }
+                }else {
+                    alert("Please enter a keyword");
                 }
             });
         }
