@@ -12,6 +12,7 @@ import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
 import play.libs.Json;
 import play.mvc.Result;
+import play.shaded.ahc.org.asynchttpclient.netty.ws.NettyWebSocket;
 import services.RedditApi;
 import services.RedditImplementationMock;
 import services.RedditService;
@@ -27,7 +28,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static play.inject.Bindings.bind;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.contentAsString;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClientConfig;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
+import org.junit.Test;
+import play.test.TestServer;
 
+import java.util.concurrent.CompletableFuture;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static play.test.Helpers.running;
+import static play.test.Helpers.testServer;
+import static org.awaitility.Awaitility.*;
 /**
  * Test the {@link RedditLyticsController} class
  *
@@ -42,8 +57,131 @@ public class RedditLyticsControllerTest {
                 .overrides((bind(RedditApi.class).to(RedditImplementationMock.class)))
                 .build();
         redditService = testApp.instanceOf(RedditService.class);
-        redditLyticsController = new RedditLyticsController(redditService);
+        redditLyticsController = new RedditLyticsController(null,null,null,redditService);
     }
+
+    /**
+     * Test for the reject WebSocket
+     * inspired by https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/FunctionalTest.java
+     */
+    @Test
+    public void testRejectWebSocket() {
+        TestServer server = testServer(37117);
+        running(server, () -> {
+            try {
+                AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder().setMaxRequestRetry(0).build();
+                AsyncHttpClient client = new DefaultAsyncHttpClient(config);
+                WebSocketClient webSocketClient = new WebSocketClient(client);
+
+                try {
+                    String serverURL = "ws://localhost:37117/ws";
+                    String serverURL1 = "ws://localhost:37117//subredditws";
+                    String serverURL2 = "ws://localhost:37117/authorprofilews";
+
+                    WebSocketClient.LoggingListener listener = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage = webSocketClient.call(serverURL, listener);
+                    WebSocketClient.LoggingListener listener1 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage1 = webSocketClient.call(serverURL1, listener1);
+                    WebSocketClient.LoggingListener listener2 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage2 = webSocketClient.call(serverURL2, listener2);
+                    await().until(completionStage::isDone);
+                    await().until(completionStage1::isDone);
+                    await().until(completionStage2::isDone);
+
+                } finally {
+                    client.close();
+                }
+            } catch (Exception e) {
+                fail("Unexpected exception", e);
+            }
+        });
+    }
+
+    /**
+     * Test for the accept WebSocket
+     * inspired by https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/FunctionalTest.java
+     */
+    @Test
+    public void testAcceptWebSocket() {
+        TestServer server = testServer(19001);
+        running(server, () -> {
+            try {
+                AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder().setMaxRequestRetry(0).build();
+                AsyncHttpClient client = new DefaultAsyncHttpClient(config);
+                WebSocketClient webSocketClient = new WebSocketClient(client);
+
+                try {
+                    String serverURL = "ws://localhost:19001/ws";
+                    WebSocketClient.LoggingListener listener = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage = webSocketClient.call(serverURL, listener);
+                    String serverURL1 = "ws://localhost:19001/subredditws";
+                    WebSocketClient.LoggingListener listener1 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage1 = webSocketClient.call(serverURL1, listener1);
+                    String serverURL2 = "ws://localhost:19001/authorprofilews";
+                    WebSocketClient.LoggingListener listener2 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage2 = webSocketClient.call(serverURL2, listener2);
+                    await().until(completionStage::isDone);
+                    assertThat(completionStage)
+                            .hasNotFailed();
+                    await().until(completionStage1::isDone);
+                    assertThat(completionStage1)
+                            .hasNotFailed();
+                    await().until(completionStage2::isDone);
+                    assertThat(completionStage2)
+                            .hasNotFailed();
+                } finally {
+                    client.close();
+                }
+            } catch (Exception e) {
+                fail("Unexpected exception", e);
+            }
+        });
+    }
+
+    /**
+     * Test for the accept WebSocket
+     * inspired by https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/FunctionalTest.java
+     */
+    @Test
+    public void testAcceptWebSocketOtherPort() {
+        TestServer server = testServer(9000);
+        running(server, () -> {
+            try {
+                AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder().setMaxRequestRetry(0).build();
+                AsyncHttpClient client = new DefaultAsyncHttpClient(config);
+                WebSocketClient webSocketClient = new WebSocketClient(client);
+
+                try {
+                    String serverURL = "ws://localhost:9000/ws";
+                    WebSocketClient.LoggingListener listener = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage = webSocketClient.call(serverURL, listener);
+                    await().until(completionStage::isDone);
+                    assertThat(completionStage)
+                            .hasNotFailed();
+
+                    String serverURL1 = "ws://localhost:9000/subredditws";
+                    WebSocketClient.LoggingListener listener1 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage1 = webSocketClient.call(serverURL1, listener1);
+                    await().until(completionStage1::isDone);
+                    assertThat(completionStage1)
+                            .hasNotFailed();
+
+                    String serverURL2 = "ws://localhost:9000/authorprofilews";
+                    WebSocketClient.LoggingListener listener2 = new WebSocketClient.LoggingListener(message -> {});
+                    CompletableFuture<NettyWebSocket> completionStage2 = webSocketClient.call(serverURL2, listener2);
+                    await().until(completionStage2::isDone);
+                    assertThat(completionStage2)
+                            .hasNotFailed();
+                } finally {
+                    client.close();
+                }
+            } catch (Exception e) {
+                fail("Unexpected exception", e);
+            }
+        });
+    }
+
+
 
     @Test
     public void index() throws ExecutionException, InterruptedException {

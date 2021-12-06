@@ -44,10 +44,11 @@ public class RedditLyticsController extends Controller {
      * Constructor
      */
     @Inject
-    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, @Named("authorProfile-ParentActor") ActorRef authorProfileParentActor) {
+    public RedditLyticsController(@Named("reddit-ParentActor") ActorRef redditparentactor, @Named("subreddit-ParentActor") ActorRef subredditparentactor, @Named("authorProfile-ParentActor") ActorRef authorProfileParentActor, RedditService redditService) {
         this.redditparentactor = redditparentactor;
         this.subredditparentactor = subredditparentactor;
         this.authorProfileParentActorRef = authorProfileParentActor;
+        this.redditService = redditService;
     }
 
     public CompletionStage<Result> index() {
