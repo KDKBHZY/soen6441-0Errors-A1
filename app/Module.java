@@ -21,9 +21,11 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
         bindActor(RedditParentActor.class, "reddit-ParentActor");
         bindActor(SubredditParentActor.class, "subreddit-ParentActor");
         bindActor(AuthorProfileParentActor.class, "authorProfile-ParentActor");
+        bindActor(WordstatsParentActor.class, "wordstats-ParentActor");
         bindActorFactory(RedditActor.class, RedditActor.Factory.class);
         bindActorFactory(SubredditActor.class, SubredditActor.Factory.class);
         bindActorFactory(AuthorProfileActor.class, AuthorProfileActor.Factory.class);
+        bindActorFactory(WordstatsActor.class, WordstatsActor.Factory.class);
         bind(RedditApi.class).to(RedditImplemention.class);
     }
 }
