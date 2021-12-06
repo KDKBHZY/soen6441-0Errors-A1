@@ -64,7 +64,7 @@ public class WordstatsResultActor  extends AbstractActorWithTimers {
      * @param message message to handle
      * @return CompletionStage of Void
      */
-    public CompletionStage<Void> watchwordstatsResult(Messages.WatchsubRedditResults message) {
+    public CompletionStage<Void> watchwordstatsResult(Messages.WatchwordstatsResults message) {
         // Set the query
         query = message.query;
 
@@ -76,10 +76,10 @@ public class WordstatsResultActor  extends AbstractActorWithTimers {
                     // Add all the statuses to the list
                     System.out.println("----Wordstats Loaded");
 
-                    Messages.WordstatsMessage wordstatsMessage =
-                            new Messages.WordstatsMessage(reddits, query);
+                    Messages.WordstatasMessage wordstatsMessage =
+                            new Messages.WordstatasMessage(reddits, query);
 
-                    wordstatsactoractor.tell(wordstatsMessage, self());
+                    wordstatsactor.tell(wordstatsMessage, self());
                 });
     }
 

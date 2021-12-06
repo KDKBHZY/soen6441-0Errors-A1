@@ -141,7 +141,7 @@ public class WordstatsActor extends AbstractActor {
 //                        searchResultsMap.remove(unwatchSearchResults.query);
                     }
                 })
-                .match(Messages.WordstatsMessage.class, message -> {
+                .match(Messages.WordstatasMessage.class, message -> {
                     System.out.println("Received Wordstats Message:  "+message);
                     if (message != null) {
                         addStatuses(message);
@@ -155,7 +155,7 @@ public class WordstatsActor extends AbstractActor {
      * Adds a statuses to the hub.
      * @param message StatusesMessage message contaning the query and the statuses
      */
-    public void addStatuses(Messages.WordstatsMessage message) {
+    public void addStatuses(Messages.WordstatasMessage message) {
         List<Reddit> reddits = message.reddits;
         String query = message.query;
         List<Words> stats = statistics(reddits, query);

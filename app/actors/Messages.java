@@ -54,6 +54,22 @@ public class Messages {
     }
 
     /**
+     * Create WordstatsActor Message
+     */
+    public static final class WordstatsActorCreate {
+        public final String id;
+
+        public WordstatsActorCreate(String id) {
+            this.id = requireNonNull(id);
+        }
+
+        @Override
+        public String toString() {
+            return "WordstatsActorCreate(" + id + ")";
+        }
+    }
+
+    /**
      * WatchSearchResults Message
      */
     public static final class WatchSearchResults {
@@ -97,6 +113,21 @@ public class Messages {
     }
 
     /**
+     * WatchWordstatsResults Message
+     */
+    public static final class WatchwordstatsResults {
+        public final String query;
+
+        public WatchwordstatsResults(String query) {
+            this.query = requireNonNull(query);
+        }
+        @Override
+        public String toString() {
+            return "WatchWordstatsResults(" + query + ")";
+        }
+    }
+
+    /**
      * UnwatchSearchResults Message
      */
     public static final class UnwatchSearchResults {
@@ -109,6 +140,22 @@ public class Messages {
         @Override
         public String toString() {
             return "UnwatchSearchResults(" + query + ")";
+        }
+    }
+
+    /**
+     * UnwatchSearchResults Message
+     */
+    public static final class UnwatchWordstatsResults {
+        public final String query;
+
+        public UnwatchWordstatsResults(String query) {
+            this.query = requireNonNull(query);
+        }
+
+        @Override
+        public String toString() {
+            return "UnwatchWordstatsResults(" + query + ")";
         }
     }
 
@@ -139,14 +186,38 @@ public class Messages {
      */
     public static final class AuthorProfileMessage {
         public final User author;
+        public final String authorName;
 
-        public AuthorProfileMessage(User author) {
+        public AuthorProfileMessage(User author, String authorName) {
             this.author = requireNonNull(author);
+            this.authorName = requireNonNull(authorName);
         }
 
         @Override
         public String toString() {
-            return "AuthorProfileMessage(" + author.getName() + ")";
+            return "AuthorProfileMessage(" + authorName + ")";
+        }
+    }
+
+    /**
+     * Wordstats Message
+     */
+    public static final class WordstatasMessage {
+        public final List<Reddit> reddits;
+        public final String query;
+
+        public WordstatasMessage(List<Reddit> reddits, String query) {
+
+            this.reddits = requireNonNull(reddits);
+            for (Reddit reddit : this.reddits) {
+                reddit.setTerm(query);
+            }
+            this.query = requireNonNull(query);
+        }
+
+        @Override
+        public String toString() {
+            return "WordstatsMessage(" + query + ")";
         }
     }
 
@@ -159,23 +230,5 @@ public class Messages {
             return "RegisterActor";
         }
     }
-    /**
-     * UnwatchSearchResults Message
-     */
-
-    public static final class UnwatchAuthorProfile {
-        public final String query;
-
-        public UnwatchAuthorProfile(String query) {
-            this.query = requireNonNull(query);
-        }
-
-        @Override
-        public String toString() {
-            return "UnwatchAuthorProfile(" + query + ")";
-        }
-    }
-
-
 
 }
