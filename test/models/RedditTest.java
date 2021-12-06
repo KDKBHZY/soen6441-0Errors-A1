@@ -1,5 +1,6 @@
 package models;
 
+import org.apache.regexp.RE;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -75,5 +76,57 @@ public class RedditTest {
         Reddit r = new Reddit();
         r.setTitle("nba");
         assertEquals("nba", r.getTitle());
+    }
+
+    @Test
+    public void getTerm() {
+        Reddit r = new Reddit();
+        r.setTerm("nba");
+        assertEquals("nba", r.getTerm());
+    }
+
+    @Test
+    public void setTerm() {
+        Reddit r = new Reddit();
+        r.setTerm("nba");
+        assertEquals("nba", r.getTerm());
+    }
+
+    @Test
+    public void testEquals() {
+        Reddit r1 = new Reddit();
+        r1.setRedditID("1");
+        r1.setAuthor("test");
+        r1.setSubreddit("test");
+        r1.setTitle("test");
+        Reddit r2 = new Reddit();
+        r2.setRedditID("1");
+        r2.setAuthor("test");
+        r2.setSubreddit("test");
+        r2.setTitle("test");
+
+        assertTrue(r1.equals(r2));
+
+        r2.setTerm("test");
+        assertTrue(r1.equals(r2));
+
+        r2.setTitle("title");
+        assertFalse(r1.equals(r2));
+    }
+
+    @Test
+    public void testHashCode() {
+        Reddit r1 = new Reddit();
+        r1.setRedditID("1");
+        r1.setAuthor("test");
+        r1.setSubreddit("test");
+        r1.setTitle("test");
+        Reddit r2 = new Reddit();
+        r2.setRedditID("1");
+        r2.setAuthor("test");
+        r2.setSubreddit("test");
+        r2.setTitle("test");
+
+        assertEquals(r1.hashCode(), r2.hashCode());
     }
 }

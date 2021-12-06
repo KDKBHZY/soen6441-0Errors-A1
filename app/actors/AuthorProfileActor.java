@@ -149,14 +149,13 @@ public class AuthorProfileActor extends AbstractActor {
         final Flow<JsonNode, JsonNode, UniqueKillSwitch> killSwitchFlow = Flow.of(JsonNode.class)
                 .joinMat(KillSwitches.singleBidi(), Keep.right());
 
-        String authorName = authorProfileMessage.authorName;
-        String runnableName = "authorProfile-" + authorName;
+        String runnableName = "authorProfile-" + authorProfileMessage.author.getName();
         final RunnableGraph<UniqueKillSwitch> graph = getSource
                 .viaMat(killSwitchFlow, Keep.right())
                 .to(hubSink)
                 .named(runnableName);
 
-        authorProfileMap.put(authorName, graph.run(mat));
+        authorProfileMap.put(authorProfileMessage.author.getName(), graph.run(mat));
     }
 
     /**

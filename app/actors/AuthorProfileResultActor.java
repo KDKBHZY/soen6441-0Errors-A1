@@ -41,7 +41,7 @@ public class AuthorProfileResultActor extends AbstractActorWithTimers {
         getTimers().startPeriodicTimer("Timer", new AuthorProfileResultActor.Filter(), Duration.create(2, TimeUnit.SECONDS));
     }
 
-    private static final class Filter {
+    public static final class Filter {
     }
 
     /**
@@ -83,7 +83,7 @@ public class AuthorProfileResultActor extends AbstractActorWithTimers {
             this.reddits.addAll(authorProfile.getPostedReddits());
             logger.info("Get author profile");
 
-            Messages.AuthorProfileMessage authorProfileMessage = new Messages.AuthorProfileMessage(author, query);
+            Messages.AuthorProfileMessage authorProfileMessage = new Messages.AuthorProfileMessage(author);
             authorProfileActor.tell(authorProfileMessage, self());
         });
     }
@@ -103,9 +103,21 @@ public class AuthorProfileResultActor extends AbstractActorWithTimers {
             if (!oldAuthor.equals(author)
                     || !oldReddits.get(0).getRedditID().equals(reddits.get(0).getRedditID())) {
                 logger.info("Author" + query + "updated");
-                Messages.AuthorProfileMessage authorProfileMessage = new Messages.AuthorProfileMessage(author, query);
+                Messages.AuthorProfileMessage authorProfileMessage = new Messages.AuthorProfileMessage(author);
                 authorProfileActor.tell(authorProfileMessage, self());
+            } else {
+                Messages.UnwatchAuthorProfile noNewData =
+                        new Messages.UnwatchAuthorProfile(query);
+                authorProfileActor.tell(noNewData, self());
             }
         });
+    }
+
+    /**
+     * Set RedditService
+     * @param redditService twitterService
+     */
+    public void setRedditService(RedditService redditService) {
+        this.redditService = redditService;
     }
 }

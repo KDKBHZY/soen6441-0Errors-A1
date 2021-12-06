@@ -50,26 +50,6 @@ function parseReddits(message) {
     for (let i = 0; i < message.length; i++) {
         redditListQuery1.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message[i].author + '" target="_blank">' + message[i].author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message[i].subReddit + '" target="_blank">' + message[i].subReddit + '</a>,' + message[i].title + '</li>');
     }
-    // redditListQuery1.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message[0].author + '" target="_blank">' + message[0].author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message[0].subReddit + '" target="_blank">' + message[0].subReddit + '</a>,' + message[0].title + '</li>');
-
-
-    // var oUl = document.querySelector("#posts");
-    // var oList = oUl.querySelectorAll("li");
-    // var size = oList.length;
-    //
-    // for (let i = 1; i < message.length; i++) {
-    //     if (size > 9) {
-    //         console.log(size);
-    //         console.log(oList[size - 1]);
-    //         oList[size - 1].remove();
-    //         posts.prepend('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message[i].author + '" target="_blank">' + message[i].author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message[i].subReddit + '" target="_blank">' + message[i].subReddit + '</a>,' + message[i].title + '</li>');
-    //     } else {
-    //         posts.append('<li style="margin-bottom:10px "> Author: <a href="http://localhost:9000/user/profile?author=' + message[i].author + '" target="_blank">' + message[i].author + '</a>, <a href="http://localhost:9000/searchsub?term=' + message[i].subReddit + '" target="_blank">' + message[i].subReddit + '</a>,' + message[i].title + '</li>');
-    //         console.log("!!!!data")
-    //     }
-    // }
-
-
 }
 
 
