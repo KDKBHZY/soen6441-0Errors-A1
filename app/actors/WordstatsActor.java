@@ -195,9 +195,12 @@ public class WordstatsActor extends AbstractActor {
                 .collect(Collectors.toList());
         String str = "{";
         for(Map.Entry<String, Long> node : res) {
-            str = str + "\"" + node.getKey() + "\":\"" + Long.toString(node.getValue()) + "\",";
+            if(str.length()>1){
+                str = str + ",";
+            }
+            str = java.lang.String.format("%s\"%s\":\"%s\"", str, node.getKey(), Long.toString(node.getValue()));
         }
-        str[str.length()-1]="}";
+        str = str + "}";
         System.out.println("List of " + res.size());
         return str;
     }
