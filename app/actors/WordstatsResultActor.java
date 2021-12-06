@@ -76,8 +76,8 @@ public class WordstatsResultActor  extends AbstractActorWithTimers {
                     // Add all the statuses to the list
                     System.out.println("----Wordstats Loaded");
 
-                    Messages.WordstatasMessage wordstatsMessage =
-                            new Messages.WordstatasMessage(reddits, query);
+                    Messages.WordstatsMessage wordstatsMessage =
+                            new Messages.WordstatsMessage(reddits, query);
 
                     wordstatsactor.tell(wordstatsMessage, self());
                 });
@@ -101,8 +101,8 @@ public class WordstatsResultActor  extends AbstractActorWithTimers {
             if (!newReddits.get(0).getRedditID().equals(oldReddits.get(0).getRedditID())){
                 newReddits.removeAll(oldReddits);
                 System.out.println("!!!!change: "+query+ " number:  "+newReddits.size());
-                Messages.WordstatasMessage wordstatasMessage =
-                        new Messages.WordstatasMessage(newReddits, query);
+                Messages.WordstatsMessage wordstatasMessage =
+                        new Messages.WordstatsMessage(newReddits, query);
 
                 wordstatsactor.tell(wordstatasMessage, self());
             }else {
