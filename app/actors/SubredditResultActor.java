@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * receive message from subredditactor and refresh self
+ * @author: Zeyu Huang
+ */
+
 public class SubredditResultActor  extends AbstractActorWithTimers {
     @Inject
     private RedditService redditService;

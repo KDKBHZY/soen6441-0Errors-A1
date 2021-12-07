@@ -78,7 +78,7 @@ public class RedditLyticsController extends Controller {
 
 
     /**
-     * searchpage websocket
+     * searchpage subreddit
      * @author: Zeyu Huang
      * @return data to front end
      */

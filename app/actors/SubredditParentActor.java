@@ -10,6 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 import static akka.pattern.PatternsCS.ask;
 import static akka.pattern.PatternsCS.pipe;
+/**
+ * get message form controller and creat subredditactor
+ * @author: Zeyu Huang
+ */
 
 public class SubredditParentActor extends AbstractActor implements InjectedActorSupport {
     private final Timeout timeout = new Timeout(2, TimeUnit.SECONDS);

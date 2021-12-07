@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 /**
  * create WebSocket
- *
+ * @author: Zeyu Huang
  * inspired by https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/WebSocketClient.java
  */
 

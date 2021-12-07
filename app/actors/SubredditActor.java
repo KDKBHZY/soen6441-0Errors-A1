@@ -23,6 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
+/**
+ * get message from subredditparentactor
+ * @author: Zeyu Huang
+ */
 
 public class SubredditActor extends AbstractActor {
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this);
